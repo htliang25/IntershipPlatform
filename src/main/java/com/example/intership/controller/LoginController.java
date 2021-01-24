@@ -3,34 +3,37 @@ package com.example.intership.controller;
 import com.example.intership.entities.User;
 import com.example.intership.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class LoginController {
     @Autowired
     UserService userService;
 
+    @ResponseBody
     @PostMapping("/login")
-    public String login(@RequestParam("username")String username,
-                        @RequestParam("password")String password,
-                        @RequestParam("role")String role,
-                        HttpSession session) {
-        User user = userService.getUser(username);
-        if (user != null && password.equals(user.getPwd())) {
-            //登录成功
-            session.setAttribute("loginUser", username);
-            return "redirect:/main.html";
+    public Map<String, Object> login(@RequestBody Map<String, Object> data) {
+        String name = (String) data.get("account");
+        String pwd = (String) data.get("password");
+        User user = userService.getUser(name);
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        if (user != null && pwd.equals(user.getPwd())) {
+            map.put("ce", "20001");
         } else if (user == null) {
-            //用户不存在
-            return "login";
+            map.put("code", "50001");
         } else {
-            //密码错误
-            return "login";
+            map.put("code", "50002");
         }
+        return map;
     }
 }

@@ -12,10 +12,7 @@ class IntershipApplicationTests {
 
     @Test
     void contextLoads() {
-        String name = "aa";
-        String pwd = "123456";
-        int role = 1;
-        userService.saveUser(name, pwd, role);
+
     }
 
 }

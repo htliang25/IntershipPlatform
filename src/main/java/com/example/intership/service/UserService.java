@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserService {
@@ -21,13 +20,7 @@ public class UserService {
         return userTemplate.getuser(name);
     }
 
-    public void saveUser(String name, String pwd, int role){
-        User user = new User();
-
-        user.setName(name);
-        user.setPwd(pwd);
-        user.setRole(role);
-
+    public void saveUser(User user){
         userTemplate.saveUser(user);
     }
 }

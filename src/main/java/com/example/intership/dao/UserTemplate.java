@@ -28,6 +28,7 @@ public class UserTemplate {
         return user;
     }
 
+    //添加用户
     public void saveUser(User user){
         mongoTemplate.save(user);
     }
