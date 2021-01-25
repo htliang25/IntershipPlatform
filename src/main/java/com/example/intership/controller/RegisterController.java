@@ -1,10 +1,11 @@
 package com.example.intership.controller;
 
+import com.example.intership.entities.Enterprise;
+import com.example.intership.entities.Student;
 import com.example.intership.entities.User;
 import com.example.intership.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,19 +21,37 @@ public class RegisterController {
     @ResponseBody
     @RequestMapping("/register")
     public Map<String, Object> register(@RequestBody Map<String, Object> data) {
-        Map map = new HashMap<String, Object>();
+        int role = (int) data.get("role");
         String name = (String) data.get("account");
-        if (userService.getUser(name) == null) {
-            User user = new User();
-            user.setName((String) data.get("account"));
-            user.setPwd((String) data.get("password"));
-            user.setUniversity((String) data.get("university"));
-            user.setMajor((String) data.get("major"));
-            userService.saveUser(user);
-            map.put("code", 20001);
+
+        Map map = new HashMap<String, Object>();
+
+        if (role == 1) {
+            if (userService.getStudent(name) == null) {
+                Student student = new Student();
+                student.setName((String) data.get("account"));
+                student.setPwd((String) data.get("password"));
+                student.setUniversity((String) data.get("university"));
+                student.setMajor((String) data.get("major"));
+                userService.saveStudent(student);
+                map.put("code", 20001);
+            } else {
+                // 账号已注册
+                map.put("code", 50001);
+            }
         } else {
-            // 账号已注册
-            map.put("code", 50001);
+            if (userService.getEnterprise(name) == null) {
+                Enterprise enterprise = new Enterprise();
+                enterprise.setName((String) data.get("account"));
+                enterprise.setPwd((String) data.get("password"));
+                enterprise.setCompanyName((String) data.get("companyName"));
+                enterprise.setCompanyIntro((String) data.get("companyIntro"));
+                userService.saveEnterprise(enterprise);
+                map.put("code", 20001);
+            } else {
+                // 账号已注册
+                map.put("code", 50001);
+            }
         }
         return map;
     }

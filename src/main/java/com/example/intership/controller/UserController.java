@@ -13,16 +13,4 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/users")
-    @ResponseBody
-    public List<User> getUsers() {
-        return userService.getUsers();
-    }
-
-    @GetMapping("/user")
-    @ResponseBody
-    public User getUser(String name) {
-        return userService.getUser(name);
-    }
-
 }

@@ -1,6 +1,8 @@
 package com.example.intership.service;
 
 import com.example.intership.dao.UserTemplate;
+import com.example.intership.entities.Enterprise;
+import com.example.intership.entities.Student;
 import com.example.intership.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,15 +14,19 @@ public class UserService {
     @Autowired
     UserTemplate userTemplate;
 
-    public List<User> getUsers() {
-        return userTemplate.getUsers();
+    public Student getStudent(String name) {
+        return userTemplate.getStudent(name);
     }
 
-    public User getUser(String name) {
-        return userTemplate.getuser(name);
+    public void saveStudent(Student student) {
+        userTemplate.saveStudent(student);
     }
 
-    public void saveUser(User user){
-        userTemplate.saveUser(user);
+    public Enterprise getEnterprise(String name) {
+        return userTemplate.getEnterprise(name);
+    }
+
+    public void saveEnterprise(Enterprise enterprise) {
+        userTemplate.saveEnterprise(enterprise);
     }
 }
