@@ -28,11 +28,11 @@ public class LoginController {
 
         Map<String, Object> map = new HashMap<String, Object>();
         if (user != null && pwd.equals(user.getPwd())) {
-            map.put("ce", "20001");
+            map.put("code", 20001);
         } else if (user == null) {
-            map.put("code", "50001");
+            map.put("code", 50001);
         } else {
-            map.put("code", "50002");
+            map.put("code", 50002);
         }
         return map;
     }
