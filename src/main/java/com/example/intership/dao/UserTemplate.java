@@ -44,4 +44,21 @@ public class UserTemplate {
     public void saveEnterprise(Enterprise enterprise) {
         mongoTemplate.save(enterprise);
     }
+
+    public List<Student> getStudents() {
+        return mongoTemplate.findAll(Student.class);
+    }
+
+    public List<Enterprise> getEnterprises() {
+        return mongoTemplate.findAll(Enterprise.class);
+    }
+
+    public void modifyPwd(String name, String pwd, String col_name) {
+        Query query = new Query();
+        Criteria criteria = Criteria.where("name").is(name);
+        query.addCriteria(criteria).limit(1);
+        Update update = new Update();
+        update.set("pwd", pwd);
+        mongoTemplate.updateMulti(query, update, col_name);
+    }
 }

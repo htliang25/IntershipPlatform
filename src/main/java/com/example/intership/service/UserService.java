@@ -29,4 +29,16 @@ public class UserService {
     public void saveEnterprise(Enterprise enterprise) {
         userTemplate.saveEnterprise(enterprise);
     }
+
+    public List<Student> getStudents() {
+        return  userTemplate.getStudents();
+    }
+
+    public List<Enterprise> getEnterprises() {
+        return userTemplate.getEnterprises();
+    }
+
+    public void modifyPwd(String name, String pwd, String col_name) {
+        userTemplate.modifyPwd(name, pwd, col_name);
+    }
 }

@@ -12,18 +12,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-public class LoginController {
+public class ModifyPwdController {
     @Autowired
     UserService userService;
 
     @ResponseBody
-    @PostMapping("/login")
-    public Map<String, Object> login(@RequestBody Map<String, Object> data) {
-        String name = (String) data.get("account");
-        String pwd = (String) data.get("password");
+    @PostMapping(value = {"/UserModifyPwd", "/EnterPriseModifyPwd"})
+    public Map<String, Object> modifyPwd(@RequestBody Map<String, Object> data) {
+        String name = (String) data.get("userName");
+        String old_pwd = (String) data.get("oldPassword");
+        String new_pwd = (String) data.get("newPassword");
         int role = (int) data.get("role");
-
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
 
         User user = new User();
 
@@ -33,7 +33,12 @@ public class LoginController {
             user = userService.getEnterprise(name);
         }
 
-       if (user != null && pwd.equals(user.getPwd())) {
+        if (user != null && old_pwd.equals(user.getPwd())) {
+            if (role == 1) {
+                userService.modifyPwd(name, new_pwd, "student");
+            } else {
+                userService.modifyPwd(name, new_pwd, "enterprise");
+            }
             map.put("code", 20001);
         } else if (user == null) {
             map.put("code", 50001);
