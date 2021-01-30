@@ -2,7 +2,6 @@ package com.example.intership.dao;
 
 import com.example.intership.entities.Enterprise;
 import com.example.intership.entities.Student;
-import com.example.intership.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -59,6 +58,26 @@ public class UserTemplate {
         query.addCriteria(criteria).limit(1);
         Update update = new Update();
         update.set("pwd", pwd);
+
         mongoTemplate.updateMulti(query, update, col_name);
+    }
+
+    public void modifyInfo(String name, String[] str) {
+        Query query = new Query();
+        Criteria criteria = Criteria.where("name").is(name);
+        query.addCriteria(criteria).limit(1);
+        Update update = new Update();
+
+        if (str[2].equals("student")) {
+            update.set("university", str[0]);
+            mongoTemplate.updateMulti(query, update, str[2]);
+            update.set("major", str[1]);
+            mongoTemplate.updateMulti(query, update, str[2]);
+        } else {
+            update.set("companyName", str[0]);
+            mongoTemplate.updateMulti(query, update, str[2]);
+            update.set("companyIntro", str[1]);
+            mongoTemplate.updateMulti(query, update, str[2]);
+        }
     }
 }
