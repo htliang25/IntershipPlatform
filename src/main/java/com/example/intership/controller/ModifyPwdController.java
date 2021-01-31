@@ -19,7 +19,7 @@ public class ModifyPwdController {
     @ResponseBody
     @PostMapping(value = {"/UserModifyPwd", "/EnterPriseModifyPwd"})
     public Map<String, Object> modifyPwd(@RequestBody Map<String, Object> data) {
-        String name = (String) data.get("userName");
+        String name = (String) data.get("account");
         String old_pwd = (String) data.get("oldPassword");
         String new_pwd = (String) data.get("newPassword");
         int role = (int) data.get("role");
