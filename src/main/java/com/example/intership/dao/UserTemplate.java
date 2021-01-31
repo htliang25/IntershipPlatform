@@ -74,8 +74,6 @@ public class UserTemplate {
             update.set("major", str[1]);
             mongoTemplate.updateMulti(query, update, str[2]);
         } else {
-            update.set("companyName", str[0]);
-            mongoTemplate.updateMulti(query, update, str[2]);
             update.set("companyIntro", str[1]);
             mongoTemplate.updateMulti(query, update, str[2]);
         }

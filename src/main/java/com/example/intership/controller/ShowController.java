@@ -17,7 +17,7 @@ public class ShowController {
     UserService userService;
 
     @ResponseBody
-    @GetMapping("/getUserInfo")
+    @GetMapping(value = {"/getUserInfo", "/getEnterpriseInfo"})
     public Map<String, Object> getUser(@RequestBody Map<String, Object> data) {
         String name = (String) data.get("account");
         int role = (int) data.get("role");

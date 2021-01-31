@@ -17,7 +17,7 @@ public class ModifyInfoController {
     UserService userService;
 
     @ResponseBody
-    @PostMapping("/UserModifyInfo")
+    @PostMapping(value = {"/UserModifyInfo", "/EnterpriseModifyInfo"})
     public Map<String, Object> modifyInfo(@RequestBody Map<String, Object> data) {
         String name = (String) data.get("account");
         int role = (int) data.get("role");
@@ -33,7 +33,7 @@ public class ModifyInfoController {
             str[2] = "student";
         } else if (role == 2){
             user = userService.getEnterprise(name);
-            str[0] = (String) data.get("companyName");
+            str[0] = "";
             str[1] = (String) data.get("companyIntro");
             str[2] = "enterprise";
         }
