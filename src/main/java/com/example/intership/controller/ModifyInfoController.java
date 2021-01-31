@@ -17,7 +17,7 @@ public class ModifyInfoController {
     UserService userService;
 
     @ResponseBody
-    @PostMapping(value = {"/UserModifyInfo", "/EnterpriseModifyInfo"})
+    @PostMapping(value = {"/UserModifyInfo", "/EnterPriseModifyInfo"})
     public Map<String, Object> modifyInfo(@RequestBody Map<String, Object> data) {
         String name = (String) data.get("account");
         int role = (int) data.get("role");

@@ -18,28 +18,29 @@ public class ShowController {
 
     @ResponseBody
     @GetMapping(value = {"/getUserInfo", "/getEnterpriseInfo"})
-    public Map<String, Object> getUser(@RequestBody Map<String, Object> data) {
-        String name = (String) data.get("account");
-        int role = (int) data.get("role");
-
+    public Map<String, Object> getUser(@RequestParam(required = false) String account,
+                                       @RequestParam(required = false) Integer role) {
         Map map = new HashMap<String, Object>();
+        Map data = new HashMap<String, Object>();
 
         if (role == 1) {
-            Student student = userService.getStudent(name);
+            Student student = userService.getStudent(account);
             if (student != null) {
                 data.put("university", student.getUniversity());
                 data.put("major", student.getMajor());
                 map.put("code", 20001);
+                map.put("data", data);
             } else {
                 //用户不存在
                 map.put("code", 50001);
             }
         } else {
-            Enterprise enterprise = userService.getEnterprise(name);
-            if (enterprise != null) {
+            Enterprise enterprise = userService.getEnterprise(account);
+          if (enterprise != null) {
                 data.put("companyName", enterprise.getCompanyName());
                 data.put("companyIntro", enterprise.getCompanyIntro());
                 map.put("code", 20001);
+                map.put("data", data);
             } else {
                 //用户不存在
                 map.put("code", 50001);
