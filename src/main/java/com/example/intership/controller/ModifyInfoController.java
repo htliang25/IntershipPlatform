@@ -12,38 +12,39 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-public class ModifyPwdController {
+public class ModifyInfoController {
     @Autowired
     UserService userService;
 
     @ResponseBody
-    @PostMapping(value = {"/UserModifyPwd", "/EnterPriseModifyPwd"})
-    public Map<String, Object> modifyPwd(@RequestBody Map<String, Object> data) {
+    @PostMapping("/UserModifyInfo")
+    public Map<String, Object> modifyInfo(@RequestBody Map<String, Object> data) {
         String name = (String) data.get("account");
-        String old_pwd = (String) data.get("oldPassword");
-        String new_pwd = (String) data.get("newPassword");
         int role = (int) data.get("role");
-        String col_name = "";
-        Map<String, Object> map = new HashMap<>();
+        String[] str = new String[3];
+        Map map = new HashMap<String, Object>();
 
         User user = new User();
 
         if (role == 1) {
             user = userService.getStudent(name);
-            col_name = "student";
+            str[0] = (String) data.get("university");
+            str[1] = (String) data.get("major");
+            str[2] = "student";
         } else if (role == 2){
             user = userService.getEnterprise(name);
-            col_name = "enterprise";
+            str[0] = (String) data.get("companyName");
+            str[1] = (String) data.get("companyIntro");
+            str[2] = "enterprise";
         }
 
-        if (user != null && old_pwd.equals(user.getPwd())) {
-            userService.modifyPwd(name, new_pwd, col_name);
+        if (user != null) {
+            userService.modifyInfo(name, str);
             map.put("code", 20001);
-        } else if (user == null) {
-            map.put("code", 50001);
         } else {
-            map.put("code", 50002);
+            map.put("code", 50001);
         }
+
         return map;
     }
 }

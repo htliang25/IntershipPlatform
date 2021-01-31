@@ -3,7 +3,6 @@ package com.example.intership.service;
 import com.example.intership.dao.UserTemplate;
 import com.example.intership.entities.Enterprise;
 import com.example.intership.entities.Student;
-import com.example.intership.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,4 +40,9 @@ public class UserService {
     public void modifyPwd(String name, String pwd, String col_name) {
         userTemplate.modifyPwd(name, pwd, col_name);
     }
+
+    public void modifyInfo(String name, String[] str) {
+        userTemplate.modifyInfo(name, str);
+    }
+
 }

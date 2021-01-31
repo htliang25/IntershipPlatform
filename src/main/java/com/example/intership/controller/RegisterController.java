@@ -2,7 +2,6 @@ package com.example.intership.controller;
 
 import com.example.intership.entities.Enterprise;
 import com.example.intership.entities.Student;
-import com.example.intership.entities.User;
 import com.example.intership.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +20,8 @@ public class RegisterController {
     @ResponseBody
     @RequestMapping("/register")
     public Map<String, Object> register(@RequestBody Map<String, Object> data) {
-        int role = (int) data.get("role");
         String name = (String) data.get("account");
+        int role = (int) data.get("role");
 
         Map map = new HashMap<String, Object>();
 
