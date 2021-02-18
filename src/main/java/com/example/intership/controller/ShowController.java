@@ -1,7 +1,7 @@
 package com.example.intership.controller;
 
-import com.example.intership.entities.Enterprise;
-import com.example.intership.entities.Student;
+import com.example.intership.entities.user.Enterprise;
+import com.example.intership.entities.user.Student;
 import com.example.intership.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

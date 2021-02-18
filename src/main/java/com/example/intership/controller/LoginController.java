@@ -1,6 +1,6 @@
 package com.example.intership.controller;
 
-import com.example.intership.entities.User;
+import com.example.intership.entities.user.User;
 import com.example.intership.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ public class LoginController {
         String pwd = (String) data.get("password");
         int role = (int) data.get("role");
 
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
 
         User user = new User();
 

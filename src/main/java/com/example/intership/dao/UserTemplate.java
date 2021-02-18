@@ -1,7 +1,7 @@
 package com.example.intership.dao;
 
-import com.example.intership.entities.Enterprise;
-import com.example.intership.entities.Student;
+import com.example.intership.entities.user.Enterprise;
+import com.example.intership.entities.user.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -17,19 +17,17 @@ public class UserTemplate {
     MongoTemplate mongoTemplate;
 
     public Student getStudent(String name) {
-        Query query = new Query();
         Criteria criteria = Criteria.where("name").is(name);
-        query.addCriteria(criteria).limit(1);
-        
+        Query query = new Query(criteria);
+
         Student student = mongoTemplate.findOne(query, Student.class, "student");
         
         return student;
     }
 
     public Enterprise getEnterprise(String name) {
-        Query query = new Query();
         Criteria criteria = Criteria.where("name").is(name);
-        query.addCriteria(criteria).limit(1);
+        Query query = new Query(criteria);
 
         Enterprise enterprise = mongoTemplate.findOne(query, Enterprise.class, "enterprise");
 
@@ -53,9 +51,9 @@ public class UserTemplate {
     }
 
     public void modifyPwd(String name, String pwd, String col_name) {
-        Query query = new Query();
         Criteria criteria = Criteria.where("name").is(name);
-        query.addCriteria(criteria).limit(1);
+        Query query = new Query(criteria);
+
         Update update = new Update();
         update.set("pwd", pwd);
 
@@ -63,14 +61,13 @@ public class UserTemplate {
     }
 
     public void modifyInfo(String name, String[] str) {
-        Query query = new Query();
         Criteria criteria = Criteria.where("name").is(name);
-        query.addCriteria(criteria).limit(1);
+        Query query = new Query(criteria);
+
         Update update = new Update();
 
         if (str[2].equals("student")) {
             update.set("university", str[0]);
-            mongoTemplate.updateMulti(query, update, str[2]);
             update.set("major", str[1]);
             mongoTemplate.updateMulti(query, update, str[2]);
         } else {

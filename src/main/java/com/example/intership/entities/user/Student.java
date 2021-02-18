@@ -1,9 +1,9 @@
-package com.example.intership.entities;
+package com.example.intership.entities.user;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "student")
-public class Student extends User{
+public class Student extends User {
     private String university;
     private String major;
 

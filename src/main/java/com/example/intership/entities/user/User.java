@@ -1,4 +1,4 @@
-package com.example.intership.entities;
+package com.example.intership.entities.user;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,15 +9,15 @@ public class User {
     private String pwd;
     private int role;
 
-    public User(){
+    public User() {
         _id = new ObjectId();
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setPwd(String pwd){
+    public void setPwd(String pwd) {
         this.pwd = pwd;
     }
 
@@ -25,15 +25,19 @@ public class User {
         this.role = role;
     }
 
-    public String getName(){
+    public ObjectId getId() {
+        return _id;
+    }
+
+    public String getName() {
         return name;
     }
 
-    public String getPwd(){
+    public String getPwd() {
         return pwd;
     }
 
-    public int getRole(){
+    public int getRole() {
         return role;
     }
 }
