@@ -18,6 +18,10 @@ public class ResumeService {
         resumeTemplate.saveForm(form, colName);
     }
 
+    public boolean isExist(String account, String colName) {
+        return resumeTemplate.isExist(account, colName);
+    }
+
     public Map<String, Object> getSingleForm(String account, String colName) {
         return resumeTemplate.getSingleForm(account, colName);
     }

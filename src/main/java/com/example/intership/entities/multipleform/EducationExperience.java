@@ -3,6 +3,7 @@ package com.example.intership.entities.multipleform;
 import com.example.intership.entities.Form;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,8 +25,7 @@ public class EducationExperience extends Form {
         setSchool((String) data.get("school"));
         setMajor((String) data.get("major"));
         setRank((String) data.get("rank"));
-        setInTime((String) data.get("inTime"));
-        setOutTime((String) data.get("outTime"));
+        setEducationTime((ArrayList) data.get("educationTime"));
     }
 
     public void setBackground(String background) {
@@ -44,12 +44,9 @@ public class EducationExperience extends Form {
         this.rank = rank;
     }
 
-    public void setInTime(String inTime) {
-        this.inTime = inTime;
-    }
-
-    public void setOutTime(String outTime) {
-        this.outTime = outTime;
+    public void setEducationTime(ArrayList educationTime) {
+        inTime = (String) educationTime.get(0);
+        outTime = (String) educationTime.get(1);
     }
 
     public Map<String, Object> getForm() {
@@ -59,8 +56,10 @@ public class EducationExperience extends Form {
         data.put("school", school);
         data.put("major", major);
         data.put("rank", rank);
-        data.put("inTime", inTime);
-        data.put("outTime", outTime);
+        ArrayList arr = new ArrayList();
+        arr.add(inTime);
+        arr.add(outTime);
+        data.put("educationTime", arr);
 
         return data;
     }

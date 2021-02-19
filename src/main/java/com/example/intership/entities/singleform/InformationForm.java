@@ -10,13 +10,12 @@ import java.util.Map;
 @Document(collection = "informationForm")
 public class InformationForm extends Form {
     private String name;
-    private String brithday;
+    private Long brithday;
     private String sexy;
     private String address;
     private String educationBackground;
     private String phone;
     private String email;
-    private String identity;
     private String politics;
 
     public InformationForm(String account) {
@@ -25,13 +24,12 @@ public class InformationForm extends Form {
 
     public void setAttributes(Map<String, Object> data) {
         setName((String) data.get("name"));
-        setBrithday((String) data.get("brithday"));
+        setBrithday((Long) data.get("birthday"));
         setSexy((String) data.get("sexy"));
         setAddress((String) data.get("address"));
         setEducationBackground((String) data.get("educationBackground"));
         setPhone((String) data.get("phone"));
         setEmail((String) data.get("email"));
-        setIdentity((String) data.get("identity"));
         setPolitics((String) data.get("politics"));
     }
 
@@ -39,7 +37,7 @@ public class InformationForm extends Form {
         this.name = name;
     }
 
-    public void setBrithday(String brithday) {
+    public void setBrithday(Long brithday) {
         this.brithday = brithday;
     }
 
@@ -63,9 +61,6 @@ public class InformationForm extends Form {
         this.email = email;
     }
 
-    public void setIdentity(String identity) {
-        this.identity = identity;
-    }
 
     public void setPolitics(String politics) {
         this.politics = politics;
@@ -97,7 +92,6 @@ public class InformationForm extends Form {
         data.put("educationBackground", educationBackground);
         data.put("phone", phone);
         data.put("email", email);
-        data.put("identity", identity);
         data.put("politics", politics);
 
         return data;
@@ -107,7 +101,7 @@ public class InformationForm extends Form {
         return name;
     }
 
-    public String getBrithday() {
+    public Long getBrithday() {
         return brithday;
     }
 
@@ -129,10 +123,6 @@ public class InformationForm extends Form {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getIdentity() {
-        return identity;
     }
 
     public String getPolitics() {

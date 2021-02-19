@@ -1,6 +1,7 @@
 package com.example.intership.controller;
 
 import com.example.intership.entities.Accessory;
+import com.example.intership.entities.Form;
 import com.example.intership.entities.multipleform.AwardExperience;
 import com.example.intership.entities.multipleform.EducationExperience;
 import com.example.intership.entities.multipleform.ProjectExperience;
@@ -31,113 +32,117 @@ public class UpdateResumeController {
         String account = (String) data.get("account");
 
         Map<String, Object> informationForm = (HashMap<String, Object>) data.get("informationForm");
-        updateInformationForm(account, informationForm);
+        updateSingleForm(account, informationForm, "informationForm");
         Map<String, Object> jobForm = (HashMap<String, Object>) data.get("jobForm");
-        updateJobForm(account, jobForm);
-        Map<String, Object> abilityContent = (HashMap<String, Object>) data.get("abilityContent");
-        updateAbilityContent(account, abilityContent);
-        Map<String, Object> evaluationContent = (HashMap<String, Object>) data.get("evaluationContent");
-        updateEvaluationContent(account, evaluationContent);
-        Map<String, Object> paperContent = (HashMap<String, Object>) data.get("paperContent");
-        updatePaperContent(account, paperContent);
+        updateSingleForm(account, jobForm, "jobForm");
+        String abilityContent = (String) data.get("abilityContent");
+        updateContent(account, abilityContent, "abilityContent");
+        String evaluationContent = (String) data.get("evaluationContent");
+        updateContent(account, evaluationContent, "evaluationContent");
+        String paperContent = (String) data.get("paperContent");
+        updateContent(account, paperContent, "paperContent");
 
         ArrayList educationExperience = (ArrayList) data.get("educationExperience");
-        updateEducationExperience(account, educationExperience);
+        updateMultipleForm(account, educationExperience, "educationExperience");
         ArrayList schoolExperience = (ArrayList) data.get("schoolExperience");
-        updateSchoolExperience(account, schoolExperience);
+        updateMultipleForm(account, schoolExperience, "schoolExperience");
         ArrayList projectExperience = (ArrayList) data.get("projectExperience");
-        updateProjectExperience(account, projectExperience);
+        updateMultipleForm(account, projectExperience, "projectExperience");
         ArrayList awardExperience = (ArrayList) data.get("awardExperience");
-        updateAwardExperience(account, awardExperience);
+        updateMultipleForm(account, awardExperience, "awardExperience");
 
         Map<String, Object> map = new HashMap<>();
         return map;
     }
 
-    //更新个人基本资料
-    public void updateInformationForm(String account, Map<String, Object> data) {
-        InformationForm informationForm = new InformationForm(account);
-        informationForm.setAttributes(data);
-
-        resumeService.saveForm(informationForm, "informationForm");
-    }
-
-    //更新个人教育经历
-    public void updateEducationExperience(String account, ArrayList list) {
-        int len = list.size();
-        for (int i = 0; i < len; i++) {
-            EducationExperience educationExperience = new EducationExperience(account);
-            educationExperience.setAttributes((Map<String, Object>) list.get(i));
-            resumeService.saveForm(educationExperience, "educationExperience");
+    //更新个人基本资料，求职意向
+    public void updateSingleForm(String account, Map<String, Object> data, String colName) {
+        if (resumeService.isExist(account, colName)) {
+            resumeService.modifySingleForm(account, colName, data);
+        } else {
+            switch (colName) {
+                case "informationForm":
+                    Form form = new InformationForm(account);
+                    form.setAttributes(data);
+                    resumeService.saveForm(form, colName);
+                    break;
+                case "jobForm":
+                    form = new JobForm(account);
+                    form.setAttributes(data);
+                    resumeService.saveForm(form, colName);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
-    //更新个人校内经历
-    public void updateSchoolExperience(String account, ArrayList list) {
+    //更新个人教育经历，校内经历，项目经历，获奖情况
+    public void updateMultipleForm(String account, ArrayList list, String colName) {
+        if (resumeService.isExist(account, colName)) {
+            resumeService.deleteMultipleForm(account, colName);
+        }
         int len = list.size();
         for (int i = 0; i < len; i++) {
-            SchoolExperience schoolExperience = new SchoolExperience(account);
-            schoolExperience.setAttributes((Map<String, Object>) list.get(i));
-            resumeService.saveForm(schoolExperience, "schoolExperience");
+            switch (colName) {
+                case "educationExperience":
+                    Form form = new EducationExperience(account);
+                    form.setAttributes((Map<String, Object>) list.get(i));
+                    resumeService.saveForm(form, colName);
+                    break;
+                case "schoolExperience":
+                    form = new SchoolExperience(account);
+                    form.setAttributes((Map<String, Object>) list.get(i));
+                    resumeService.saveForm(form, colName);
+                    break;
+                case "projectExperience":
+                    form = new ProjectExperience(account);
+                    form.setAttributes((Map<String, Object>) list.get(i));
+                    resumeService.saveForm(form, colName);
+                    break;
+                case "awardExperience":
+                    form = new AwardExperience(account);
+                    form.setAttributes((Map<String, Object>) list.get(i));
+                    resumeService.saveForm(form, colName);
+                    break;
+            }
         }
     }
 
-    //更新个人求职意向
-    public void updateJobForm(String account, Map<String, Object> data) {
-        JobForm jobForm = new JobForm(account);
-        jobForm.setAttributes(data);
+    //更新个人个人技能，自我评价，论文发表
+    public void updateContent(String account, String content, String colName) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("content", content);
+        if (resumeService.isExist(account, colName)) {
+            resumeService.modifySingleForm(account, colName, data);
+        } else {
+            switch (colName) {
+                case "abilityContent":
+                    Form form = new AbilityContent(account);
+                    form.setAttributes(data);
+                    resumeService.saveForm(form, colName);
+                    break;
+                case "evaluationContent":
+                    form = new EvaluationContent(account);
+                    form.setAttributes(data);
+                    resumeService.saveForm(form, colName);
+                    break;
+                case "paperContent":
+                    form = new PaperContent(account);
+                    form.setAttributes(data);
+                    resumeService.saveForm(form, colName);
+                    break;
+                default:
+                    break;
+            }
 
-        resumeService.saveForm(jobForm, "jobForm");
-    }
-
-    //更新个人项目经历
-    public void updateProjectExperience(String account, ArrayList list) {
-        int len = list.size();
-        for (int i = 0; i < len; i++) {
-            ProjectExperience projectExperience = new ProjectExperience(account);
-            projectExperience.setAttributes((Map<String, Object>) list.get(i));
-            resumeService.saveForm(projectExperience, "projectExperience");
         }
-    }
-
-    //更新个人获奖情况
-    public void updateAwardExperience(String account, ArrayList list) {
-        int len = list.size();
-        for (int i = 0; i < len; i++) {
-            AwardExperience awardExperience = new AwardExperience(account);
-            awardExperience.setAttributes((Map<String, Object>) list.get(i));
-            resumeService.saveForm(awardExperience, "awardExperience");
-        }
-    }
-
-    //更新个人个人技能
-    public void updateAbilityContent(String account, Map<String, Object> data) {
-        AbilityContent abilityContent = new AbilityContent(account);
-        abilityContent.setAttributes(data);
-
-        resumeService.saveForm(abilityContent, "abilityContent");
-    }
-
-    //更新个人自我评价
-    public void updateEvaluationContent(String account, Map<String, Object> data) {
-        EvaluationContent evaluationContent = new EvaluationContent(account);
-        evaluationContent.setAttributes(data);
-
-        resumeService.saveForm(evaluationContent, "evaluationContent");
-    }
-
-    //更新个人论文发表
-    public void updatePaperContent(String account, Map<String, Object> data) {
-        PaperContent paperContent = new PaperContent(account);
-        paperContent.setAttributes(data);
-
-        resumeService.saveForm(paperContent, "paperContent");
     }
 
     //更新个人附件作品
     public void updateAccessory(String account, ArrayList list) {
         int len = list.size();
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             Accessory accessory = new Accessory(account);
             accessory.setAttributes((MultipartFile) list.get(i));
             resumeService.saveAccessory(accessory);
@@ -146,20 +151,19 @@ public class UpdateResumeController {
 
     @ResponseBody
     @PostMapping("/UserUpdateResumeAppendix")
-    public Map<String, Object>updateResumeAppendix(HttpServletRequest request, @RequestParam(value = "appendixList", required = false) ArrayList<MultipartFile> appendixList) {
+    public Map<String, Object> updateResumeAppendix(HttpServletRequest request, @RequestParam(value = "appendixList", required = false) ArrayList<MultipartFile> appendixList) {
         String account = (String) request.getParameter("account");
-
+        updateAccessory(account, appendixList);
         // 这里传入account 和 附件 可以传多个文件了
         return new HashMap<>();
     }
 
     @ResponseBody
     @PostMapping("/UserUpdateResumeAvatar")
-    public Map<String, Object>updateResumeAvatar(HttpServletRequest request, @RequestParam(value = "avatar", required = false) MultipartFile file) {
+    public Map<String, Object> updateResumeAvatar(HttpServletRequest request, @RequestParam(value = "avatar", required = false) MultipartFile file) {
         String account = (String) request.getParameter("account");
 
         // 这里传入account 和 简历头像
         return new HashMap<>();
     }
-
 }

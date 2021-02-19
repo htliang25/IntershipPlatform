@@ -176,4 +176,53 @@ public class ResumeTemplate {
         mongoTemplate.remove(query, Accessory.class);
     }
 
+    public boolean isExist(String account, String colName) {
+        Criteria criteria = Criteria.where("account").is(account);
+        Query query = new Query(criteria);
+
+        boolean result = false;
+
+        switch (colName) {
+            case "informationForm":
+                Form form = mongoTemplate.findOne(query, InformationForm.class, colName);
+                result = (form != null) ? true : false;
+                break;
+            case "educationExperience":
+                form = mongoTemplate.findOne(query, EducationExperience.class, colName);
+                result = (form != null) ? true : false;
+                break;
+            case "schoolExperience":
+                form = mongoTemplate.findOne(query, SchoolExperience.class, colName);
+                result = (form != null) ? true : false;
+                break;
+            case "projectExperience":
+                form = mongoTemplate.findOne(query, ProjectExperience.class, colName);
+                result = (form != null) ? true : false;
+                break;
+            case "awardExperience":
+                form = mongoTemplate.findOne(query, AwardExperience.class, colName);
+                result = (form != null) ? true : false;
+                break;
+            case "jobForm":
+                form = mongoTemplate.findOne(query, JobForm.class, colName);
+                result = (form != null) ? true : false;
+                break;
+            case "abilityContent":
+                form = mongoTemplate.findOne(query, AbilityContent.class, colName);
+                result = (form != null) ? true : false;
+                break;
+            case "evaluationContent":
+                form = mongoTemplate.findOne(query, EvaluationContent.class, colName);
+                result = (form != null) ? true : false;
+                break;
+            case "paperContent":
+                form = mongoTemplate.findOne(query, PaperContent.class, colName);
+                result = (form != null) ? true : false;
+                break;
+            default:
+                break;
+        }
+
+        return result;
+    }
 }
