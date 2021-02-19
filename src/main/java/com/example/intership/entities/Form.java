@@ -1,5 +1,7 @@
 package com.example.intership.entities;
 
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 
 import java.util.Map;
@@ -16,4 +18,9 @@ public abstract class Form {
     public abstract void setAttributes(Map<String, Object> data);
 
     public abstract Map<String, Object> getForm();
+
+    public static boolean isObjectNotEmpty(Object obj) {
+        String str = ObjectUtils.toString(obj, "");
+        return StringUtils.isNotBlank(str);
+    }
 }

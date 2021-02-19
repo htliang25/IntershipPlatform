@@ -43,16 +43,16 @@ public class ResumeService {
         return resumeTemplate.getMultipleForm(account, colName);
     }
 
-    public void deleteMultipleForm(String account, String colName) {
-        resumeTemplate.deleteMultipleForm(account, colName);
+    public void deleteInfo(String account, String colName) {
+        resumeTemplate.deleteInfo(account, colName);
     }
 
     public ArrayList getAccessory(String account) {
         return resumeTemplate.getAccessory(account);
     }
 
-    public void saveAccessory(Accessory accessory) {
-        resumeTemplate.saveAccessory(accessory);
+    public void saveAccessory(Accessory accessory, String colName) {
+        resumeTemplate.saveAccessory(accessory, colName);
     }
 
     public void deleteAccessory(String account) {

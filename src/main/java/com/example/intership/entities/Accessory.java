@@ -1,8 +1,6 @@
 package com.example.intership.entities;
 
-import jdk.jfr.ContentType;
 import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,7 +10,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-@Document(collection = "accessory")
 public class Accessory {
     private ObjectId _id;
     private String account;

@@ -25,7 +25,9 @@ public class EducationExperience extends Form {
         setSchool((String) data.get("school"));
         setMajor((String) data.get("major"));
         setRank((String) data.get("rank"));
-        setEducationTime((ArrayList) data.get("educationTime"));
+        if (this.isObjectNotEmpty(data.get("educationTime"))) {
+            setEducationTime((ArrayList) data.get("educationTime"));
+        }
     }
 
     public void setBackground(String background) {

@@ -163,11 +163,17 @@ public class ResumeTemplate {
         return data;
     }
 
-    public void deleteMultipleForm(String account, String colName) {
+    public void deleteInfo(String account, String colName) {
         Criteria criteria = Criteria.where("account").is(account);
         Query query = new Query(criteria);
 
         switch (colName) {
+            case "informationForm":
+                mongoTemplate.remove(query, InformationForm.class);
+                break;
+            case "jobForm":
+                mongoTemplate.remove(query, JobForm.class);
+                break;
             case "educationExperience":
                 mongoTemplate.remove(query, EducationExperience.class);
                 break;
@@ -179,6 +185,15 @@ public class ResumeTemplate {
                 break;
             case "awardExperience":
                 mongoTemplate.remove(query, AwardExperience.class);
+                break;
+            case "abilityContent":
+                mongoTemplate.remove(query, AbilityContent.class);
+                break;
+            case "evaluationContent":
+                mongoTemplate.remove(query, EvaluationContent.class);
+                break;
+            case "paperContent":
+                mongoTemplate.remove(query, PaperContent.class);
                 break;
             default:
                 break;
@@ -199,8 +214,8 @@ public class ResumeTemplate {
         return data;
     }
 
-    public void saveAccessory(Accessory accessory) {
-        mongoTemplate.save(accessory);
+    public void saveAccessory(Accessory accessory, String colName) {
+        mongoTemplate.save(accessory, colName);
     }
 
     public void deleteAccessory(String account) {

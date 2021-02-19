@@ -73,8 +73,10 @@ public class UpdateResumeController {
     public Map<String, Object> updateResumeAppendix(HttpServletRequest request,
                                                     @RequestParam(value = "appendixList", required = false) ArrayList<MultipartFile> appendixList) {
         String account = (String) request.getParameter("account");
-        updateAccessory(account, appendixList);
-        // 这里传入account 和 附件 可以传多个文件了
+        if (appendixList != null) {
+            // 这里传入account 和 附件 可以传多个文件了
+            updateAccessory(account, appendixList);
+        }
         return new HashMap<>();
     }
 
@@ -83,8 +85,11 @@ public class UpdateResumeController {
     public Map<String, Object> updateResumeAvatar(HttpServletRequest request,
                                                   @RequestParam(value = "avatar", required = false) MultipartFile file) {
         String account = (String) request.getParameter("account");
+        if (file != null) {
+            // 这里传入account 和 简历头像
+            updateAvatar(account, file);
+        }
 
-        // 这里传入account 和 简历头像
         return new HashMap<>();
     }
 
@@ -113,7 +118,7 @@ public class UpdateResumeController {
     //更新个人教育经历，校内经历，项目经历，获奖情况
     public void updateMultipleForm(String account, ArrayList list, String colName) {
         if (resumeService.isExist(account, colName)) {
-            resumeService.deleteMultipleForm(account, colName);
+            resumeService.deleteInfo(account, colName);
         }
         int len = list.size();
         for (int i = 0; i < len; i++) {
@@ -175,7 +180,13 @@ public class UpdateResumeController {
         for (int i = 0; i < len; i++) {
             Accessory accessory = new Accessory(account);
             accessory.setAttributes((MultipartFile) list.get(i));
-            resumeService.saveAccessory(accessory);
+            resumeService.saveAccessory(accessory, "accessory");
         }
+    }
+
+    public void updateAvatar(String account, MultipartFile file) {
+        Accessory accessory = new Accessory(account);
+        accessory.setAttributes(file);
+        resumeService.saveAccessory(accessory, "avatar");
     }
 }

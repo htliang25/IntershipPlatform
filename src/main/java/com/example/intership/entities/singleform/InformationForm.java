@@ -11,7 +11,7 @@ import java.util.Map;
 public class InformationForm extends Form {
     private String resumeName;
     private String name;
-    private Long brithday;
+    private Long birthday;
     private String sexy;
     private String address;
     private String educationBackground;
@@ -26,7 +26,9 @@ public class InformationForm extends Form {
     public void setAttributes(Map<String, Object> data) {
         setResumeName((String) data.get("resumeName"));
         setName((String) data.get("name"));
-        setBrithday((Long) data.get("birthday"));
+        if (this.isObjectNotEmpty(data.get("birthday"))) {
+            setBrithday((Long) data.get("birthday"));
+        }
         setSexy((String) data.get("sexy"));
         setAddress((String) data.get("address"));
         setEducationBackground((String) data.get("educationBackground"));
@@ -43,8 +45,8 @@ public class InformationForm extends Form {
         this.name = name;
     }
 
-    public void setBrithday(Long brithday) {
-        this.brithday = brithday;
+    public void setBrithday(Long birthday) {
+        this.birthday = birthday;
     }
 
     public void setSexy(String sexy) {
@@ -93,7 +95,7 @@ public class InformationForm extends Form {
         Map<String, Object> data = new HashMap<>();
 
         data.put("name", name);
-        data.put("brithday", brithday);
+        data.put("brithday", birthday);
         data.put("sexy", sexy);
         data.put("address", address);
         data.put("educationBackground", educationBackground);
@@ -109,7 +111,7 @@ public class InformationForm extends Form {
     }
 
     public Long getBrithday() {
-        return brithday;
+        return birthday;
     }
 
     public String getSexy() {
