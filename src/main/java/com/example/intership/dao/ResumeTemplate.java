@@ -1,7 +1,11 @@
 package com.example.intership.dao;
 
 import com.example.intership.entities.Accessory;
+import com.example.intership.entities.Content;
 import com.example.intership.entities.Form;
+import com.example.intership.entities.content.AbilityContent;
+import com.example.intership.entities.content.EvaluationContent;
+import com.example.intership.entities.content.PaperContent;
 import com.example.intership.entities.multipleform.AwardExperience;
 import com.example.intership.entities.multipleform.EducationExperience;
 import com.example.intership.entities.multipleform.ProjectExperience;
@@ -39,18 +43,6 @@ public class ResumeTemplate {
                 form = mongoTemplate.findOne(query, JobForm.class, colName);
                 data = form.getForm();
                 break;
-            case "abilityContent":
-                form = mongoTemplate.findOne(query, AbilityContent.class, colName);
-                data = form.getForm();
-                break;
-            case "evaluationContent":
-                form = mongoTemplate.findOne(query, EvaluationContent.class, colName);
-                data = form.getForm();
-                break;
-            case "paperContent":
-                form = mongoTemplate.findOne(query, PaperContent.class, colName);
-                data = form.getForm();
-                break;
             default:
                 break;
         }
@@ -74,14 +66,57 @@ public class ResumeTemplate {
             case "jobForm":
                 update = JobForm.modify(data);
                 break;
+            default:
+                break;
+        }
+
+        mongoTemplate.updateMulti(query, update, colName);
+    }
+
+    public String getContent(String account, String colName) {
+        Criteria criteria = Criteria.where("account").is(account);
+        Query query = new Query(criteria);
+
+        String data = "";
+
+        switch (colName) {
             case "abilityContent":
-                update = AbilityContent.modify(data);
+                Content content = mongoTemplate.findOne(query, AbilityContent.class, colName);
+                data = content.getContent();
                 break;
             case "evaluationContent":
-                update = EvaluationContent.modify(data);
+                content = mongoTemplate.findOne(query, EvaluationContent.class, colName);
+                data = content.getContent();
                 break;
             case "paperContent":
-                update = PaperContent.modify(data);
+                content = mongoTemplate.findOne(query, PaperContent.class, colName);
+                data = content.getContent();
+                break;
+            default:
+                break;
+        }
+
+        return data;
+    }
+
+    public void saveContent(Content content, String colName) {
+        mongoTemplate.save(content, colName);
+    }
+
+    public void modifyContent(String account, String colName, String data) {
+        Criteria criteria = Criteria.where("account").is(account);
+        Query query = new Query(criteria);
+        Update update = new Update();
+
+        switch (colName) {
+            case "abilityContent":
+                update = AbilityContent.modifyContent(data);
+                break;
+            case "evaluationContent":
+                update = EvaluationContent.modifyContent(data);
+                break;
+            case "paperContent":
+                update = PaperContent.modifyContent(data);
                 break;
             default:
                 break;
@@ -127,7 +162,6 @@ public class ResumeTemplate {
 
         return data;
     }
-
 
     public void deleteMultipleForm(String account, String colName) {
         Criteria criteria = Criteria.where("account").is(account);
@@ -208,16 +242,16 @@ public class ResumeTemplate {
                 result = (form != null) ? true : false;
                 break;
             case "abilityContent":
-                form = mongoTemplate.findOne(query, AbilityContent.class, colName);
-                result = (form != null) ? true : false;
+                Content content = mongoTemplate.findOne(query, AbilityContent.class, colName);
+                result = (content != null) ? true : false;
                 break;
             case "evaluationContent":
-                form = mongoTemplate.findOne(query, EvaluationContent.class, colName);
-                result = (form != null) ? true : false;
+                content = mongoTemplate.findOne(query, EvaluationContent.class, colName);
+                result = (content != null) ? true : false;
                 break;
             case "paperContent":
-                form = mongoTemplate.findOne(query, PaperContent.class, colName);
-                result = (form != null) ? true : false;
+                content = mongoTemplate.findOne(query, PaperContent.class, colName);
+                result = (content != null) ? true : false;
                 break;
             default:
                 break;

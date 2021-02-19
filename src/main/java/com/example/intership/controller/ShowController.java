@@ -20,8 +20,8 @@ public class ShowController {
     @GetMapping(value = {"/getUserInfo", "/getEnterpriseInfo"})
     public Map<String, Object> getUser(@RequestParam(required = false) String account,
                                        @RequestParam(required = false) Integer role) {
-        Map map = new HashMap<String, Object>();
-        Map data = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
 
         if (role == 1) {
             Student student = userService.getStudent(account);

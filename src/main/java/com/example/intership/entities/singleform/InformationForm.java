@@ -9,6 +9,7 @@ import java.util.Map;
 
 @Document(collection = "informationForm")
 public class InformationForm extends Form {
+    private String resumeName;
     private String name;
     private Long brithday;
     private String sexy;
@@ -23,6 +24,7 @@ public class InformationForm extends Form {
     }
 
     public void setAttributes(Map<String, Object> data) {
+        setResumeName((String) data.get("resumeName"));
         setName((String) data.get("name"));
         setBrithday((Long) data.get("birthday"));
         setSexy((String) data.get("sexy"));
@@ -31,6 +33,10 @@ public class InformationForm extends Form {
         setPhone((String) data.get("phone"));
         setEmail((String) data.get("email"));
         setPolitics((String) data.get("politics"));
+    }
+
+    public void setResumeName(String resumeName) {
+        this.resumeName = resumeName;
     }
 
     public void setName(String name) {
@@ -69,6 +75,7 @@ public class InformationForm extends Form {
     public static Update modify(Map<String, Object> data) {
         Update update = new Update();
 
+        update.set("resumeName", (String) data.get("resumeName"));
         update.set("name", (String) data.get("name"));
         update.set("birthday", (String) data.get("brithday"));
         update.set("sexy", (String) data.get("sexy"));
