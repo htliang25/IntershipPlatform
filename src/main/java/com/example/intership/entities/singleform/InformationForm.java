@@ -95,7 +95,11 @@ public class InformationForm extends Form {
         Map<String, Object> data = new HashMap<>();
 
         data.put("name", name);
-        data.put("brithday", birthday);
+        if (birthday != null) {
+            data.put("birthday", birthday);
+        } else {
+            data.put("birthday", "");
+        }
         data.put("sexy", sexy);
         data.put("address", address);
         data.put("educationBackground", educationBackground);

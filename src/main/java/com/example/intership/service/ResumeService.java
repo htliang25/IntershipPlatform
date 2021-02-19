@@ -62,4 +62,8 @@ public class ResumeService {
     public boolean isExist(String account, String colName) {
         return resumeTemplate.isExist(account, colName);
     }
+
+    public Accessory getAvatar(String account) {
+        return resumeTemplate.getAvatar(account);
+    }
 }

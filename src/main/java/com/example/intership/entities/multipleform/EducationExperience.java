@@ -59,8 +59,8 @@ public class EducationExperience extends Form {
         data.put("major", major);
         data.put("rank", rank);
         ArrayList arr = new ArrayList();
-        arr.add(inTime);
-        arr.add(outTime);
+        arr.add((inTime != null) ? inTime : "");
+        arr.add((outTime != null) ? outTime : "");
         data.put("educationTime", arr);
 
         return data;

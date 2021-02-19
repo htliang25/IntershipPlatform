@@ -16,6 +16,7 @@ public class Accessory {
     private String name;
     private byte[] content;
     private String contentType;
+    private String url;
 
     public Accessory(String account) {
         _id = new ObjectId();
@@ -47,8 +48,12 @@ public class Accessory {
         this.contentType = contentType;
     }
 
-    public String getName() {
-        return name;
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public ObjectId getId() {
+        return _id;
     }
 
     public Map<String, Object> getFile() {
@@ -66,6 +71,10 @@ public class Accessory {
         }
 
         return data;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public byte[] getContent() {

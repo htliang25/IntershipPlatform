@@ -75,7 +75,7 @@ public class UpdateResumeController {
         String account = (String) request.getParameter("account");
         if (appendixList != null) {
             // 这里传入account 和 附件 可以传多个文件了
-            updateAccessory(account, appendixList);
+            updateAccessory(account, appendixList, "accessory");
         }
         return new HashMap<>();
     }
@@ -87,7 +87,7 @@ public class UpdateResumeController {
         String account = (String) request.getParameter("account");
         if (file != null) {
             // 这里传入account 和 简历头像
-            updateAvatar(account, file);
+            updateAvatar(account, file, "avatar");
         }
 
         return new HashMap<>();
@@ -175,7 +175,10 @@ public class UpdateResumeController {
     }
 
     //更新个人附件作品
-    public void updateAccessory(String account, ArrayList list) {
+    public void updateAccessory(String account, ArrayList list, String colName) {
+        if (resumeService.isExist(account, colName)) {
+            resumeService.deleteInfo(account, colName);
+        }
         int len = list.size();
         for (int i = 0; i < len; i++) {
             Accessory accessory = new Accessory(account);
@@ -184,9 +187,12 @@ public class UpdateResumeController {
         }
     }
 
-    public void updateAvatar(String account, MultipartFile file) {
+    public void updateAvatar(String account, MultipartFile file, String colName) {
+        if (resumeService.isExist(account, colName)) {
+            resumeService.deleteInfo(account, colName);
+        }
         Accessory accessory = new Accessory(account);
         accessory.setAttributes(file);
-        resumeService.saveAccessory(accessory, "avatar");
+        resumeService.saveAccessory(accessory, colName);
     }
 }

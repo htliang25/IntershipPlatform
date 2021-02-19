@@ -195,6 +195,9 @@ public class ResumeTemplate {
             case "paperContent":
                 mongoTemplate.remove(query, PaperContent.class);
                 break;
+            case "avatar": case "accessory":
+                mongoTemplate.remove(query, Accessory.class, colName);
+                break;
             default:
                 break;
         }
@@ -212,6 +215,15 @@ public class ResumeTemplate {
         }
 
         return data;
+    }
+
+    public Accessory getAvatar(String account) {
+        Criteria criteria = Criteria.where("account").is(account);
+        Query query = new Query(criteria);
+
+        Accessory accessory = mongoTemplate.findOne(query, Accessory.class, "avatar");
+
+        return accessory;
     }
 
     public void saveAccessory(Accessory accessory, String colName) {
@@ -267,6 +279,10 @@ public class ResumeTemplate {
             case "paperContent":
                 content = mongoTemplate.findOne(query, PaperContent.class, colName);
                 result = (content != null) ? true : false;
+                break;
+            case "avatar": case "accessory":
+                Accessory accessory = mongoTemplate.findOne(query, Accessory.class, colName);
+                result = (accessory != null) ? true : false;
                 break;
             default:
                 break;
