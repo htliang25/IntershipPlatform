@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +26,7 @@ public class UpdateResumeController {
     ResumeService resumeService;
 
     @ResponseBody
-    @PostMapping("/UserUpdateResume")
+    @PostMapping("/UserUpdateResumeInfo")
     public Map<String, Object> updateResume(@RequestBody Map<String, Object> data) {
         String account = (String) data.get("account");
 
@@ -141,4 +143,23 @@ public class UpdateResumeController {
             resumeService.saveAccessory(accessory);
         }
     }
+
+    @ResponseBody
+    @PostMapping("/UserUpdateResumeAppendix")
+    public Map<String, Object>updateResumeAppendix(HttpServletRequest request, @RequestParam(value = "appendixList", required = false) ArrayList<MultipartFile> appendixList) {
+        String account = (String) request.getParameter("account");
+
+        // 这里传入account 和 附件 可以传多个文件了
+        return new HashMap<>();
+    }
+
+    @ResponseBody
+    @PostMapping("/UserUpdateResumeAvatar")
+    public Map<String, Object>updateResumeAvatar(HttpServletRequest request, @RequestParam(value = "avatar", required = false) MultipartFile file) {
+        String account = (String) request.getParameter("account");
+
+        // 这里传入account 和 简历头像
+        return new HashMap<>();
+    }
+
 }
