@@ -106,6 +106,7 @@ public class InformationForm extends Form {
         data.put("phone", phone);
         data.put("email", email);
         data.put("politics", politics);
+        data.put("resumeName", resumeName);
 
         return data;
     }
@@ -140,5 +141,9 @@ public class InformationForm extends Form {
 
     public String getPolitics() {
         return politics;
+    }
+
+    public String getResumeName() {
+        return resumeName;
     }
 }
