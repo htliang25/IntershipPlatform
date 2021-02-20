@@ -85,7 +85,6 @@ public class InformationForm extends Form {
         update.set("educationBackground", (String) data.get("educationBackground"));
         update.set("phone", (String) data.get("phone"));
         update.set("email", (String) data.get("email"));
-        update.set("identity", (String) data.get("identity"));
         update.set("politics", (String) data.get("politics"));
 
         return update;
