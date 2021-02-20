@@ -59,6 +59,22 @@ public class PreviewResumeController {
     }
 
     @ResponseBody
+    @GetMapping(value = "/UserGetResume")
+    public Map<String, Object> PreviewResumeName(@RequestParam(value = "account", required = false) String account) {
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
+
+        Map<String, Object> form = resumeService.getSingleForm(account, "informationForm");
+        String resumeName = (String) form.get("resumeName");
+        data.put("resumeName", resumeName);
+
+        map.put("data", data);
+        map.put("code", 20001);
+
+        return map;
+    }
+
+    @ResponseBody
     @GetMapping(value = "/avatar/{account}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
     public byte[] PreviewAvatar(@PathVariable String account) {
         Accessory accessory = resumeService.getAvatar(account);
