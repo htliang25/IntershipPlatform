@@ -65,6 +65,7 @@ public class UpdateResumeController {
         updateMultipleForm(account, awardExperience, "awardExperience");
 
         Map<String, Object> map = new HashMap<>();
+        map.put("code", 20001);
         return map;
     }
 
