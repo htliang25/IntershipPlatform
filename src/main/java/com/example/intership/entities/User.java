@@ -1,4 +1,4 @@
-package com.example.intership.entities.user;
+package com.example.intership.entities;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;

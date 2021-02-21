@@ -1,9 +1,10 @@
 package com.example.intership.entities.user;
 
+import com.example.intership.entities.User;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "enterprise")
-public class Enterprise extends User{
+public class Enterprise extends User {
     private String companyName;
     private String companyIntro;
 

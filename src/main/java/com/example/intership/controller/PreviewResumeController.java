@@ -1,9 +1,7 @@
 package com.example.intership.controller;
 
-import com.example.intership.entities.Accessory;
 import com.example.intership.service.ResumeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,7 +57,7 @@ public class PreviewResumeController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/UserGetResume")
+    @GetMapping(value = "/getResumeName")
     public Map<String, Object> PreviewResumeName(@RequestParam(value = "account", required = false) String account) {
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> data = new HashMap<>();
@@ -72,13 +70,5 @@ public class PreviewResumeController {
         map.put("code", 20001);
 
         return map;
-    }
-
-    @ResponseBody
-    @GetMapping(value = "/avatar/{account}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
-    public byte[] PreviewAvatar(@PathVariable String account) {
-        Accessory accessory = resumeService.getAvatar(account);
-
-        return (accessory != null) ? accessory.getContent() : new byte[0];
     }
 }
