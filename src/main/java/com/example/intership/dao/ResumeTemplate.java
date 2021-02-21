@@ -203,40 +203,6 @@ public class ResumeTemplate {
         }
     }
 
-    public ArrayList getAccessory(String account) {
-        Criteria criteria = Criteria.where("account").is(account);
-        Query query = new Query(criteria);
-
-        ArrayList data = new ArrayList();
-
-        List<Accessory> accessories = mongoTemplate.find(query, Accessory.class, "accessory");
-        for(Accessory accessory : accessories) {
-            data.add(accessory.getFile());
-        }
-
-        return data;
-    }
-
-    public Accessory getAvatar(String account) {
-        Criteria criteria = Criteria.where("account").is(account);
-        Query query = new Query(criteria);
-
-        Accessory accessory = mongoTemplate.findOne(query, Accessory.class, "avatar");
-
-        return accessory;
-    }
-
-    public void saveAccessory(Accessory accessory, String colName) {
-        mongoTemplate.save(accessory, colName);
-    }
-
-    public void deleteAccessory(String account) {
-        Criteria criteria = Criteria.where("account").is(account);
-        Query query = new Query(criteria);
-
-        mongoTemplate.remove(query, Accessory.class);
-    }
-
     public boolean isExist(String account, String colName) {
         Criteria criteria = Criteria.where("account").is(account);
         Query query = new Query(criteria);
@@ -279,10 +245,6 @@ public class ResumeTemplate {
             case "paperContent":
                 content = mongoTemplate.findOne(query, PaperContent.class, colName);
                 result = (content != null) ? true : false;
-                break;
-            case "avatar": case "accessory":
-                Accessory accessory = mongoTemplate.findOne(query, Accessory.class, colName);
-                result = (accessory != null) ? true : false;
                 break;
             default:
                 break;

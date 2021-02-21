@@ -1,7 +1,6 @@
 package com.example.intership.service;
 
 import com.example.intership.dao.ResumeTemplate;
-import com.example.intership.entities.Accessory;
 import com.example.intership.entities.Content;
 import com.example.intership.entities.Form;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,23 +46,8 @@ public class ResumeService {
         resumeTemplate.deleteInfo(account, colName);
     }
 
-    public ArrayList getAccessory(String account) {
-        return resumeTemplate.getAccessory(account);
-    }
-
-    public void saveAccessory(Accessory accessory, String colName) {
-        resumeTemplate.saveAccessory(accessory, colName);
-    }
-
-    public void deleteAccessory(String account) {
-        resumeTemplate.deleteAccessory(account);
-    }
-
     public boolean isExist(String account, String colName) {
         return resumeTemplate.isExist(account, colName);
     }
 
-    public Accessory getAvatar(String account) {
-        return resumeTemplate.getAvatar(account);
-    }
 }
