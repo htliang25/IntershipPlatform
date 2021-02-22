@@ -72,7 +72,7 @@ public class Accessory {
             data.put("name", name);
             data.put("content", input);
             data.put("contentType", contentType);
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

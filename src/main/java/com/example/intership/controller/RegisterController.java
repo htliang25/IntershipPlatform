@@ -26,26 +26,26 @@ public class RegisterController {
         Map map = new HashMap<String, Object>();
 
         if (role == 1) {
-            if (userService.getStudent(name) == null) {
+            if ((Student) userService.getUser(name, 1) == null) {
                 Student student = new Student();
-                student.setName((String) data.get("account"));
+                student.setAccount((String) data.get("account"));
                 student.setPwd((String) data.get("password"));
                 student.setUniversity((String) data.get("university"));
                 student.setMajor((String) data.get("major"));
-                userService.saveStudent(student);
+                userService.saveUser(student);
                 map.put("code", 20001);
             } else {
                 // 账号已注册
                 map.put("code", 50001);
             }
         } else {
-            if (userService.getEnterprise(name) == null) {
+            if ((Enterprise) userService.getUser(name, 2) == null) {
                 Enterprise enterprise = new Enterprise();
-                enterprise.setName((String) data.get("account"));
+                enterprise.setAccount((String) data.get("account"));
                 enterprise.setPwd((String) data.get("password"));
                 enterprise.setCompanyName((String) data.get("companyName"));
                 enterprise.setCompanyIntro((String) data.get("companyIntro"));
-                userService.saveEnterprise(enterprise);
+                userService.saveUser(enterprise);
                 map.put("code", 20001);
             } else {
                 // 账号已注册

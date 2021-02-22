@@ -35,7 +35,7 @@ public class PreviewResumeController {
         content = resumeService.getContent(account, "paperContent");
         data.put("paperContent", content);
 
-        ArrayList  list = resumeService.getMultipleForm(account, "educationExperience");
+        ArrayList list = resumeService.getMultipleForm(account, "educationExperience");
         data.put("educationExperience", list);
 
         list = resumeService.getMultipleForm(account, "schoolExperience");

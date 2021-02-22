@@ -195,7 +195,8 @@ public class ResumeTemplate {
             case "paperContent":
                 mongoTemplate.remove(query, PaperContent.class);
                 break;
-            case "avatar": case "accessory":
+            case "avatar":
+            case "accessory":
                 mongoTemplate.remove(query, Accessory.class, colName);
                 break;
             default:

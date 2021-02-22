@@ -22,7 +22,7 @@ public class AccessoryTemplate {
         ArrayList data = new ArrayList();
 
         List<Accessory> accessories = mongoTemplate.find(query, Accessory.class, "accessory");
-        for(Accessory accessory : accessories) {
+        for (Accessory accessory : accessories) {
             data.add(accessory.getFile());
         }
 

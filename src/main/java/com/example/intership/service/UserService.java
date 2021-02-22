@@ -1,40 +1,21 @@
 package com.example.intership.service;
 
 import com.example.intership.dao.UserTemplate;
-import com.example.intership.entities.user.Enterprise;
-import com.example.intership.entities.user.Student;
+import com.example.intership.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserService {
     @Autowired
     UserTemplate userTemplate;
 
-    public Student getStudent(String name) {
-        return userTemplate.getStudent(name);
+    public User getUser(String account, int role) {
+        return userTemplate.getUser(account, role);
     }
 
-    public void saveStudent(Student student) {
-        userTemplate.saveStudent(student);
-    }
-
-    public Enterprise getEnterprise(String name) {
-        return userTemplate.getEnterprise(name);
-    }
-
-    public void saveEnterprise(Enterprise enterprise) {
-        userTemplate.saveEnterprise(enterprise);
-    }
-
-    public List<Student> getStudents() {
-        return userTemplate.getStudents();
-    }
-
-    public List<Enterprise> getEnterprises() {
-        return userTemplate.getEnterprises();
+    public void saveUser(User user) {
+        userTemplate.saveUser(user);
     }
 
     public void modifyPwd(String name, String pwd, String col_name) {

@@ -19,6 +19,14 @@ public abstract class Form {
 
     public abstract Map<String, Object> getForm();
 
+    public ObjectId getId() {
+        return _id;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
     public static boolean isObjectNotEmpty(Object obj) {
         String str = ObjectUtils.toString(obj, "");
         return StringUtils.isNotBlank(str);
