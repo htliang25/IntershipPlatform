@@ -29,8 +29,8 @@ public class AccessoryTemplate {
         return data;
     }
 
-    public Accessory getAvatar(String account) {
-        Criteria criteria = Criteria.where("account").is(account);
+    public Accessory getAvatar(String account, int role) {
+        Criteria criteria = Criteria.where("account").is(account).and("role").is(role);
         Query query = new Query(criteria);
 
         Accessory accessory = mongoTemplate.findOne(query, Accessory.class, "avatar");
@@ -42,15 +42,15 @@ public class AccessoryTemplate {
         mongoTemplate.save(accessory, colName);
     }
 
-    public void deleteAccessory(String account, String colName) {
-        Criteria criteria = Criteria.where("account").is(account);
+    public void deleteAccessory(String account, int role, String colName) {
+        Criteria criteria = Criteria.where("account").is(account).and("role").is(role);
         Query query = new Query(criteria);
 
         mongoTemplate.remove(query, Accessory.class, colName);
     }
 
-    public boolean isExist(String account, String colName) {
-        Criteria criteria = Criteria.where("account").is(account);
+    public boolean isExist(String account, int role, String colName) {
+        Criteria criteria = Criteria.where("account").is(account).and("role").is(role);
         Query query = new Query(criteria);
 
         Accessory accessory = mongoTemplate.findOne(query, Accessory.class, colName);

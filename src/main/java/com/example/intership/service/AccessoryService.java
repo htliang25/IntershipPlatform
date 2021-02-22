@@ -20,15 +20,15 @@ public class AccessoryService {
         accessoryTemplate.saveAccessory(accessory, colName);
     }
 
-    public void deleteAccessory(String account, String colName) {
-        accessoryTemplate.deleteAccessory(account, colName);
+    public void deleteAccessory(String account, int role, String colName) {
+        accessoryTemplate.deleteAccessory(account, role, colName);
     }
 
-    public boolean isExist(String account, String colName) {
-        return accessoryTemplate.isExist(account, colName);
+    public boolean isExist(String account, int role, String colName) {
+        return accessoryTemplate.isExist(account, role, colName);
     }
 
-    public Accessory getAvatar(String account) {
-        return accessoryTemplate.getAvatar(account);
+    public Accessory getAvatar(String account, int role) {
+        return accessoryTemplate.getAvatar(account, role);
     }
 }

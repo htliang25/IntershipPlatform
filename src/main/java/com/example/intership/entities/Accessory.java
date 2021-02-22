@@ -13,6 +13,7 @@ import java.util.Map;
 public class Accessory {
     private ObjectId _id;
     private String account;
+    private int role;
     private String name;
     private byte[] content;
     private String contentType;
@@ -23,17 +24,22 @@ public class Accessory {
         this.account = account;
     }
 
-    public void setAttributes(MultipartFile multipartFile) {
+    public void setAttributes(int role, MultipartFile multipartFile) {
         try {
             String fileName = multipartFile.getOriginalFilename();
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
             byte[] content = multipartFile.getBytes();
+            setRole(role);
             setName(fileName);
             setContent(content);
             setContentType(suffixName);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setRole(int role) {
+        this.role = role;
     }
 
     public void setName(String name) {
@@ -71,6 +77,10 @@ public class Accessory {
         }
 
         return data;
+    }
+
+    public int getRole() {
+        return role;
     }
 
     public String getName() {

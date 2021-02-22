@@ -47,7 +47,7 @@ public class PreviewResumeController {
         list = resumeService.getMultipleForm(account, "awardExperience");
         data.put("awardExperience", list);
 
-        String url = "http://localhost:8089/avatar/" + account;
+        String url = "http://localhost:8089/avatar/1/" + account;
         data.put("avatarURL", url);
 
         map.put("data", data);

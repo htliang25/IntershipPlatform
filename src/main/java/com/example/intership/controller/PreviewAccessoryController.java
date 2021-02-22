@@ -15,9 +15,9 @@ public class PreviewAccessoryController {
     AccessoryService accessoryService;
 
     @ResponseBody
-    @GetMapping(value = "/avatar/{account}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
-    public byte[] PreviewAvatar(@PathVariable String account) {
-        Accessory accessory = accessoryService.getAvatar(account);
+    @GetMapping(value = "/avatar/{role}/{account}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+    public byte[] PreviewAvatar(@PathVariable int role, @PathVariable String account) {
+        Accessory accessory = accessoryService.getAvatar(account, role);
 
         return (accessory != null) ? accessory.getContent() : new byte[0];
     }
