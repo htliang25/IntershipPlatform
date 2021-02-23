@@ -6,7 +6,9 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class JobService {
@@ -27,5 +29,21 @@ public class JobService {
 
     public int getJobNum(String account) {
         return jobTemplate.getJobNum(account);
+    }
+
+    public void addApplicant(ObjectId id, Map<String, Object> applicant) {
+        jobTemplate.addApplicant(id, applicant);
+    }
+
+    public List<Job> getOtherJob(String account, ObjectId id) {
+        return jobTemplate.getOtherJob(account, id);
+    }
+
+    public List<Job> getPublishJob(String account) {
+        return jobTemplate.getPublishJob(account);
+    }
+
+    public ArrayList getApplicants(ObjectId id) {
+        return jobTemplate.getApplicants(id);
     }
 }

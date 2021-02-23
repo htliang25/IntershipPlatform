@@ -66,14 +66,6 @@ public class Job extends Form {
         this.jobRequire = jobRequire;
     }
 
-    public void addApplicant(Map<String, Object> applicant) {
-        applicants.add(applicant);
-    }
-
-    public void removeApplicant(String applicant) {
-        applicants.remove(applicant);
-    }
-
     public Map<String, Object> getForm() {
         Map<String, Object> data = new HashMap<>();
 
