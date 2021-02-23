@@ -1,6 +1,7 @@
 package com.example.intership.dao;
 
 import com.example.intership.entities.Job;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -31,5 +32,19 @@ public class JobTemplate {
         Query query = new Query(criteria);
 
         return mongoTemplate.find(query, Job.class);
+    }
+
+    public Job getJob(ObjectId id) {
+        Criteria criteria = Criteria.where("_id").is(id);
+        Query query = new Query(criteria);
+
+        return mongoTemplate.findOne(query, Job.class);
+    }
+
+    public int getJobNum(String account) {
+        Criteria criteria = Criteria.where("account").is(account);
+        Query query = new Query(criteria);
+
+        return mongoTemplate.find(query, Job.class).size();
     }
 }

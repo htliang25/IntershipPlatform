@@ -2,6 +2,7 @@ package com.example.intership.service;
 
 import com.example.intership.dao.JobTemplate;
 import com.example.intership.entities.Job;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +19,13 @@ public class JobService {
 
     public List<Job> getJobList(String city, String type) {
         return jobTemplate.getJobList(city, type);
+    }
+
+    public Job getJob(ObjectId id) {
+        return jobTemplate.getJob(id);
+    }
+
+    public int getJobNum(String account) {
+        return jobTemplate.getJobNum(account);
     }
 }
