@@ -1,6 +1,7 @@
 package com.example.intership.entities;
 
 import com.example.intership.entities.user.Enterprise;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -77,7 +78,8 @@ public class Job extends Form {
     public Map<String, Object> getForm() {
         Map<String, Object> data = new HashMap<>();
 
-        data.put("id", super.getId());
+        ObjectId id = super.getId();
+        data.put("id", id.toString());
         data.put("jobName", jobName);
         data.put("logoURL", "http://localhost:8089/avatar/2/" + super.getAccount());
         data.put("companyName", companyName);
