@@ -15,7 +15,7 @@ public class AwardExperience extends Form {
         super(account);
     }
 
-    public void setAttributes(Map<String,Object> data) {
+    public void setAttributes(Map<String, Object> data) {
         setName((String) data.get("name"));
         setTime((String) data.get("time"));
     }

@@ -35,7 +35,7 @@ public class PreviewResumeController {
         content = resumeService.getContent(account, "paperContent");
         data.put("paperContent", content);
 
-        ArrayList  list = resumeService.getMultipleForm(account, "educationExperience");
+        ArrayList list = resumeService.getMultipleForm(account, "educationExperience");
         data.put("educationExperience", list);
 
         list = resumeService.getMultipleForm(account, "schoolExperience");
@@ -47,7 +47,7 @@ public class PreviewResumeController {
         list = resumeService.getMultipleForm(account, "awardExperience");
         data.put("awardExperience", list);
 
-        String url = "http://localhost:8089/avatar/" + account;
+        String url = "http://localhost:8089/avatar/1/" + account;
         data.put("avatarURL", url);
 
         map.put("data", data);

@@ -19,25 +19,20 @@ public class ModifyPwdController {
     @ResponseBody
     @PostMapping(value = {"/UserModifyPwd", "/EnterPriseModifyPwd"})
     public Map<String, Object> modifyPwd(@RequestBody Map<String, Object> data) {
-        String name = (String) data.get("account");
+        String account = (String) data.get("account");
         String old_pwd = (String) data.get("oldPassword");
         String new_pwd = (String) data.get("newPassword");
         int role = (int) data.get("role");
-        String col_name = "";
+
+
         Map<String, Object> map = new HashMap<>();
 
-        User user = new User();
+        User user = userService.getUser(account, role);
 
-        if (role == 1) {
-            user = userService.getStudent(name);
-            col_name = "student";
-        } else if (role == 2){
-            user = userService.getEnterprise(name);
-            col_name = "enterprise";
-        }
+        String col_name = (role == 1) ? "student" : "enterprise";
 
         if (user != null && old_pwd.equals(user.getPwd())) {
-            userService.modifyPwd(name, new_pwd, col_name);
+            userService.modifyPwd(account, new_pwd, col_name);
             map.put("code", 20001);
         } else if (user == null) {
             map.put("code", 50001);

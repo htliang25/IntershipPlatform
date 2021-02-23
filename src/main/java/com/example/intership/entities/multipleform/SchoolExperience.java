@@ -18,7 +18,7 @@ public class SchoolExperience extends Form {
         super(account);
     }
 
-    public void setAttributes(Map<String,Object> data) {
+    public void setAttributes(Map<String, Object> data) {
         setOrganization((String) data.get("organization"));
         setPosition((String) data.get("position"));
         setInTime((String) data.get("inTime"));
@@ -26,7 +26,7 @@ public class SchoolExperience extends Form {
         setContent((String) data.get("content"));
     }
 
-    public void setOrganization(String organization){
+    public void setOrganization(String organization) {
         this.organization = organization;
     }
 

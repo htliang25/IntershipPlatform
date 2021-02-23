@@ -1,7 +1,7 @@
 package com.example.intership;
 
-import com.example.intership.dao.ResumeTemplate;
-import com.example.intership.service.ResumeService;
+import com.example.intership.dao.UserTemplate;
+import com.example.intership.entities.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,12 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class IntershipApplicationTests {
     @Autowired
-    ResumeTemplate resumeTemplate;
-    @Autowired
-    ResumeService resumeService;
+    UserTemplate userTemplate;
 
     @Test
     void contextLoads(){
-
+        User user = userTemplate.getUser("bb", 1);
+        System.out.println();
     }
 }
