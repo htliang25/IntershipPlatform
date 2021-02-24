@@ -63,21 +63,41 @@ public class JobTemplate {
         Criteria criteria = Criteria.where("account").is(account);
         Query query = new Query(criteria);
 
-        return mongoTemplate.find(query, Job.class).size();
+        return (int) mongoTemplate.count(query, Job.class);
     }
 
-    public void addApplicant(ObjectId id, Map<String, Object> applicant) {
+    public int addApplicant(ObjectId id, Map<String, Object> applicant) {
         Criteria criteria = Criteria.where("_id").is(id);
         Query query = new Query(criteria);
 
         Job job = mongoTemplate.findOne(query, Job.class);
         ArrayList applicants = job.getApplicants();
-        applicants.add(applicant);
 
-        Update update = new Update();
-        update.set("applicants", applicants);
+        String account = (String) applicant.get("applicantAccount");
+        boolean result = true;
 
-        mongoTemplate.updateMulti(query, update, "job");
+        if (!applicants.isEmpty()) {
+            for(Object obj : applicants) {
+                Map<String, Object> user = (Map<String, Object>) obj;
+
+                if (user.containsValue(account)) {
+                    result = false;
+                    break;
+                }
+            }
+        }
+
+        if (result) {
+            Update update = new Update();
+            update.set("applicants", applicants);
+
+            applicants.add(applicant);
+            mongoTemplate.updateMulti(query, update, "job");
+
+            return 20001;
+        } else {
+            return 50001;
+        }
     }
 
     public ArrayList getApplicants(ObjectId id) {
@@ -87,5 +107,13 @@ public class JobTemplate {
         Job job = mongoTemplate.findOne(query, Job.class);
 
         return job.getApplicants();
+    }
+
+    public List<Job> getUserSearch(String searchKey) {
+        String jobName = ".*?" + searchKey + ".*?";
+        Criteria criteria = Criteria.where("jobName").regex(jobName);
+        Query query = new Query(criteria);
+
+        return mongoTemplate.find(query, Job.class);
     }
 }
