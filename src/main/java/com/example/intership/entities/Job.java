@@ -21,7 +21,6 @@ public class Job extends Form {
     private String jobDuty;
     private String jobRequire;
 
-
     private ArrayList applicants;
 
     public Job(String account, String companyName) {
@@ -67,14 +66,6 @@ public class Job extends Form {
         this.jobRequire = jobRequire;
     }
 
-    public void addApplicant(Map<String, Object> applicant) {
-        applicants.add(applicant);
-    }
-
-    public void removeApplicant(String applicant) {
-        applicants.remove(applicant);
-    }
-
     public Map<String, Object> getForm() {
         Map<String, Object> data = new HashMap<>();
 
@@ -85,6 +76,10 @@ public class Job extends Form {
         data.put("companyName", companyName);
 
         return data;
+    }
+
+    public String getCompanyName() {
+        return companyName;
     }
 
     public String getJobName() {

@@ -1,6 +1,8 @@
 package com.example.intership.controller;
 
+import com.example.intership.service.JobService;
 import com.example.intership.service.ResumeService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,9 @@ import java.util.Map;
 public class PreviewResumeController {
     @Autowired
     ResumeService resumeService;
+
+    @Autowired
+    JobService jobService;
 
     @ResponseBody
     @GetMapping(value = "/UserGetResume")
@@ -65,6 +70,23 @@ public class PreviewResumeController {
         Map<String, Object> form = resumeService.getSingleForm(account, "informationForm");
         String resumeName = (String) form.get("resumeName");
         data.put("resumeName", resumeName);
+
+        map.put("data", data);
+        map.put("code", 20001);
+
+        return map;
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/getApplicants")
+    public Map<String, Object> getApplicants(@RequestParam(value = "jobId", required = false) String jobId) {
+        ObjectId id = new ObjectId(jobId);
+
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
+
+        ArrayList list = jobService.getApplicants(id);
+        data.put("applicants", list);
 
         map.put("data", data);
         map.put("code", 20001);
