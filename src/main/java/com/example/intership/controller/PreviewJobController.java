@@ -20,7 +20,7 @@ public class PreviewJobController {
     JobService jobService;
 
     @ResponseBody
-    @GetMapping("/getJobList")
+    @GetMapping("/UserRecommendJob")
     public Map<String, Object> getJobList(@RequestParam(value = "city", required = false) String city,
                                           @RequestParam(value = "type", required = false) String type) {
         ArrayList list = new ArrayList();
@@ -99,6 +99,26 @@ public class PreviewJobController {
         Map<String, Object> res = new HashMap<>();
 
         List<Job> jobList = jobService.getPublishJob(account);
+        for (Job job : jobList) {
+            list.add(job.getForm());
+        }
+
+        data.put("jobList", list);
+
+        res.put("data", data);
+        res.put("code", 20001);
+
+        return res;
+    }
+
+    @ResponseBody
+    @GetMapping("/UserSearchJob")
+    public Map<String, Object> getUserSearch(@RequestParam(value = "searchKey", required = false) String searchKey) {
+        ArrayList list = new ArrayList();
+        Map<String, Object> data = new HashMap<>();
+        Map<String, Object> res = new HashMap<>();
+
+        List<Job> jobList = jobService.getUserSearch(searchKey);
         for (Job job : jobList) {
             list.add(job.getForm());
         }

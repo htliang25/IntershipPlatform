@@ -31,8 +31,8 @@ public class JobService {
         return jobTemplate.getJobNum(account);
     }
 
-    public void addApplicant(ObjectId id, Map<String, Object> applicant) {
-        jobTemplate.addApplicant(id, applicant);
+    public int addApplicant(ObjectId id, Map<String, Object> applicant) {
+        return jobTemplate.addApplicant(id, applicant);
     }
 
     public List<Job> getOtherJob(String account, ObjectId id) {
@@ -45,5 +45,9 @@ public class JobService {
 
     public ArrayList getApplicants(ObjectId id) {
         return jobTemplate.getApplicants(id);
+    }
+
+    public List<Job> getUserSearch(String searchKey) {
+        return jobTemplate.getUserSearch(searchKey);
     }
 }
