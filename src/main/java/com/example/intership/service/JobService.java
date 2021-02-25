@@ -15,6 +15,10 @@ public class JobService {
     @Autowired
     JobTemplate jobTemplate;
 
+    public void updateJob(ObjectId id, Map<String, Object> data) {
+        jobTemplate.updateJob(id, data);
+    }
+
     public void publishJob(Job job) {
         jobTemplate.publishJob(job);
     }
@@ -49,5 +53,9 @@ public class JobService {
 
     public List<Job> getUserSearch(String searchKey) {
         return jobTemplate.getUserSearch(searchKey);
+    }
+
+    public void deleteJob(ObjectId id) {
+        jobTemplate.deleteJob(id);
     }
 }

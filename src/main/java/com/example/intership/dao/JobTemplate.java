@@ -124,4 +124,19 @@ public class JobTemplate {
 
         return mongoTemplate.find(query, Job.class);
     }
+
+    public void updateJob(ObjectId id, Map<String, Object> data) {
+        Criteria criteria = Criteria.where("_id").is(id);
+        Query query = new Query(criteria);
+        Update update = Job.modifyJob(data);
+
+        mongoTemplate.updateMulti(query, update, "job");
+    }
+
+    public void deleteJob(ObjectId id) {
+        Criteria criteria = Criteria.where("_id").is(id);
+        Query query = new Query(criteria);
+
+        mongoTemplate.remove(query, Job.class);
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,6 +65,18 @@ public class Job extends Form {
 
     public void setJobRequire(String jobRequire) {
         this.jobRequire = jobRequire;
+    }
+
+    public static Update modifyJob(Map<String, Object> data) {
+        Update update = new Update();
+
+        update.set("jobCity", (String) data.get("city"));
+        update.set("jobType", (String) data.get("type"));
+        update.set("jobDescription", (String) data.get("jobDesc"));
+        update.set("jobDuty", (String) data.get("jobDuty"));
+        update.set("jobRequire", (String) data.get("jobRequire"));
+
+        return update;
     }
 
     public Map<String, Object> getForm() {
