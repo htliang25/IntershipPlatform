@@ -45,8 +45,16 @@ public class JobTemplate {
         return mongoTemplate.find(query, Job.class);
     }
 
-    public List<Job> getPublishJob(String account) {
+    public List<Job> getPublishJob(String account, String city, String type) {
         Criteria criteria = Criteria.where("account").is(account);
+
+        if (!city.equals("全国")) {
+            criteria.and("jobCity").is(city);
+        }
+        if (!type.equals("全部")) {
+            criteria.and("jobType").is(type);
+        }
+
         Query query = new Query(criteria);
 
         return mongoTemplate.find(query, Job.class);
@@ -115,5 +123,20 @@ public class JobTemplate {
         Query query = new Query(criteria);
 
         return mongoTemplate.find(query, Job.class);
+    }
+
+    public void updateJob(ObjectId id, Map<String, Object> data) {
+        Criteria criteria = Criteria.where("_id").is(id);
+        Query query = new Query(criteria);
+        Update update = Job.modifyJob(data);
+
+        mongoTemplate.updateMulti(query, update, "job");
+    }
+
+    public void deleteJob(ObjectId id) {
+        Criteria criteria = Criteria.where("_id").is(id);
+        Query query = new Query(criteria);
+
+        mongoTemplate.remove(query, Job.class);
     }
 }

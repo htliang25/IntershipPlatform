@@ -92,13 +92,15 @@ public class PreviewJobController {
     }
 
     @ResponseBody
-    @GetMapping("/getPublishJob")
-    public Map<String, Object> getPublishJob(@RequestParam(value = "account", required = false) String account) {
+    @GetMapping("/CompanyFindJob")
+    public Map<String, Object> getPublishJob(@RequestParam(value = "city", required = false) String city,
+                                             @RequestParam(value = "type", required = false) String type,
+                                             @RequestParam(value = "account", required = false) String account) {
         ArrayList list = new ArrayList();
         Map<String, Object> data = new HashMap<>();
         Map<String, Object> res = new HashMap<>();
 
-        List<Job> jobList = jobService.getPublishJob(account);
+        List<Job> jobList = jobService.getPublishJob(account, city, type);
         for (Job job : jobList) {
             list.add(job.getForm());
         }
