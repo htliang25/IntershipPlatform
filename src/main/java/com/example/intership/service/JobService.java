@@ -1,7 +1,10 @@
 package com.example.intership.service;
 
 import com.example.intership.dao.JobTemplate;
+import com.example.intership.dao.UserTemplate;
+import com.example.intership.entities.Applicant;
 import com.example.intership.entities.Job;
+import com.example.intership.entities.user.Enterprise;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,9 @@ import java.util.Map;
 public class JobService {
     @Autowired
     JobTemplate jobTemplate;
+
+    @Autowired
+    UserTemplate userTemplate;
 
     public void updateJob(ObjectId id, Map<String, Object> data) {
         jobTemplate.updateJob(id, data);
@@ -35,7 +41,7 @@ public class JobService {
         return jobTemplate.getJobNum(account);
     }
 
-    public int addApplicant(ObjectId id, Map<String, Object> applicant) {
+    public int addApplicant(ObjectId id, Applicant applicant) {
         return jobTemplate.addApplicant(id, applicant);
     }
 
@@ -52,6 +58,8 @@ public class JobService {
     }
 
     public List<Job> getUserSearch(String searchKey) {
+        List<Job> jobList = jobTemplate.getUserSearch(searchKey);
+
         return jobTemplate.getUserSearch(searchKey);
     }
 

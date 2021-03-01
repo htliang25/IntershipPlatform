@@ -24,7 +24,7 @@ public class ModifyJobController {
         jobService.updateJob(id, data);
 
         Map<String, Object> res = new HashMap<>();
-        res.put("code", 200001);
+        res.put("code", 20001);
 
         return res;
     }
@@ -37,7 +37,7 @@ public class ModifyJobController {
         jobService.deleteJob(id);
 
         Map<String, Object> res = new HashMap<>();
-        res.put("code", 200001);
+        res.put("code", 20001);
 
         return res;
     }

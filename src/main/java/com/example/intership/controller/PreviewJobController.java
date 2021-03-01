@@ -22,17 +22,22 @@ public class PreviewJobController {
     @ResponseBody
     @GetMapping("/UserRecommendJob")
     public Map<String, Object> getJobList(@RequestParam(value = "city", required = false) String city,
-                                          @RequestParam(value = "type", required = false) String type) {
+                                          @RequestParam(value = "type", required = false) String type,
+                                          @RequestParam(value = "currentPage", required = false) int currentPage,
+                                          @RequestParam(value = "pageSize", required = false) int pageSize) {
         ArrayList list = new ArrayList();
         Map<String, Object> data = new HashMap<>();
         Map<String, Object> res = new HashMap<>();
 
         List<Job> jobList = jobService.getJobList(city, type);
-        for (Job job : jobList) {
-            list.add(job.getForm());
+
+        int realJobListCount = jobList.size() > (pageSize * currentPage) ? pageSize * currentPage : jobList.size();
+        for (int i = (currentPage - 1) * pageSize; i < realJobListCount; i++) {
+            list.add(jobList.get(i).getForm());
         }
 
-        data.put("jobList", list);
+        data.put("currentJobList", list);
+        data.put("totalJobCount", jobList.size());
 
         res.put("data", data);
         res.put("code", 20001);
@@ -56,6 +61,7 @@ public class PreviewJobController {
         data.put("jobDuty", job.getJobDuty());
         data.put("jobRequire", job.getJobRequire());
         data.put("companyName", job.getCompanyName());
+        data.put("companyAccount", job.getAccount());
 
         String account = job.getAccount();
         data.put("companyLogoURL", "http://localhost:8089/avatar/2/" + account);
@@ -95,17 +101,22 @@ public class PreviewJobController {
     @GetMapping("/CompanyFindJob")
     public Map<String, Object> getPublishJob(@RequestParam(value = "city", required = false) String city,
                                              @RequestParam(value = "type", required = false) String type,
-                                             @RequestParam(value = "account", required = false) String account) {
+                                             @RequestParam(value = "account", required = false) String account,
+                                             @RequestParam(value = "currentPage", required = false) int currentPage,
+                                             @RequestParam(value = "pageSize", required = false) int pageSize) {
         ArrayList list = new ArrayList();
         Map<String, Object> data = new HashMap<>();
         Map<String, Object> res = new HashMap<>();
 
         List<Job> jobList = jobService.getPublishJob(account, city, type);
-        for (Job job : jobList) {
-            list.add(job.getForm());
+        int realJobListCount = jobList.size() > (pageSize * currentPage) ? pageSize * currentPage : jobList.size();
+        for (int i = (currentPage - 1) * pageSize; i < realJobListCount; i++) {
+            list.add(jobList.get(i).getFormAddJobDesc());
         }
 
-        data.put("jobList", list);
+        data.put("currentJobList", list);
+        data.put("totalJobCount", jobList.size());
+
 
         res.put("data", data);
         res.put("code", 20001);
@@ -113,23 +124,28 @@ public class PreviewJobController {
         return res;
     }
 
+    // 加入分页功能
     @ResponseBody
     @GetMapping("/UserSearchJob")
-    public Map<String, Object> getUserSearch(@RequestParam(value = "searchKey", required = false) String searchKey) {
+    public Map<String, Object> getUserSearch(@RequestParam(value = "searchKey", required = false) String searchKey,
+                                             @RequestParam(value = "currentPage", required = false) int currentPage,
+                                             @RequestParam(value = "pageSize", required = false) int pageSize ) {
         ArrayList list = new ArrayList();
         Map<String, Object> data = new HashMap<>();
         Map<String, Object> res = new HashMap<>();
 
         List<Job> jobList = jobService.getUserSearch(searchKey);
-        for (Job job : jobList) {
-            list.add(job.getForm());
+        int realJobListCount = jobList.size() > (pageSize * currentPage) ? pageSize * currentPage : jobList.size();
+        for (int i = (currentPage - 1) * pageSize; i < realJobListCount; i++) {
+            list.add(jobList.get(i).getForm());
         }
 
-        data.put("jobList", list);
-
+        data.put("currentJobList", list);
+        data.put("totalJobCount", jobList.size());
         res.put("data", data);
         res.put("code", 20001);
 
         return res;
     }
+
 }

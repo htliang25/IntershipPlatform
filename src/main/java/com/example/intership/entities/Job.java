@@ -22,12 +22,12 @@ public class Job extends Form {
     private String jobDuty;
     private String jobRequire;
 
-    private ArrayList applicants;
+    private ArrayList<Applicant> applicants;
 
     public Job(String account, String companyName) {
         super(account);
         this.companyName = companyName;
-        applicants = new ArrayList();
+        applicants = new ArrayList<Applicant>();
     }
 
     public void setAttributes(Map<String, Object> data) {
@@ -69,7 +69,7 @@ public class Job extends Form {
 
     public static Update modifyJob(Map<String, Object> data) {
         Update update = new Update();
-
+        update.set("jobName", (String) data.get("jobName"));
         update.set("jobCity", (String) data.get("city"));
         update.set("jobType", (String) data.get("type"));
         update.set("jobDescription", (String) data.get("jobDesc"));
@@ -87,6 +87,19 @@ public class Job extends Form {
         data.put("jobName", jobName);
         data.put("logoURL", "http://localhost:8089/avatar/2/" + super.getAccount());
         data.put("companyName", companyName);
+
+        return data;
+    }
+
+    public Map<String, Object> getFormAddJobDesc() {
+        Map<String, Object> data = new HashMap<>();
+
+        ObjectId id = super.getId();
+        data.put("id", id.toString());
+        data.put("jobName", jobName);
+        data.put("logoURL", "http://localhost:8089/avatar/2/" + super.getAccount());
+        data.put("companyName", companyName);
+        data.put("jobDesc", jobDescription);
 
         return data;
     }

@@ -1,6 +1,8 @@
 package com.example.intership.dao;
 
+import com.example.intership.entities.Applicant;
 import com.example.intership.entities.Job;
+import com.example.intership.entities.user.Enterprise;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -74,21 +76,27 @@ public class JobTemplate {
         return (int) mongoTemplate.count(query, Job.class);
     }
 
-    public int addApplicant(ObjectId id, Map<String, Object> applicant) {
-        Criteria criteria = Criteria.where("_id").is(id);
-        Query query = new Query(criteria);
+    // 1. job要更新Applicants   2. 企业也需要更新Applicants
+    public int addApplicant(ObjectId id, Applicant currentApplicant) {
+        Criteria criteria1 = Criteria.where("_id").is(id);
+        Query query1 = new Query(criteria1);
 
-        Job job = mongoTemplate.findOne(query, Job.class);
-        ArrayList applicants = job.getApplicants();
+        Job job = mongoTemplate.findOne(query1, Job.class);
+        currentApplicant.setJobName(job.getJobName());
+        ArrayList<Applicant> jobApplicants = job.getApplicants();
 
-        String account = (String) applicant.get("applicantAccount");
+        Criteria criteria2 = Criteria.where("account").is(job.getAccount());
+        Query query2 = new Query(criteria2);
+        Enterprise enterprise = mongoTemplate.findOne(query2, Enterprise.class);
+        ArrayList<Applicant> companyApplicants = enterprise.getApplicants();
+
+
+        String account = currentApplicant.getApplicantAccount();
         boolean result = true;
 
-        if (!applicants.isEmpty()) {
-            for(Object obj : applicants) {
-                Map<String, Object> user = (Map<String, Object>) obj;
-
-                if (user.containsValue(account)) {
+        if (!jobApplicants.isEmpty()) {
+            for(Applicant applicant : jobApplicants) {
+                if (applicant.getApplicantAccount().equals(currentApplicant.getApplicantAccount())) {
                     result = false;
                     break;
                 }
@@ -96,11 +104,15 @@ public class JobTemplate {
         }
 
         if (result) {
-            Update update = new Update();
-            update.set("applicants", applicants);
+            Update update1 = new Update();
+            jobApplicants.add(currentApplicant);
+            update1.set("applicants", jobApplicants);
+            mongoTemplate.updateMulti(query1, update1, "job");
 
-            applicants.add(applicant);
-            mongoTemplate.updateMulti(query, update, "job");
+            Update update2 = new Update();
+            companyApplicants.add(currentApplicant);
+            update2.set("applicants", companyApplicants);
+            mongoTemplate.updateMulti(query2, update2, "enterprise");
 
             return 20001;
         } else {
@@ -118,11 +130,24 @@ public class JobTemplate {
     }
 
     public List<Job> getUserSearch(String searchKey) {
-        String jobName = ".*?" + searchKey + ".*?";
-        Criteria criteria = Criteria.where("jobName").regex(jobName);
-        Query query = new Query(criteria);
+        String jobName = ".*?" + searchKey + ".*";
+        Criteria criteria1 = Criteria.where("jobName").regex(jobName);
+        Query query1 = new Query(criteria1);
 
-        return mongoTemplate.find(query, Job.class);
+        List<Job> jobList = mongoTemplate.find(query1, Job.class);
+
+        String companyName = ".*?" + searchKey + ".*";
+        Criteria criteria2 = Criteria.where("companyName").regex(companyName);
+        Query query2 = new Query(criteria2);
+
+        Enterprise enterprise = mongoTemplate.findOne(query2, Enterprise.class);
+        if (enterprise != null) {
+            List<Job> companyJobList = getPublishJob(enterprise.getAccount(), "全国", "全部");
+            companyJobList.addAll(jobList);
+            return companyJobList;
+        }
+
+        return jobList;
     }
 
     public void updateJob(ObjectId id, Map<String, Object> data) {

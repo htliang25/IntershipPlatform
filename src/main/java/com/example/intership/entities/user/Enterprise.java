@@ -1,16 +1,21 @@
 package com.example.intership.entities.user;
 
+import com.example.intership.entities.Applicant;
 import com.example.intership.entities.User;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
 
 @Document(collection = "enterprise")
 public class Enterprise extends User {
     private String companyName;
     private String companyIntro;
+    private ArrayList<Applicant> applicants;
 
     public Enterprise() {
         super();
         super.setRole(2);
+        applicants = new ArrayList<Applicant>();
     }
 
     public void setCompanyName(String companyName) {
@@ -21,6 +26,8 @@ public class Enterprise extends User {
         this.companyIntro = companyIntro;
     }
 
+    public void setApplicants(ArrayList<Applicant> applicants) { this.applicants = applicants; }
+
     public String getCompanyName() {
         return companyName;
     }
@@ -28,4 +35,6 @@ public class Enterprise extends User {
     public String getCompanyIntro() {
         return companyIntro;
     }
+
+    public ArrayList<Applicant> getApplicants() { return applicants; }
 }

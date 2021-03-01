@@ -34,9 +34,10 @@ public class ResumeTemplate {
 
         Map<String, Object> data = new HashMap<>();
 
+        Form form;
         switch (colName) {
             case "informationForm":
-                Form form = mongoTemplate.findOne(query, InformationForm.class, colName);
+                form = mongoTemplate.findOne(query, InformationForm.class, colName);
                 data = form.getForm();
                 break;
             case "jobForm":
