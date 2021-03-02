@@ -140,11 +140,13 @@ public class JobTemplate {
 
         List<Job> jobList = mongoTemplate.find(query1, Job.class);
 
-        String companyName = ".*?" + searchKey + ".*";
-        Criteria criteria2 = Criteria.where("companyName").regex(companyName);
-        Query query2 = new Query(criteria2);
-
-        Enterprise enterprise = mongoTemplate.findOne(query2, Enterprise.class);
+        Enterprise enterprise = null;
+        if (searchKey != null && !searchKey.trim().equals("")) {
+            String companyName = ".*?" + searchKey + ".*";
+            Criteria criteria2 = Criteria.where("companyName").regex(companyName);
+            Query query2 = new Query(criteria2);
+            enterprise = mongoTemplate.findOne(query2, Enterprise.class);
+        }
         if (enterprise != null) {
             List<Job> companyJobList = getPublishJob(enterprise.getAccount(), "全国", "全部", "");
             companyJobList.addAll(jobList);
