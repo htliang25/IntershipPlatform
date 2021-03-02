@@ -2,6 +2,7 @@ package com.example.intership.controller;
 
 import com.example.intership.entities.user.Enterprise;
 import com.example.intership.entities.user.Student;
+import com.example.intership.service.JobService;
 import com.example.intership.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,9 @@ import java.util.Map;
 public class PreviewUserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    JobService jobService;
 
     @ResponseBody
     @GetMapping(value = {"/getUserInfo", "/getEnterpriseInfo"})
@@ -41,6 +45,9 @@ public class PreviewUserController {
                 data.put("companyName", enterprise.getCompanyName());
                 data.put("companyIntro", enterprise.getCompanyIntro());
                 data.put("companyLogoURL", "http://localhost:8089/avatar/2/" + account);
+                data.put("companyType", enterprise.getCompanyType());
+                data.put("companyAddress", enterprise.getCompanyAddress());
+                data.put("companyJobCount", jobService.getJobNum(account));
                 map.put("code", 20001);
                 map.put("data", data);
             } else {

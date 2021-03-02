@@ -11,6 +11,8 @@ public class Enterprise extends User {
     private String companyName;
     private String companyIntro;
     private ArrayList<Applicant> applicants;
+    private String companyType;
+    private String companyAddress;
 
     public Enterprise() {
         super();
@@ -37,4 +39,20 @@ public class Enterprise extends User {
     }
 
     public ArrayList<Applicant> getApplicants() { return applicants; }
+
+    public String getCompanyType() {
+        return companyType;
+    }
+
+    public void setCompanyType(String type) {
+        this.companyType = type;
+    }
+
+    public String getCompanyAddress() {
+        return companyAddress;
+    }
+
+    public void setCompanyAddress(String address) {
+        this.companyAddress = address;
+    }
 }

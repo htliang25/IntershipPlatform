@@ -27,10 +27,10 @@ public class JobTemplate {
     public List<Job> getJobList(String city, String type) {
         Criteria criteria = new Criteria();
 
-        if (!city.equals("全国")) {
+        if (!city.equals("全国") && !city.equals("全部城市")) {
             criteria.and("jobCity").is(city);
         }
-        if (!type.equals("全部")) {
+        if (!type.equals("全部") && !type.equals("全部类型")) {
             criteria.and("jobType").is(type);
         }
 
@@ -47,14 +47,18 @@ public class JobTemplate {
         return mongoTemplate.find(query, Job.class);
     }
 
-    public List<Job> getPublishJob(String account, String city, String type) {
+    public List<Job> getPublishJob(String account, String city, String type, String searchKey) {
         Criteria criteria = Criteria.where("account").is(account);
 
-        if (!city.equals("全国")) {
+        if (!city.equals("全国") && !city.equals("全部城市")) {
             criteria.and("jobCity").is(city);
         }
-        if (!type.equals("全部")) {
+        if (!type.equals("全部") && !type.equals("全部类型")) {
             criteria.and("jobType").is(type);
+        }
+        if (searchKey != null && !searchKey.trim().equals("")) {
+            String jobName = ".*?" + searchKey + ".*";
+            criteria.and("jobName").regex(jobName);
         }
 
         Query query = new Query(criteria);
@@ -142,7 +146,7 @@ public class JobTemplate {
 
         Enterprise enterprise = mongoTemplate.findOne(query2, Enterprise.class);
         if (enterprise != null) {
-            List<Job> companyJobList = getPublishJob(enterprise.getAccount(), "全国", "全部");
+            List<Job> companyJobList = getPublishJob(enterprise.getAccount(), "全国", "全部", "");
             companyJobList.addAll(jobList);
             return companyJobList;
         }

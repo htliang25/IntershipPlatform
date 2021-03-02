@@ -103,12 +103,13 @@ public class PreviewJobController {
                                              @RequestParam(value = "type", required = false) String type,
                                              @RequestParam(value = "account", required = false) String account,
                                              @RequestParam(value = "currentPage", required = false) int currentPage,
-                                             @RequestParam(value = "pageSize", required = false) int pageSize) {
+                                             @RequestParam(value = "pageSize", required = false) int pageSize,
+                                             @RequestParam(value = "searchKey", required = false) String searchKey) {
         ArrayList list = new ArrayList();
         Map<String, Object> data = new HashMap<>();
         Map<String, Object> res = new HashMap<>();
 
-        List<Job> jobList = jobService.getPublishJob(account, city, type);
+        List<Job> jobList = jobService.getPublishJob(account, city, type, searchKey);
         int realJobListCount = jobList.size() > (pageSize * currentPage) ? pageSize * currentPage : jobList.size();
         for (int i = (currentPage - 1) * pageSize; i < realJobListCount; i++) {
             list.add(jobList.get(i).getFormAddJobDesc());
@@ -117,12 +118,12 @@ public class PreviewJobController {
         data.put("currentJobList", list);
         data.put("totalJobCount", jobList.size());
 
-
         res.put("data", data);
         res.put("code", 20001);
 
         return res;
     }
+
 
     // 加入分页功能
     @ResponseBody
