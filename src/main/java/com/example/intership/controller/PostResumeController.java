@@ -1,6 +1,8 @@
 package com.example.intership.controller;
 
 import com.example.intership.entities.Applicant;
+import com.example.intership.entities.Job;
+import com.example.intership.entities.User;
 import com.example.intership.entities.user.Enterprise;
 import com.example.intership.entities.user.Student;
 import com.example.intership.service.JobService;
@@ -44,7 +46,7 @@ public class PostResumeController {
 
     @ResponseBody
     @GetMapping("/CompanyGetApplicants")
-    public Map<String, Object> getApplicants(@RequestParam(value = "account", required = true) String account) {
+    public Map<String, Object> companyGetApplicants(@RequestParam(value = "account", required = true) String account) {
         ArrayList list = new ArrayList();
         Map<String, Object> data = new HashMap<>();
         Map<String, Object> res = new HashMap<>();
@@ -54,15 +56,46 @@ public class PostResumeController {
 
         for (Applicant applicant : applicants) {
             // 学生名字 学生学历 投递岗位 入职时间
-            String applicantCount = applicant.getApplicantAccount();
-            Student student = (Student) userService.getUser(applicantCount, 1);
+            String applicantAccount = applicant.getApplicantAccount();
+            Student student = (Student) userService.getUser(applicantAccount, 1);
             HashMap<String, Object> map = new HashMap<>();
             map.put("applicantUniversity", student.getUniversity());
             map.put("applicantMajor", student.getMajor());
-            map.put("applicantAccount", applicantCount);
+            map.put("applicantAccount", applicantAccount);
             map.put("entryTime", applicant.getEntryTime());
             map.put("jobId", applicant.getJobId());
             map.put("jobName", applicant.getJobName());
+            list.add(map);
+        }
+
+        data.put("applicantList", list);
+        data.put("applicantCount", list.size());
+        res.put("data", data);
+        res.put("code", 20001);
+        return res;
+    }
+
+    @ResponseBody
+    @GetMapping("/UserGetApplicants")
+    public Map<String, Object> userGetApplicants(@RequestParam(value = "account", required = true) String account) {
+        ArrayList list = new ArrayList();
+        Map<String, Object> data = new HashMap<>();
+        Map<String, Object> res = new HashMap<>();
+
+        Student user = (Student) userService.getUser(account, 1);
+        ArrayList<Applicant> applicants = user.getApplicants();
+
+        for (Applicant applicant : applicants) {
+//          岗位名字 岗位描述 公司名字
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("jobId", applicant.getJobId());
+            map.put("jobName", applicant.getJobName());
+
+            Job job = (Job) jobService.getJob(new ObjectId(applicant.getJobId()));
+            Enterprise enterprise = (Enterprise) userService.getUser(job.getAccount(), 2);
+            map.put("companyName", enterprise.getCompanyName());
+            
+            map.put("jobDesc", job.getJobDescription());
             list.add(map);
         }
 

@@ -145,4 +145,12 @@ public class InformationForm extends Form {
     public String getResumeName() {
         return resumeName;
     }
+
+    public Long getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Long birthday) {
+        this.birthday = birthday;
+    }
 }

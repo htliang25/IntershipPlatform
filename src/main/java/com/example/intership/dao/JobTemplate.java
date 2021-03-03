@@ -3,6 +3,7 @@ package com.example.intership.dao;
 import com.example.intership.entities.Applicant;
 import com.example.intership.entities.Job;
 import com.example.intership.entities.user.Enterprise;
+import com.example.intership.entities.user.Student;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -94,6 +95,10 @@ public class JobTemplate {
         Enterprise enterprise = mongoTemplate.findOne(query2, Enterprise.class);
         ArrayList<Applicant> companyApplicants = enterprise.getApplicants();
 
+        Criteria criteria3 = Criteria.where("account").is(currentApplicant.getApplicantAccount());
+        Query query3 = new Query(criteria3);
+        Student student = mongoTemplate.findOne(query3, Student.class);
+        ArrayList<Applicant> userApplicants = student.getApplicants();
 
         String account = currentApplicant.getApplicantAccount();
         boolean result = true;
@@ -117,6 +122,11 @@ public class JobTemplate {
             companyApplicants.add(currentApplicant);
             update2.set("applicants", companyApplicants);
             mongoTemplate.updateMulti(query2, update2, "enterprise");
+
+            Update update3 = new Update();
+            userApplicants.add(currentApplicant);
+            update3.set("applicants", userApplicants);
+            mongoTemplate.updateMulti(query3, update3, "student");
 
             return 20001;
         } else {

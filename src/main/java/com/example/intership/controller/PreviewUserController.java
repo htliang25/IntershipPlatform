@@ -3,6 +3,7 @@ package com.example.intership.controller;
 import com.example.intership.entities.user.Enterprise;
 import com.example.intership.entities.user.Student;
 import com.example.intership.service.JobService;
+import com.example.intership.service.ResumeService;
 import com.example.intership.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,9 @@ public class PreviewUserController {
     @Autowired
     JobService jobService;
 
+    @Autowired
+    ResumeService resumeService;
+
     @ResponseBody
     @GetMapping(value = {"/getUserInfo", "/getEnterpriseInfo"})
     public Map<String, Object> getUser(@RequestParam(value = "account", required = false) String account,
@@ -32,6 +36,11 @@ public class PreviewUserController {
             if (student != null) {
                 data.put("university", student.getUniversity());
                 data.put("major", student.getMajor());
+
+                Map<String, Object> infoForm = resumeService.getSingleForm(account, "informationForm");
+                data.put("infoForm", infoForm);
+
+                data.put("avatarURL", "http://localhost:8089/avatar/1/" + account);
                 map.put("code", 20001);
                 map.put("data", data);
             } else {

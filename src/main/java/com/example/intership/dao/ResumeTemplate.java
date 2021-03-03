@@ -38,11 +38,15 @@ public class ResumeTemplate {
         switch (colName) {
             case "informationForm":
                 form = mongoTemplate.findOne(query, InformationForm.class, colName);
-                data = form.getForm();
+                if (form != null) {
+                    data = form.getForm();
+                }
                 break;
             case "jobForm":
                 form = mongoTemplate.findOne(query, JobForm.class, colName);
-                data = form.getForm();
+                if (form != null) {
+                    data = form.getForm();
+                }
                 break;
             default:
                 break;
@@ -83,15 +87,21 @@ public class ResumeTemplate {
         switch (colName) {
             case "abilityContent":
                 Content content = mongoTemplate.findOne(query, AbilityContent.class, colName);
-                data = content.getContent();
+                if (content != null) {
+                    data = content.getContent();
+                }
                 break;
             case "evaluationContent":
                 content = mongoTemplate.findOne(query, EvaluationContent.class, colName);
-                data = content.getContent();
+                if (content != null) {
+                    data = content.getContent();
+                }
                 break;
             case "paperContent":
                 content = mongoTemplate.findOne(query, PaperContent.class, colName);
-                data = content.getContent();
+                if (content != null) {
+                    data = content.getContent();
+                }
                 break;
             default:
                 break;

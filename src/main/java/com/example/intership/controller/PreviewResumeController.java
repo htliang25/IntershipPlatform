@@ -71,6 +71,7 @@ public class PreviewResumeController {
         String resumeName = (String) form.get("resumeName");
         data.put("resumeName", resumeName);
 
+
         map.put("data", data);
         map.put("code", 20001);
 
