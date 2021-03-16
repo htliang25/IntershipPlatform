@@ -2,8 +2,11 @@ package com.example.intership.service;
 
 import com.example.intership.dao.UserTemplate;
 import com.example.intership.entities.User;
+import com.example.intership.entities.user.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -12,6 +15,10 @@ public class UserService {
 
     public User getUser(String account, int role) {
         return userTemplate.getUser(account, role);
+    }
+
+    public List<Student> getStudentList() {
+        return userTemplate.getStudentList();
     }
 
     public void saveUser(User user) {

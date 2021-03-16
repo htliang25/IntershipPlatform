@@ -41,8 +41,8 @@ public class JobService {
         return jobTemplate.getJobNum(account);
     }
 
-    public int addApplicant(ObjectId id, Applicant applicant) {
-        return jobTemplate.addApplicant(id, applicant);
+    public int addApplicant(ObjectId jobId, Applicant applicant) {
+        return jobTemplate.addApplicant(jobId, applicant);
     }
 
     public List<Job> getOtherJob(String account, ObjectId id) {

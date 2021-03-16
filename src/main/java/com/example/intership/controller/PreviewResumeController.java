@@ -2,6 +2,7 @@ package com.example.intership.controller;
 
 import com.example.intership.service.JobService;
 import com.example.intership.service.ResumeService;
+import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,32 +26,32 @@ public class PreviewResumeController {
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> data = new HashMap<>();
 
-        Map<String, Object> form = resumeService.getSingleForm(account, "informationForm");
-        data.put("informationForm", form);
+        Map<String, Object> informationForm = resumeService.getSingleForm(account, "informationForm");
+        data.put("informationForm", informationForm);
 
-        form = resumeService.getSingleForm(account, "jobForm");
-        data.put("jobForm", form);
+        Map<String, Object> jobForm = resumeService.getSingleForm(account, "jobForm");
+        data.put("jobForm", jobForm);
 
-        String content = resumeService.getContent(account, "abilityContent");
-        data.put("abilityContent", content);
+        String abilityContent = resumeService.getContent(account, "abilityContent");
+        data.put("abilityContent", abilityContent);
 
-        content = resumeService.getContent(account, "evaluationContent");
-        data.put("evaluationContent", content);
+        String evaluationContent = resumeService.getContent(account, "evaluationContent");
+        data.put("evaluationContent", evaluationContent);
 
-        content = resumeService.getContent(account, "paperContent");
-        data.put("paperContent", content);
+        String paperContent = resumeService.getContent(account, "paperContent");
+        data.put("paperContent", paperContent);
 
-        ArrayList list = resumeService.getMultipleForm(account, "educationExperience");
-        data.put("educationExperience", list);
+        ArrayList educationExperienceList = resumeService.getMultipleForm(account, "educationExperience");
+        data.put("educationExperience", educationExperienceList);
 
-        list = resumeService.getMultipleForm(account, "schoolExperience");
-        data.put("schoolExperience", list);
+        ArrayList schoolExperienceList = resumeService.getMultipleForm(account, "schoolExperience");
+        data.put("schoolExperience", schoolExperienceList);
 
-        list = resumeService.getMultipleForm(account, "projectExperience");
-        data.put("projectExperience", list);
+        ArrayList projectExperienceList = resumeService.getMultipleForm(account, "projectExperience");
+        data.put("projectExperience", projectExperienceList);
 
-        list = resumeService.getMultipleForm(account, "awardExperience");
-        data.put("awardExperience", list);
+        ArrayList awardExperienceList = resumeService.getMultipleForm(account, "awardExperience");
+        data.put("awardExperience", awardExperienceList);
 
         String url = "http://localhost:8089/avatar/1/" + account;
         data.put("avatarURL", url);

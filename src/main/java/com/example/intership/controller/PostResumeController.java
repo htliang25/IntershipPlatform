@@ -29,7 +29,7 @@ public class PostResumeController {
     public Map<String, Object> postResume(@RequestBody Map<String, Object> data) {
         String account = (String) data.get("account");
         String entryTime = (String) data.get("entryTime");
-        ObjectId _id = new ObjectId((String) data.get("id"));
+        ObjectId jobId = new ObjectId((String) data.get("id"));
 
         Map<String, Object> result = new HashMap<>();
 
@@ -38,7 +38,7 @@ public class PostResumeController {
         applicant.setEntryTime(entryTime);
         applicant.setJobId((String) data.get("id"));
 
-        int code = jobService.addApplicant(_id, applicant);
+        int code = jobService.addApplicant(jobId, applicant);
         result.put("code", code);
 
         return result;
@@ -87,16 +87,18 @@ public class PostResumeController {
 
         for (Applicant applicant : applicants) {
 //          岗位名字 岗位描述 公司名字
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("jobId", applicant.getJobId());
-            map.put("jobName", applicant.getJobName());
-
             Job job = (Job) jobService.getJob(new ObjectId(applicant.getJobId()));
-            Enterprise enterprise = (Enterprise) userService.getUser(job.getAccount(), 2);
-            map.put("companyName", enterprise.getCompanyName());
-            
-            map.put("jobDesc", job.getJobDescription());
-            list.add(map);
+            if (job != null) {
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("jobId", applicant.getJobId());
+                map.put("jobName", applicant.getJobName());
+
+                Enterprise enterprise = (Enterprise) userService.getUser(job.getAccount(), 2);
+                map.put("companyName", enterprise.getCompanyName());
+
+                map.put("jobDesc", job.getJobDescription());
+                list.add(map);
+            }
         }
 
         data.put("applicantList", list);

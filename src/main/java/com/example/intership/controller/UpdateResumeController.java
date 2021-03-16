@@ -72,9 +72,10 @@ public class UpdateResumeController {
         if (resumeService.isExist(account, colName)) {
             resumeService.modifySingleForm(account, colName, data);
         } else {
+            Form form;
             switch (colName) {
                 case "informationForm":
-                    Form form = new InformationForm(account);
+                    form = new InformationForm(account);
                     form.setAttributes(data);
                     resumeService.saveForm(form, colName);
                     break;

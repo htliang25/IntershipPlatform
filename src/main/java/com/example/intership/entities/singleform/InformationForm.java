@@ -26,9 +26,7 @@ public class InformationForm extends Form {
     public void setAttributes(Map<String, Object> data) {
         setResumeName((String) data.get("resumeName"));
         setName((String) data.get("name"));
-        if (this.isObjectNotEmpty(data.get("birthday"))) {
-            setBrithday((Long) data.get("birthday"));
-        }
+        setBrithday((Long) data.get("birthday"));
         setSexy((String) data.get("sexy"));
         setAddress((String) data.get("address"));
         setEducationBackground((String) data.get("educationBackground"));
@@ -79,7 +77,7 @@ public class InformationForm extends Form {
 
         update.set("resumeName", (String) data.get("resumeName"));
         update.set("name", (String) data.get("name"));
-        update.set("birthday", (String) data.get("brithday"));
+        update.set("birthday", (Long) data.get("birthday"));
         update.set("sexy", (String) data.get("sexy"));
         update.set("address", (String) data.get("address"));
         update.set("educationBackground", (String) data.get("educationBackground"));

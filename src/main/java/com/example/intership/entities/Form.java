@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 
 import java.util.Map;
+import java.util.Objects;
 
 public abstract class Form {
     private ObjectId _id;
@@ -13,6 +14,19 @@ public abstract class Form {
     public Form(String account) {
         _id = new ObjectId();
         this.account = account;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Form form = (Form) o;
+        return Objects.equals(_id, form._id) && Objects.equals(account, form.account);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(_id, account);
     }
 
     public abstract void setAttributes(Map<String, Object> data);

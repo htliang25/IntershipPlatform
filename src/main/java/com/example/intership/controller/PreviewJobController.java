@@ -19,31 +19,6 @@ public class PreviewJobController {
     @Autowired
     JobService jobService;
 
-    @ResponseBody
-    @GetMapping("/UserRecommendJob")
-    public Map<String, Object> getJobList(@RequestParam(value = "city", required = false) String city,
-                                          @RequestParam(value = "type", required = false) String type,
-                                          @RequestParam(value = "currentPage", required = false) int currentPage,
-                                          @RequestParam(value = "pageSize", required = false) int pageSize) {
-        ArrayList list = new ArrayList();
-        Map<String, Object> data = new HashMap<>();
-        Map<String, Object> res = new HashMap<>();
-
-        List<Job> jobList = jobService.getJobList(city, type);
-
-        int realJobListCount = jobList.size() > (pageSize * currentPage) ? pageSize * currentPage : jobList.size();
-        for (int i = (currentPage - 1) * pageSize; i < realJobListCount; i++) {
-            list.add(jobList.get(i).getForm());
-        }
-
-        data.put("currentJobList", list);
-        data.put("totalJobCount", jobList.size());
-
-        res.put("data", data);
-        res.put("code", 20001);
-
-        return res;
-    }
 
     @ResponseBody
     @GetMapping("/getJobDetail")
