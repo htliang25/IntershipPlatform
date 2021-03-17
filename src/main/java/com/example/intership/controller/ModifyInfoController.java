@@ -21,20 +21,23 @@ public class ModifyInfoController {
     public Map<String, Object> modifyInfo(@RequestBody Map<String, Object> data) {
         String account = (String) data.get("account");
         int role = (int) data.get("role");
-        String[] str = new String[3];
+        String[] str = new String[4];
 
         Map map = new HashMap<String, Object>();
 
         User user = userService.getUser(account, role);
 
         if (role == 1) {
-            str[0] = (String) data.get("university");
-            str[1] = (String) data.get("major");
-            str[2] = "student";
+            str[0] = "student";
+            str[1] = (String) data.get("university");
+            str[2] = (String) data.get("major");
+
         } else {
-            str[0] = "";
-            str[1] = (String) data.get("companyIntro");
-            str[2] = "enterprise";
+            str[0] = "enterprise";
+            str[1] = (String) data.get("companyType");
+            str[2] = (String) data.get("companyAddress");
+            str[3] = (String) data.get("companyIntro");
+
         }
 
         if (user != null) {

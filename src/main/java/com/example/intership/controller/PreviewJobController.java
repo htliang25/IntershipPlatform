@@ -1,7 +1,9 @@
 package com.example.intership.controller;
 
 import com.example.intership.entities.Job;
+import com.example.intership.entities.user.Enterprise;
 import com.example.intership.service.JobService;
+import com.example.intership.service.UserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,9 @@ import java.util.Map;
 public class PreviewJobController {
     @Autowired
     JobService jobService;
+
+    @Autowired
+    UserService userService;
 
 
     @ResponseBody
@@ -43,6 +48,12 @@ public class PreviewJobController {
 
         int jobNum = jobService.getJobNum(account);
         data.put("companyJobNum", jobNum - 1);
+
+        Enterprise enterprise = (Enterprise) userService.getUser(account, 2);
+        if (enterprise != null) {
+            data.put("companyType", enterprise.getCompanyType());
+            data.put("companyAddress", enterprise.getCompanyAddress());
+        }
 
         res.put("data", data);
         res.put("code", 20001);

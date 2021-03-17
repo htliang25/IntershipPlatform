@@ -52,13 +52,15 @@ public class UserTemplate {
 
         Update update = new Update();
 
-        if (str[2].equals("student")) {
-            update.set("university", str[0]);
-            update.set("major", str[1]);
+        if (str[0].equals("student")) {
+            update.set("university", str[1]);
+            update.set("major", str[2]);
         } else {
-            update.set("companyIntro", str[1]);
+            update.set("companyType", str[1]);
+            update.set("companyAddress", str[2]);
+            update.set("companyIntro", str[3]);
         }
 
-        mongoTemplate.updateMulti(query, update, str[2]);
+        mongoTemplate.updateMulti(query, update, str[0]);
     }
 }
