@@ -58,14 +58,17 @@ public class PostResumeController {
             // 学生名字 学生学历 投递岗位 入职时间
             String applicantAccount = applicant.getApplicantAccount();
             Student student = (Student) userService.getUser(applicantAccount, 1);
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("applicantUniversity", student.getUniversity());
-            map.put("applicantMajor", student.getMajor());
-            map.put("applicantAccount", applicantAccount);
-            map.put("entryTime", applicant.getEntryTime());
-            map.put("jobId", applicant.getJobId());
-            map.put("jobName", applicant.getJobName());
-            list.add(map);
+            Job job = jobService.getJob(new ObjectId(applicant.getJobId()));
+            if (job != null) {
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("applicantUniversity", student.getUniversity());
+                map.put("applicantMajor", student.getMajor());
+                map.put("applicantAccount", applicantAccount);
+                map.put("entryTime", applicant.getEntryTime());
+                map.put("jobId", applicant.getJobId());
+                map.put("jobName", job.getJobName());
+                list.add(map);
+            }
         }
 
         data.put("applicantList", list);

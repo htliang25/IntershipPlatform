@@ -49,8 +49,8 @@ public class JobService {
         return jobTemplate.getOtherJob(account, id);
     }
 
-    public List<Job> getPublishJob(String account, String city, String type, String searchKey) {
-        return jobTemplate.getPublishJob(account, city, type, searchKey);
+    public List<Job> searchPublishJob(String account, String city, String type, String searchKey) {
+        return jobTemplate.searchPublishJob(account, city, type, searchKey);
     }
 
     public ArrayList getApplicants(ObjectId id) {

@@ -14,9 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import javax.swing.text.Style;
 import java.time.LocalDateTime;
-import java.time.format.SignStyle;
 import java.util.*;
 
 @Configuration
@@ -40,7 +38,6 @@ public class RecommendScheduleTask {
         学生注册时的专业  这个比较复杂  需要去解析输入的专业适合什么岗位，
         学生简历的求职意向  地点：cityOptions: []  岗位: typeOptions: [],
         协同过滤的推荐  基于用户相似度和内容相似度
-        学生的搜索行为，搜索出来的岗位 需要根据这些岗位的type 来更优推荐
      */
 
     static String[]jobTypeArr = new String[]{"测试", "数据分析", "算法", "前端", "后端", "客户端", "游戏开发", "产品经理", "运营", "行政", "人事", "美术设计", "商务合作",  "硬件设施", "法务"};
@@ -349,6 +346,5 @@ public class RecommendScheduleTask {
         }
 
     }
-
 
 }

@@ -10,9 +10,10 @@ import java.util.ArrayList;
 public class Enterprise extends User {
     private String companyName;
     private String companyIntro;
-    private ArrayList<Applicant> applicants;
     private String companyType;
     private String companyAddress;
+
+    private ArrayList<Applicant> applicants;
 
     public Enterprise() {
         super();

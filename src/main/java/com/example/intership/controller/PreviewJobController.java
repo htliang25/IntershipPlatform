@@ -95,7 +95,7 @@ public class PreviewJobController {
         Map<String, Object> data = new HashMap<>();
         Map<String, Object> res = new HashMap<>();
 
-        List<Job> jobList = jobService.getPublishJob(account, city, type, searchKey);
+        List<Job> jobList = jobService.searchPublishJob(account, city, type, searchKey);
         int realJobListCount = jobList.size() > (pageSize * currentPage) ? pageSize * currentPage : jobList.size();
         for (int i = (currentPage - 1) * pageSize; i < realJobListCount; i++) {
             list.add(jobList.get(i).getFormAddJobDesc());
