@@ -44,7 +44,6 @@ class IntershipApplicationTests {
     @Test
     void contextLoads(){
 
-
         String []companyArr = new String[]{"字节跳动", "腾讯", "阿里巴巴", "美团", "快手", "拼多多", "滴滴", "斗鱼", "百度", "虎牙", "华为", "深信服", "哔哩哔哩", "微软", "Google"};
         String []cityArr = new String[]{"北京", "上海", "深圳", "杭州", "南京", "成都", "厦门", "武汉", "广州", "天津", "其他"};
         String []typeArr = new String[]{"测试", "数据分析", "算法", "前端", "后端", "客户端", "游戏开发", "产品经理", "运营", "行政", "人事", "美术设计", "商务合作",  "硬件设施", "法务"};
