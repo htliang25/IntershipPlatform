@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -67,4 +70,33 @@ public class PreviewUserController {
 
         return map;
     }
+
+
+    @ResponseBody
+    @GetMapping("/getHotCompanyList")
+    public Map<String, Object> getHotCompanyList() {
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
+
+        List<Enterprise> list = userService.getEnterpriseList();
+        ArrayList hotCompanyList = new ArrayList();
+        int i = 0;
+        for (Enterprise enterprise : list) {
+            i++;
+            if (i > 12) {
+                break;
+            }
+            HashMap<String, Object> enterpriseMsg = new HashMap<>();
+            enterpriseMsg.put("logoURL", "http://localhost:8089/avatar/2/" + enterprise.getAccount());
+            enterpriseMsg.put("companyName", enterprise.getCompanyName());
+            enterpriseMsg.put("companyAccount", enterprise.getAccount());
+            hotCompanyList.add(enterpriseMsg);
+        }
+        data.put("hotCompanyList", hotCompanyList);
+        map.put("data", data);
+        map.put("code", 20001);
+
+        return map;
+    }
+
 }

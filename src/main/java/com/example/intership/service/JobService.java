@@ -66,4 +66,8 @@ public class JobService {
     public void deleteJob(ObjectId id) {
         jobTemplate.deleteJob(id);
     }
+
+    public List<Job> findJob(String city, String type, String searchKey) {
+        return jobTemplate.findJob(city, type, searchKey);
+    }
 }

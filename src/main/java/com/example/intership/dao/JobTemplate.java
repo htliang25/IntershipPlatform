@@ -67,6 +67,25 @@ public class JobTemplate {
         return mongoTemplate.find(query, Job.class);
     }
 
+    public List<Job> findJob(String city, String type, String searchKey) {
+        Criteria criteria = new Criteria();
+
+        if (!city.equals("全国") && !city.equals("全部城市")) {
+            criteria.and("jobCity").is(city);
+        }
+        if (!type.equals("全部") && !type.equals("全部类型")) {
+            criteria.and("jobType").is(type);
+        }
+        if (searchKey != null && !searchKey.trim().equals("")) {
+            String jobName = ".*?" + searchKey + ".*";
+            criteria.and("jobName").regex(jobName);
+        }
+
+        Query query = new Query(criteria);
+
+        return mongoTemplate.find(query, Job.class);
+    }
+
     public Job getJob(ObjectId id) {
         Criteria criteria = Criteria.where("_id").is(id);
         Query query = new Query(criteria);
@@ -148,22 +167,7 @@ public class JobTemplate {
         Criteria criteria1 = Criteria.where("jobName").regex(jobName);
         Query query1 = new Query(criteria1);
 
-        List<Job> jobList = mongoTemplate.find(query1, Job.class);
-
-        Enterprise enterprise = null;
-        if (searchKey != null && !searchKey.trim().equals("")) {
-            String companyName = ".*?" + searchKey + ".*";
-            Criteria criteria2 = Criteria.where("companyName").regex(companyName);
-            Query query2 = new Query(criteria2);
-            enterprise = mongoTemplate.findOne(query2, Enterprise.class);
-        }
-        if (enterprise != null) {
-            List<Job> companyJobList = searchPublishJob(enterprise.getAccount(), "全国", "全部", "");
-            companyJobList.addAll(jobList);
-            return companyJobList;
-        }
-
-        return jobList;
+        return mongoTemplate.find(query1, Job.class);
     }
 
     public void updateJob(ObjectId id, Map<String, Object> data) {

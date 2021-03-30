@@ -87,6 +87,7 @@ public class Job extends Form {
         data.put("jobName", jobName);
         data.put("logoURL", "http://localhost:8089/avatar/2/" + super.getAccount());
         data.put("companyName", companyName);
+        data.put("jobDesc", jobDescription);
 
         return data;
     }

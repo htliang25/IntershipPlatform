@@ -135,11 +135,4 @@ class IntershipApplicationTests {
 
     }
 
-
-    @Test
-    void testPostResume () {
-
-
-    }
-
 }

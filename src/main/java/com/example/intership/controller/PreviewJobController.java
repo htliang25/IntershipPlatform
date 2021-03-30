@@ -111,17 +111,18 @@ public class PreviewJobController {
     }
 
 
-    // 加入分页功能
     @ResponseBody
-    @GetMapping("/UserSearchJob")
-    public Map<String, Object> getUserSearch(@RequestParam(value = "searchKey", required = false) String searchKey,
+    @GetMapping("/findJob")
+    public Map<String, Object> indJob(@RequestParam(value = "city", required = false) String city,
+                                             @RequestParam(value = "type", required = false) String type,
                                              @RequestParam(value = "currentPage", required = false) int currentPage,
-                                             @RequestParam(value = "pageSize", required = false) int pageSize ) {
+                                             @RequestParam(value = "pageSize", required = false) int pageSize,
+                                             @RequestParam(value = "searchKey", required = false) String searchKey) {
         ArrayList list = new ArrayList();
         Map<String, Object> data = new HashMap<>();
         Map<String, Object> res = new HashMap<>();
 
-        List<Job> jobList = jobService.getUserSearch(searchKey);
+        List<Job> jobList = jobService.findJob(city, type, searchKey);
         int realJobListCount = jobList.size() > (pageSize * currentPage) ? pageSize * currentPage : jobList.size();
         for (int i = (currentPage - 1) * pageSize; i < realJobListCount; i++) {
             list.add(jobList.get(i).getForm());
@@ -129,10 +130,37 @@ public class PreviewJobController {
 
         data.put("currentJobList", list);
         data.put("totalJobCount", jobList.size());
+
         res.put("data", data);
         res.put("code", 20001);
 
         return res;
     }
+
+
+    @ResponseBody
+    @GetMapping("/getHotJobList")
+    public Map<String, Object> getHotJobList() {
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
+
+        List<Job> list = jobService.getJobList("全国", "全部");
+        ArrayList hotJobList = new ArrayList();
+        int i = 0;
+        for (Job job : list) {
+            i++;
+            if (i > 9) {
+                break;
+            }
+            hotJobList.add(job.getForm());
+        }
+        data.put("hotJobList", hotJobList);
+        map.put("data", data);
+        map.put("code", 20001);
+
+        return map;
+
+    }
+
 
 }

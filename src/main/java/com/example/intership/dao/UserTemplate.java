@@ -1,5 +1,6 @@
 package com.example.intership.dao;
 
+import com.example.intership.entities.Job;
 import com.example.intership.entities.User;
 import com.example.intership.entities.user.Enterprise;
 import com.example.intership.entities.user.Student;
@@ -30,6 +31,10 @@ public class UserTemplate {
 
     public List<Student> getStudentList () {
         return mongoTemplate.findAll(Student.class);
+    }
+
+    public List<Enterprise> getEnterpriseList () {
+        return mongoTemplate.findAll(Enterprise.class);
     }
 
     public void saveUser(User user) {
@@ -63,4 +68,13 @@ public class UserTemplate {
 
         mongoTemplate.updateMulti(query, update, str[0]);
     }
+
+    public List<Enterprise> searchEnterprise (String searchKey) {
+        String companyName = ".*?" + searchKey + ".*";
+        Criteria criteria1 = Criteria.where("companyName").regex(companyName);
+        Query query1 = new Query(criteria1);
+
+        return mongoTemplate.find(query1, Enterprise.class);
+    }
+
 }
