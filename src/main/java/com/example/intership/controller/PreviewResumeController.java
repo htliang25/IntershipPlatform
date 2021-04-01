@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +54,7 @@ public class PreviewResumeController {
         ArrayList awardExperienceList = resumeService.getMultipleForm(account, "awardExperience");
         data.put("awardExperience", awardExperienceList);
 
-        String url = "http://localhost:8089/avatar/1/" + account;
+        String url = "http://localhost:8089/avatar/1/" + account + "/" + new Date().getTime();
         data.put("avatarURL", url);
 
         map.put("data", data);

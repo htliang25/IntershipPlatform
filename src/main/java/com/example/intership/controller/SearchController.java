@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class SearchController {
@@ -52,7 +49,7 @@ public class SearchController {
             HashMap<String, Object> enterpriseMsg = new HashMap<>();
             enterpriseMsg.put("companyName", enterprise.getCompanyName());
             enterpriseMsg.put("companyIntro", enterprise.getCompanyIntro());
-            enterpriseMsg.put("companyLogoURL", "http://localhost:8089/avatar/2/" + enterprise.getAccount());
+            enterpriseMsg.put("companyLogoURL", "http://localhost:8089/avatar/2/" + enterprise.getAccount() + '/' + new Date().getTime());
             enterpriseMsg.put("companyAccount", enterprise.getAccount());
 
             finalEnterpriseList.add(enterpriseMsg);
