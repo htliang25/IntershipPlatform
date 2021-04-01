@@ -19,6 +19,11 @@ public class Accessory {
     private String contentType;
     private String url;
 
+
+    public Accessory () {
+        _id = new ObjectId();
+    }
+
     public Accessory(String account) {
         _id = new ObjectId();
         this.account = account;

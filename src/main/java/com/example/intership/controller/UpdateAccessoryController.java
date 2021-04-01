@@ -67,4 +67,8 @@ public class UpdateAccessoryController {
         accessory.setAttributes(role, file);
         accessoryService.saveAccessory(accessory, colName);
     }
+
+
+
+
 }
