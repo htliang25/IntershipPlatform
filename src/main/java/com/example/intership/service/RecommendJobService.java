@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RecommendJobService {
 
     @Autowired
     RecommendJobTemplate recommendJobTemplate;
+
 
     public List<Job> getRecommendJobList (String account) {
         return recommendJobTemplate.getRecommendJobList(account);
@@ -21,4 +23,5 @@ public class RecommendJobService {
     public void updateRecommendJobList (String account, ArrayList<Job> recommendJobList) {
         recommendJobTemplate.updateRecommendList(account, recommendJobList);
     }
+
 }

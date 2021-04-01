@@ -77,7 +77,10 @@ public class InformationForm extends Form {
 
         update.set("resumeName", (String) data.get("resumeName"));
         update.set("name", (String) data.get("name"));
-        update.set("birthday", (Long) data.get("birthday"));
+        if (data.get("birthday") instanceof Long) {
+            update.set("birthday", (Long) data.get("birthday"));
+        }
+
         update.set("sexy", (String) data.get("sexy"));
         update.set("address", (String) data.get("address"));
         update.set("educationBackground", (String) data.get("educationBackground"));

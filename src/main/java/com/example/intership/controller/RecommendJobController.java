@@ -1,12 +1,16 @@
 package com.example.intership.controller;
 
 import com.example.intership.entities.Job;
+import com.example.intership.entities.User;
+import com.example.intership.entities.user.Student;
+import com.example.intership.entities.utils.RecommendUtils;
+import com.example.intership.service.JobService;
 import com.example.intership.service.RecommendJobService;
+import com.example.intership.service.ResumeService;
+import com.example.intership.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +22,15 @@ public class RecommendJobController {
 
     @Autowired
     RecommendJobService recommendJobService;
+
+    @Autowired
+    JobService jobService;
+
+    @Autowired
+    ResumeService resumeService;
+
+    @Autowired
+    UserService userService;
 
     @ResponseBody
     @GetMapping("/UserRecommendJob")
@@ -43,4 +56,5 @@ public class RecommendJobController {
 
         return res;
     }
+
 }

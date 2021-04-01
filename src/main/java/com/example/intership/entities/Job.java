@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,7 +86,7 @@ public class Job extends Form {
         ObjectId id = super.getId();
         data.put("id", id.toString());
         data.put("jobName", jobName);
-        data.put("logoURL", "http://localhost:8089/avatar/2/" + super.getAccount());
+        data.put("logoURL", "http://localhost:8089/avatar/2/" + super.getAccount() + "/" + new Date().getTime());
         data.put("companyName", companyName);
         data.put("jobDesc", jobDescription);
 

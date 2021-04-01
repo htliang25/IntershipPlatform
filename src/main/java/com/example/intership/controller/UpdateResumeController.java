@@ -11,7 +11,10 @@ import com.example.intership.entities.multipleform.ProjectExperience;
 import com.example.intership.entities.multipleform.SchoolExperience;
 import com.example.intership.entities.singleform.*;
 
+import com.example.intership.entities.user.Student;
+import com.example.intership.entities.utils.RecommendUtils;
 import com.example.intership.service.ResumeService;
+import com.example.intership.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +29,9 @@ import java.util.Map;
 public class UpdateResumeController {
     @Autowired
     ResumeService resumeService;
+
+    @Autowired
+    UserService userService;
 
     //更新个人简历信息
     @ResponseBody
@@ -60,6 +66,29 @@ public class UpdateResumeController {
 
         ArrayList awardExperience = (ArrayList) data.get("awardExperience");
         updateMultipleForm(account, awardExperience, "awardExperience");
+
+
+        {
+            ArrayList<Student> studentList = (ArrayList<Student>) userService.getStudentList();
+            int index = -1;
+            for (int i = 0; i < studentList.size();i++) {
+                Student currentStudent = studentList.get(i);
+                if (currentStudent.getAccount().equals(account)) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index != -1) {
+                int finalIndex = index;
+                new Thread () {
+                    @Override
+                    public void run() {
+                        RecommendUtils.recommendJob(finalIndex, studentList);
+                    }
+                }.start();
+            }
+        }
+
 
         Map<String, Object> map = new HashMap<>();
         map.put("code", 20001);

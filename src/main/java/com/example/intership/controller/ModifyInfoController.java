@@ -1,6 +1,8 @@
 package com.example.intership.controller;
 
 import com.example.intership.entities.User;
+import com.example.intership.entities.user.Student;
+import com.example.intership.entities.utils.RecommendUtils;
 import com.example.intership.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +45,29 @@ public class ModifyInfoController {
 
         if (user != null) {
             userService.modifyInfo(account, str);
+
+
+            if (role == 1) {
+                ArrayList<Student> studentList = (ArrayList<Student>) userService.getStudentList();
+                int index = -1;
+                for (int i = 0; i < studentList.size();i++) {
+                    Student currentStudent = studentList.get(i);
+                    if (currentStudent.getAccount().equals(account)) {
+                        index = i;
+                        break;
+                    }
+                }
+                if (index != -1) {
+                    int finalIndex = index;
+                    new Thread () {
+                        @Override
+                        public void run() {
+                            RecommendUtils.recommendJob(finalIndex, studentList);
+                        }
+                    }.start();
+                }
+            }
+
             map.put("code", 20001);
         } else {
             map.put("code", 50001);

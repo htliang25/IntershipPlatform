@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class PreviewJobController {
@@ -44,7 +41,7 @@ public class PreviewJobController {
         data.put("companyAccount", job.getAccount());
 
         String account = job.getAccount();
-        data.put("companyLogoURL", "http://localhost:8089/avatar/2/" + account);
+        data.put("companyLogoURL", "http://localhost:8089/avatar/2/" + account + '/' + new Date().getTime());
 
         int jobNum = jobService.getJobNum(account);
         data.put("companyJobNum", jobNum - 1);

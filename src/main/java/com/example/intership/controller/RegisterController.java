@@ -2,6 +2,7 @@ package com.example.intership.controller;
 
 import com.example.intership.entities.user.Enterprise;
 import com.example.intership.entities.user.Student;
+import com.example.intership.entities.utils.RecommendUtils;
 import com.example.intership.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,11 +30,34 @@ public class RegisterController {
         if (role == 1) {
             if ((Student) userService.getUser(name, 1) == null) {
                 Student student = new Student();
-                student.setAccount((String) data.get("account"));
+                String account = (String) data.get("account");
+                student.setAccount(account);
                 student.setPwd((String) data.get("password"));
                 student.setUniversity((String) data.get("university"));
                 student.setMajor((String) data.get("major"));
                 userService.saveUser(student);
+
+                {
+                    ArrayList<Student> studentList = (ArrayList<Student>) userService.getStudentList();
+                    int index = -1;
+                    for (int i = 0; i < studentList.size();i++) {
+                        Student currentStudent = studentList.get(i);
+                        if (currentStudent.getAccount().equals(account)) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    if (index != -1) {
+                        int finalIndex = index;
+                        new Thread () {
+                            @Override
+                            public void run() {
+                                RecommendUtils.recommendJob(finalIndex, studentList);
+                            }
+                        }.start();
+                    }
+                }
+
                 map.put("code", 20001);
             } else {
                 // 账号已注册

@@ -10,10 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class PreviewUserController {
@@ -43,7 +40,7 @@ public class PreviewUserController {
                 Map<String, Object> infoForm = resumeService.getSingleForm(account, "informationForm");
                 data.put("infoForm", infoForm);
 
-                data.put("avatarURL", "http://localhost:8089/avatar/1/" + account);
+                data.put("avatarURL", "http://localhost:8089/avatar/1/" + account + '/' + new Date().getTime());
                 map.put("code", 20001);
                 map.put("data", data);
             } else {
@@ -56,7 +53,7 @@ public class PreviewUserController {
             if (enterprise != null) {
                 data.put("companyName", enterprise.getCompanyName());
                 data.put("companyIntro", enterprise.getCompanyIntro());
-                data.put("companyLogoURL", "http://localhost:8089/avatar/2/" + account);
+                data.put("companyLogoURL", "http://localhost:8089/avatar/2/" + account + '/' + new Date().getTime());
                 data.put("companyType", enterprise.getCompanyType());
                 data.put("companyAddress", enterprise.getCompanyAddress());
                 data.put("companyJobCount", jobService.getJobNum(account));
@@ -87,7 +84,7 @@ public class PreviewUserController {
                 break;
             }
             HashMap<String, Object> enterpriseMsg = new HashMap<>();
-            enterpriseMsg.put("logoURL", "http://localhost:8089/avatar/2/" + enterprise.getAccount());
+            enterpriseMsg.put("logoURL", "http://localhost:8089/avatar/2/" + enterprise.getAccount() + '/' + new Date().getTime());
             enterpriseMsg.put("companyName", enterprise.getCompanyName());
             enterpriseMsg.put("companyAccount", enterprise.getAccount());
             hotCompanyList.add(enterpriseMsg);
