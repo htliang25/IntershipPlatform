@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Accessory {
-    private ObjectId _id;
+    private ObjectId id;
     private String account;
     private int role;
     private String name;
@@ -19,13 +19,12 @@ public class Accessory {
     private String contentType;
     private String url;
 
-
     public Accessory () {
-        _id = new ObjectId();
+        id = new ObjectId();
     }
 
     public Accessory(String account) {
-        _id = new ObjectId();
+        id = new ObjectId();
         this.account = account;
     }
 
@@ -38,6 +37,13 @@ public class Accessory {
             setName(fileName);
             setContent(content);
             setContentType(suffixName);
+            if (suffixName.equals(".pdf")) {
+                setUrl("/api/accessory/pdf/" + account + '/' + fileName);
+            } else {
+                setUrl("/api/accessory/img/" + account + '/' + fileName);
+            }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,7 +70,7 @@ public class Accessory {
     }
 
     public ObjectId getId() {
-        return _id;
+        return id;
     }
 
     public Map<String, Object> getFile() {
@@ -98,5 +104,21 @@ public class Accessory {
 
     public String getContentType() {
         return contentType;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }

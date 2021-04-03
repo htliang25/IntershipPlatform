@@ -1,5 +1,7 @@
 package com.example.intership.controller;
 
+import com.example.intership.entities.Accessory;
+import com.example.intership.service.AccessoryService;
 import com.example.intership.service.JobService;
 import com.example.intership.service.ResumeService;
 import com.fasterxml.jackson.databind.ser.std.MapSerializer;
@@ -8,15 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class PreviewResumeController {
     @Autowired
     ResumeService resumeService;
+
+    @Autowired
+    AccessoryService accessoryService;
 
     @Autowired
     JobService jobService;
@@ -57,6 +59,21 @@ public class PreviewResumeController {
         String url = "http://localhost:8089/avatar/1/" + account + "/" + new Date().getTime();
         data.put("avatarURL", url);
 
+
+        List<Accessory> accessoryList = accessoryService.getMyAccessoryList(account, 1);
+        ArrayList finalAccessoryList = new ArrayList();
+        for (Accessory accessory : accessoryList) {
+            HashMap<String, Object> accessoryMsg = new HashMap<>();
+            accessoryMsg.put("name", accessory.getName());
+            accessoryMsg.put("url", accessory.getUrl());
+            accessoryMsg.put("contentType", accessory.getContentType());
+            accessoryMsg.put("accessoryId", accessory.getId().toString());
+            finalAccessoryList.add(accessoryMsg);
+        }
+
+        data.put("accessoryList", finalAccessoryList);
+
+
         map.put("data", data);
         map.put("code", 20001);
 
@@ -96,4 +113,5 @@ public class PreviewResumeController {
 
         return map;
     }
+
 }

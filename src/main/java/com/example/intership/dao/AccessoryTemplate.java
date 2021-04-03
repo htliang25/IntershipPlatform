@@ -1,6 +1,7 @@
 package com.example.intership.dao;
 
 import com.example.intership.entities.Accessory;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -15,18 +16,31 @@ public class AccessoryTemplate {
     @Autowired
     MongoTemplate mongoTemplate;
 
-    public ArrayList getAccessory(String account) {
-        Criteria criteria = Criteria.where("account").is(account);
+
+    // 通过url 来访问某个附件地址
+    public Accessory getAccessoryDetail (String account, String fileName) {
+        Criteria criteria = Criteria.where("account").is(account).and("name").is(fileName);
+        Query query = new Query(criteria);
+
+        return mongoTemplate.findOne(query, Accessory.class, "accessory");
+    }
+
+
+    // 通过附件id 来删除某个附件
+    public void removeResumeAccessory (ObjectId accessoryId) {
+        Criteria criteria = Criteria.where("_id").is(accessoryId);
+        Query query = new Query(criteria);
+
+        mongoTemplate.remove(query, Accessory.class, "accessory");
+    }
+
+    public List<Accessory> getAccessory(String account, int role) {
+        Criteria criteria = Criteria.where("account").is(account).and("role").is(role);
         Query query = new Query(criteria);
 
         ArrayList data = new ArrayList();
 
-        List<Accessory> accessories = mongoTemplate.find(query, Accessory.class, "accessory");
-        for (Accessory accessory : accessories) {
-            data.add(accessory.getFile());
-        }
-
-        return data;
+        return mongoTemplate.find(query, Accessory.class, "accessory");
     }
 
     public Accessory getAvatar(String account, int role) {
@@ -42,18 +56,34 @@ public class AccessoryTemplate {
         mongoTemplate.save(accessory, colName);
     }
 
-    public void deleteAccessory(String account, int role, String colName) {
+    public void deleteAccessory(String account, int role, String fileName, String colName) {
+        Criteria criteria = Criteria.where("account").is(account).and("role").is(role).and("name").is(fileName);
+        Query query = new Query(criteria);
+
+        mongoTemplate.remove(query, Accessory.class, colName);
+    }
+
+    public boolean isExist(String account, int role, String fileName, String colName) {
+        Criteria criteria = Criteria.where("account").is(account).and("role").is(role).and("name").is(fileName);
+        Query query = new Query(criteria);
+
+        Accessory accessory = mongoTemplate.findOne(query, Accessory.class, colName);
+        return (accessory != null) ? true : false;
+    }
+
+    public void deleteAvatar(String account, int role, String colName) {
         Criteria criteria = Criteria.where("account").is(account).and("role").is(role);
         Query query = new Query(criteria);
 
         mongoTemplate.remove(query, Accessory.class, colName);
     }
 
-    public boolean isExist(String account, int role, String colName) {
+    public boolean isAvatarExist(String account, int role, String colName) {
         Criteria criteria = Criteria.where("account").is(account).and("role").is(role);
         Query query = new Query(criteria);
 
         Accessory accessory = mongoTemplate.findOne(query, Accessory.class, colName);
         return (accessory != null) ? true : false;
     }
+
 }

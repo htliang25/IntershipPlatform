@@ -23,4 +23,25 @@ public class PreviewAccessoryController {
         return (accessory != null) ? accessory.getContent() : new byte[0];
     }
 
+
+    // 图片
+    @ResponseBody
+    @GetMapping(value = "/accessory/img/{account}/{fileName}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+    public byte[] previewImgAccessory(@PathVariable String account, @PathVariable String fileName) {
+        Accessory accessory = accessoryService.getAccessoryDetail(account, fileName);
+
+        return (accessory != null) ? accessory.getContent() : new byte[0];
+    }
+
+    // pdf文件
+    @ResponseBody
+    @GetMapping(value = "/accessory/pdf/{account}/{fileName}", produces = {MediaType.APPLICATION_PDF_VALUE})
+    public byte[] previewPdfAccessory(@PathVariable String account, @PathVariable String fileName) {
+        Accessory accessory = accessoryService.getAccessoryDetail(account, fileName);
+
+        return (accessory != null) ? accessory.getContent() : new byte[0];
+    }
+
+
+
 }
