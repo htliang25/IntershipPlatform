@@ -1,7 +1,7 @@
 package com.example.intership.service;
 
 import com.example.intership.dao.UserTemplate;
-import com.example.intership.entities.User;
+import com.example.intership.entities.user.User;
 import com.example.intership.entities.user.Enterprise;
 import com.example.intership.entities.user.Student;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,4 @@ public class UserService {
     public List<Enterprise> getEnterpriseList () {
         return userTemplate.getEnterpriseList();
     }
-
-
-
 }

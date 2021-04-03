@@ -1,7 +1,7 @@
 package com.example.intership.dao;
 
-import com.example.intership.entities.Applicant;
-import com.example.intership.entities.Job;
+import com.example.intership.entities.user.Applicant;
+import com.example.intership.entities.job.Job;
 import com.example.intership.entities.user.Enterprise;
 import com.example.intership.entities.user.Student;
 import org.bson.types.ObjectId;
@@ -21,10 +21,19 @@ public class JobTemplate {
     @Autowired
     MongoTemplate mongoTemplate;
 
+    /*
+        发布工作函数
+        参数为工作job
+     */
     public void publishJob(Job job) {
         mongoTemplate.save(job);
     }
 
+    /*
+        获取工作列表函数
+        参数为工作所在城市city和工作类型type
+        返回值为符合条件的工作列表
+     */
     public List<Job> getJobList(String city, String type) {
         Criteria criteria = new Criteria();
 
@@ -40,6 +49,11 @@ public class JobTemplate {
         return mongoTemplate.find(query, Job.class);
     }
 
+    /*
+        获取企业其他工作函数
+        参数为企业帐号account和被排除工作id
+        返回值为符合条件的工作列表
+     */
     public List<Job> getOtherJob(String account, ObjectId id) {
         Criteria c = Criteria.where("_id").is(id);
         Criteria criteria = Criteria.where("account").is(account).norOperator(c);
@@ -48,6 +62,11 @@ public class JobTemplate {
         return mongoTemplate.find(query, Job.class);
     }
 
+    /*
+        搜索企业发布工作函数
+        参数为企业帐号account、工作所在城市city和工作类型type和搜索关键字searchKey
+        返回值为符合条件的工作列表
+     */
     public List<Job> searchPublishJob(String account, String city, String type, String searchKey) {
         Criteria criteria = Criteria.where("account").is(account);
 
@@ -67,6 +86,11 @@ public class JobTemplate {
         return mongoTemplate.find(query, Job.class);
     }
 
+    /*
+        搜索工作函数
+        参数为工作所在城市city和工作类型type和搜索关键字searchKey
+        返回值为符合条件的工作列表
+     */
     public List<Job> findJob(String city, String type, String searchKey) {
         Criteria criteria = new Criteria();
 
@@ -86,6 +110,11 @@ public class JobTemplate {
         return mongoTemplate.find(query, Job.class);
     }
 
+    /*
+        获取工作函数
+        参数为工作id
+        返回值为指定的工作
+     */
     public Job getJob(ObjectId id) {
         Criteria criteria = Criteria.where("_id").is(id);
         Query query = new Query(criteria);
@@ -93,6 +122,11 @@ public class JobTemplate {
         return mongoTemplate.findOne(query, Job.class);
     }
 
+    /*
+        获取指定企业发布工作数函数
+        参数为企业帐号account
+        返回值为指定企业发布工作数
+     */
     public int getJobNum(String account) {
         Criteria criteria = Criteria.where("account").is(account);
         Query query = new Query(criteria);

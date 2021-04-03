@@ -1,13 +1,16 @@
 package com.example.intership.entities.user;
 
-import com.example.intership.entities.Applicant;
-import com.example.intership.entities.User;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 
 @Document(collection = "enterprise")
 public class Enterprise extends User {
+    /*
+        企业类，继承自用户类
+        类属性有公司名称companyName、公司介绍companyIntro、公司类型companyType和公司地址companyAddress
+        类函数有类属性的set、get函数
+     */
     private String companyName;
     private String companyIntro;
     private String companyType;
@@ -18,7 +21,7 @@ public class Enterprise extends User {
     public Enterprise() {
         super();
         super.setRole(2);
-        applicants = new ArrayList<Applicant>();
+        applicants = new ArrayList<>();
     }
 
     public void setCompanyName(String companyName) {

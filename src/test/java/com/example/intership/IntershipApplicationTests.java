@@ -2,29 +2,21 @@ package com.example.intership;
 
 import com.example.intership.dao.JobTemplate;
 import com.example.intership.dao.UserTemplate;
-import com.example.intership.entities.Applicant;
-import com.example.intership.entities.Form;
-import com.example.intership.entities.Job;
-import com.example.intership.entities.User;
-import com.example.intership.entities.singleform.JobForm;
+import com.example.intership.entities.user.Applicant;
+import com.example.intership.entities.form.Form;
+import com.example.intership.entities.job.Job;
+import com.example.intership.entities.form.singleform.JobForm;
 import com.example.intership.entities.user.Enterprise;
 import com.example.intership.entities.user.Student;
 import com.example.intership.service.JobService;
 import com.example.intership.service.ResumeService;
-import com.example.intership.service.UserService;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @SpringBootTest
 class IntershipApplicationTests {

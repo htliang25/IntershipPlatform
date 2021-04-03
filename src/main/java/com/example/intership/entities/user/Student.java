@@ -1,13 +1,16 @@
 package com.example.intership.entities.user;
 
-import com.example.intership.entities.Applicant;
-import com.example.intership.entities.User;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 
 @Document(collection = "student")
 public class Student extends User {
+    /*
+        学生类,继承自用户类
+        类属性有现所属大学university、现所读专业major和申请工作列表applicants
+        类函数有类属性的set、get函数
+     */
     private String university;
     private String major;
     private ArrayList<Applicant> applicants;

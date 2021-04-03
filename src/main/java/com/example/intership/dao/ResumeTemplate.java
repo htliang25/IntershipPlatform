@@ -1,16 +1,14 @@
 package com.example.intership.dao;
 
-import com.example.intership.entities.Accessory;
-import com.example.intership.entities.Content;
-import com.example.intership.entities.Form;
-import com.example.intership.entities.content.AbilityContent;
-import com.example.intership.entities.content.EvaluationContent;
-import com.example.intership.entities.content.PaperContent;
-import com.example.intership.entities.multipleform.AwardExperience;
-import com.example.intership.entities.multipleform.EducationExperience;
-import com.example.intership.entities.multipleform.ProjectExperience;
-import com.example.intership.entities.multipleform.SchoolExperience;
-import com.example.intership.entities.singleform.*;
+import com.example.intership.entities.form.Picture;
+import com.example.intership.entities.form.Content;
+import com.example.intership.entities.form.Form;
+import com.example.intership.entities.form.multipleform.AwardExperience;
+import com.example.intership.entities.form.multipleform.EducationExperience;
+import com.example.intership.entities.form.multipleform.ProjectExperience;
+import com.example.intership.entities.form.multipleform.SchoolExperience;
+import com.example.intership.entities.form.singleform.InformationForm;
+import com.example.intership.entities.form.singleform.JobForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -84,27 +82,9 @@ public class ResumeTemplate {
 
         String data = "";
 
-        switch (colName) {
-            case "abilityContent":
-                Content content = mongoTemplate.findOne(query, AbilityContent.class, colName);
-                if (content != null) {
-                    data = content.getContent();
-                }
-                break;
-            case "evaluationContent":
-                content = mongoTemplate.findOne(query, EvaluationContent.class, colName);
-                if (content != null) {
-                    data = content.getContent();
-                }
-                break;
-            case "paperContent":
-                content = mongoTemplate.findOne(query, PaperContent.class, colName);
-                if (content != null) {
-                    data = content.getContent();
-                }
-                break;
-            default:
-                break;
+        Content content = mongoTemplate.findOne(query, Content.class, colName);
+        if (content != null) {
+            data = content.getContent();
         }
 
         return data;
@@ -119,19 +99,7 @@ public class ResumeTemplate {
         Query query = new Query(criteria);
         Update update = new Update();
 
-        switch (colName) {
-            case "abilityContent":
-                update = AbilityContent.modifyContent(data);
-                break;
-            case "evaluationContent":
-                update = EvaluationContent.modifyContent(data);
-                break;
-            case "paperContent":
-                update = PaperContent.modifyContent(data);
-                break;
-            default:
-                break;
-        }
+        update = Content.modifyContent(data);
 
         mongoTemplate.updateMulti(query, update, colName);
     }
@@ -198,17 +166,13 @@ public class ResumeTemplate {
                 mongoTemplate.remove(query, AwardExperience.class);
                 break;
             case "abilityContent":
-                mongoTemplate.remove(query, AbilityContent.class);
-                break;
             case "evaluationContent":
-                mongoTemplate.remove(query, EvaluationContent.class);
-                break;
             case "paperContent":
-                mongoTemplate.remove(query, PaperContent.class);
+                mongoTemplate.remove(query, Content.class, colName);
                 break;
             case "avatar":
             case "accessory":
-                mongoTemplate.remove(query, Accessory.class, colName);
+                mongoTemplate.remove(query, Picture.class, colName);
                 break;
             default:
                 break;
@@ -247,15 +211,9 @@ public class ResumeTemplate {
                 result = (form != null) ? true : false;
                 break;
             case "abilityContent":
-                Content content = mongoTemplate.findOne(query, AbilityContent.class, colName);
-                result = (content != null) ? true : false;
-                break;
             case "evaluationContent":
-                content = mongoTemplate.findOne(query, EvaluationContent.class, colName);
-                result = (content != null) ? true : false;
-                break;
             case "paperContent":
-                content = mongoTemplate.findOne(query, PaperContent.class, colName);
+                Content content = mongoTemplate.findOne(query, Content.class, colName);
                 result = (content != null) ? true : false;
                 break;
             default:

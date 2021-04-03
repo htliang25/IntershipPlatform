@@ -1,8 +1,7 @@
 package com.example.intership.dao;
 
-import com.example.intership.entities.Job;
-import com.example.intership.entities.RecommendJob;
-import org.bson.types.ObjectId;
+import com.example.intership.entities.job.Job;
+import com.example.intership.entities.job.RecommendJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;

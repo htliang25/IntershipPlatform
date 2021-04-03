@@ -1,8 +1,8 @@
 package com.example.intership.service;
 
 import com.example.intership.dao.ArticleTemplate;
-import com.example.intership.entities.Article;
-import com.example.intership.entities.Comment;
+import com.example.intership.entities.discussion.Article;
+import com.example.intership.entities.discussion.Comment;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

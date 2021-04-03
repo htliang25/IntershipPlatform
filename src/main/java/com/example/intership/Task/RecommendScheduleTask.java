@@ -1,15 +1,11 @@
 package com.example.intership.Task;
 
-import com.example.intership.entities.Applicant;
-import com.example.intership.entities.Form;
-import com.example.intership.entities.Job;
 import com.example.intership.entities.user.Student;
-import com.example.intership.entities.utils.RecommendUtils;
+import com.example.intership.controller.utils.RecommendUtils;
 import com.example.intership.service.JobService;
 import com.example.intership.service.RecommendJobService;
 import com.example.intership.service.ResumeService;
 import com.example.intership.service.UserService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

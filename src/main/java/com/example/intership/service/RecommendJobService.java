@@ -1,13 +1,12 @@
 package com.example.intership.service;
 
 import com.example.intership.dao.RecommendJobTemplate;
-import com.example.intership.entities.Job;
+import com.example.intership.entities.job.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class RecommendJobService {

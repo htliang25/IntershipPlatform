@@ -1,7 +1,7 @@
 package com.example.intership.service;
 
 import com.example.intership.dao.ImageTemplate;
-import com.example.intership.entities.Image;
+import com.example.intership.entities.discussion.Image;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.example.intership.controller;
 
-import com.example.intership.entities.Job;
+import com.example.intership.entities.job.Job;
 import com.example.intership.entities.user.Enterprise;
 import com.example.intership.service.JobService;
 import com.example.intership.service.UserService;
@@ -21,6 +21,12 @@ public class SearchController {
     @Autowired
     UserService userService;
 
+    /*
+        岗位搜索函数
+        api为SearchAnything
+        参数为搜索关键字searchKey、现在所在页数currentPage和每页工作数pageSize
+        返回值为工作列表和状态码
+     */
     // 加入分页功能
     @ResponseBody
     @GetMapping("/SearchAnything")
@@ -40,7 +46,6 @@ public class SearchController {
             finalJobList.add(jobList.get(i).getForm());
         }
 
-
         List<Enterprise> enterpriseList = userService.searchEnterprise(searchKey);
 
         ArrayList finalEnterpriseList = new ArrayList();
@@ -54,7 +59,6 @@ public class SearchController {
 
             finalEnterpriseList.add(enterpriseMsg);
         }
-
 
         data.put("companyList", finalEnterpriseList);
         data.put("currentJobList", finalJobList);
