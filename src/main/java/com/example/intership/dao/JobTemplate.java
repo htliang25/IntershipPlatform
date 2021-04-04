@@ -21,6 +21,9 @@ public class JobTemplate {
     @Autowired
     MongoTemplate mongoTemplate;
 
+    @Autowired
+    PictureTemplate pictureTemplate;
+
     /*
         发布工作函数
         参数为工作job
@@ -217,5 +220,19 @@ public class JobTemplate {
         Query query = new Query(criteria);
 
         mongoTemplate.remove(query, Job.class);
+    }
+
+    public Map<String, Object> getForm(Job job) {
+        Map<String, Object> data = job.getForm();
+        ObjectId avatarId = pictureTemplate.getAvatarId(job.getAccount(), 2);
+        data.put("logoURL", "http://localhost:8089/avatar/" + avatarId);
+        return data;
+    }
+
+    public Map<String, Object> getFormAddJobDesc(Job job) {
+        Map<String, Object> data = job.getFormAddJobDesc();
+        ObjectId avatarId = pictureTemplate.getAvatarId(job.getAccount(), 2);
+        data.put("logoURL", "http://localhost:8089/avatar/" + avatarId);
+        return data;
     }
 }

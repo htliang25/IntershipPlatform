@@ -69,4 +69,12 @@ public class JobService {
     public List<Job> findJob(String city, String type, String searchKey) {
         return jobTemplate.findJob(city, type, searchKey);
     }
+
+    public Map<String, Object> getForm(Job job) {
+        return jobTemplate.getForm(job);
+    }
+
+    public Map<String, Object> getFormAddJobDesc(Job job) {
+        return jobTemplate.getFormAddJobDesc(job);
+    }
 }

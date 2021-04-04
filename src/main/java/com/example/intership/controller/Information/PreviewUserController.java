@@ -3,8 +3,10 @@ package com.example.intership.controller.Information;
 import com.example.intership.entities.user.Enterprise;
 import com.example.intership.entities.user.Student;
 import com.example.intership.service.JobService;
+import com.example.intership.service.PictureService;
 import com.example.intership.service.ResumeService;
 import com.example.intership.service.UserService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +24,13 @@ public class PreviewUserController {
     @Autowired
     ResumeService resumeService;
 
+    @Autowired
+    PictureService pictureService;
+
     /*
         获取用户（或企业）函数
         api为getUserInfo和getEnterpriseInfo
-        参数为用户帐号account和哟农户角色role
+        参数为用户帐号account和用户角色role
         返回值为用户的个人信息、头像和状态码
      */
     @ResponseBody
@@ -37,6 +42,7 @@ public class PreviewUserController {
 
         if (role == 1) {
             Student student = (Student) userService.getUser(account, role);
+            ObjectId avatarId = pictureService.getAvatarId(account, 1);
 
             if (student != null) {
                 data.put("university", student.getUniversity());
@@ -45,7 +51,7 @@ public class PreviewUserController {
                 Map<String, Object> infoForm = resumeService.getSingleForm(account, "informationForm");
                 data.put("infoForm", infoForm);
 
-                data.put("avatarURL", "http://localhost:8089/avatar/1/" + account + '/' + new Date().getTime());
+                data.put("avatarURL", "http://localhost:8089/avatar/" + avatarId);
                 map.put("code", 20001);
                 map.put("data", data);
             } else {
@@ -54,11 +60,12 @@ public class PreviewUserController {
             }
         } else {
             Enterprise enterprise = (Enterprise) userService.getUser(account, role);
+            ObjectId avatarId = pictureService.getAvatarId(account, 2);
 
             if (enterprise != null) {
                 data.put("companyName", enterprise.getCompanyName());
                 data.put("companyIntro", enterprise.getCompanyIntro());
-                data.put("companyLogoURL", "http://localhost:8089/avatar/2/" + account + '/' + new Date().getTime());
+                data.put("companyLogoURL", "http://localhost:8089/avatar/" + avatarId);
                 data.put("companyType", enterprise.getCompanyType());
                 data.put("companyAddress", enterprise.getCompanyAddress());
                 data.put("companyJobCount", jobService.getJobNum(account));
@@ -93,7 +100,8 @@ public class PreviewUserController {
                 break;
             }
             HashMap<String, Object> enterpriseMsg = new HashMap<>();
-            enterpriseMsg.put("logoURL", "http://localhost:8089/avatar/2/" + enterprise.getAccount() + '/' + new Date().getTime());
+            ObjectId pictureId = pictureService.getAvatarId(enterprise.getAccount(), 2);
+            enterpriseMsg.put("logoURL", "http://localhost:8089/avatar/" + pictureId);
             enterpriseMsg.put("companyName", enterprise.getCompanyName());
             enterpriseMsg.put("companyAccount", enterprise.getAccount());
             hotCompanyList.add(enterpriseMsg);

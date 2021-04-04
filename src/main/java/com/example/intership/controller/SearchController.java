@@ -3,7 +3,9 @@ package com.example.intership.controller;
 import com.example.intership.entities.job.Job;
 import com.example.intership.entities.user.Enterprise;
 import com.example.intership.service.JobService;
+import com.example.intership.service.PictureService;
 import com.example.intership.service.UserService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,9 @@ public class SearchController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PictureService pictureService;
 
     /*
         岗位搜索函数
@@ -43,7 +48,8 @@ public class SearchController {
 
         int realJobListCount = jobList.size() > (pageSize * currentPage) ? pageSize * currentPage : jobList.size();
         for (int i = (currentPage - 1) * pageSize; i < realJobListCount; i++) {
-            finalJobList.add(jobList.get(i).getForm());
+            Job job = jobList.get(i);
+            finalJobList.add(jobService.getForm(job));
         }
 
         List<Enterprise> enterpriseList = userService.searchEnterprise(searchKey);
@@ -52,9 +58,11 @@ public class SearchController {
 
         for (Enterprise enterprise : enterpriseList) {
             HashMap<String, Object> enterpriseMsg = new HashMap<>();
+            ObjectId avatarId = pictureService.getAvatarId(enterprise.getAccount(), 2);
+
             enterpriseMsg.put("companyName", enterprise.getCompanyName());
             enterpriseMsg.put("companyIntro", enterprise.getCompanyIntro());
-            enterpriseMsg.put("companyLogoURL", "http://localhost:8089/avatar/2/" + enterprise.getAccount() + '/' + new Date().getTime());
+            enterpriseMsg.put("companyLogoURL", "http://localhost:8089/avatar/" + avatarId);
             enterpriseMsg.put("companyAccount", enterprise.getAccount());
 
             finalEnterpriseList.add(enterpriseMsg);

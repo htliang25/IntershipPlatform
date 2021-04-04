@@ -52,7 +52,6 @@ public class ModifyInfoController {
         if (user != null) {
             userService.modifyInfo(account, str);
 
-
             if (role == 1) {
                 ArrayList<Student> studentList = (ArrayList<Student>) userService.getStudentList();
                 int index = -1;

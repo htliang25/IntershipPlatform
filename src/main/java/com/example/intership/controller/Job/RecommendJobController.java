@@ -1,10 +1,7 @@
 package com.example.intership.controller.Job;
 
 import com.example.intership.entities.job.Job;
-import com.example.intership.service.JobService;
-import com.example.intership.service.RecommendJobService;
-import com.example.intership.service.ResumeService;
-import com.example.intership.service.UserService;
+import com.example.intership.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +26,9 @@ public class RecommendJobController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    PictureService pictureService;
+
     /*
         获取用户推荐工作函数
         api为UserRecommendJob
@@ -48,7 +48,8 @@ public class RecommendJobController {
 
         int realJobListCount = recommendJobList.size() > (pageSize * currentPage) ? pageSize * currentPage : recommendJobList.size();
         for (int i = (currentPage - 1) * pageSize; i < realJobListCount; i++) {
-            list.add(recommendJobList.get(i).getForm());
+            Job job = recommendJobList.get(i);
+            list.add(jobService.getForm(job));
         }
 
         data.put("currentJobList", list);

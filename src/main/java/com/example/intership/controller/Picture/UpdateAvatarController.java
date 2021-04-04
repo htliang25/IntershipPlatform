@@ -10,41 +10,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-public class UpdatePictureController {
+public class UpdateAvatarController {
     @Autowired
     PictureService pictureService;
-
-    /*
-        更新简历附件函数
-        api为UserUpdateResumeAppendix
-        参数为为用户帐号account、用户角色role和附件列表appendixList
-        返回值为
-     */
-    @ResponseBody
-    @PostMapping("/UserUpdateResumeAppendix")
-    public Map<String, Object> updateResumeAppendix(HttpServletRequest request,
-                                                    @RequestParam(value = "role", required = false) int role,
-                                                    @RequestParam(value = "appendixList", required = false) ArrayList<MultipartFile> appendixList) {
-        String account = request.getParameter("account");
-        if (appendixList != null) {
-            // 这里传入 account 和 附件 可以传多个文件了
-            if (pictureService.isExist(account, role, "accessory")) {
-                pictureService.deleteAccessory(account, role, "accessory");
-            }
-            int len = appendixList.size();
-            for (int i = 0; i < len; i++) {
-                Picture picture = new Picture(account, role);
-                picture.setAttributes((MultipartFile) appendixList.get(i));
-                pictureService.saveAccessory(picture, "accessory");
-            }
-        }
-        return new HashMap<>();
-    }
 
     /*
         更新用户头像函数
@@ -61,13 +33,23 @@ public class UpdatePictureController {
         if (file != null) {
             // 这里传入 account 和 简历头像
             if (pictureService.isExist(account, role, "avatar")) {
-                pictureService.deleteAccessory(account, role, "avatar");
+                pictureService.deletePicture(account, role, "avatar");
             }
             Picture picture = new Picture(account, role);
             picture.setAttributes(file);
-            pictureService.saveAccessory(picture, "avatar");
+            pictureService.savePicture(picture, "avatar");
         }
 
         return new HashMap<>();
+    }
+
+    //更新个人和企业头像
+    public void updateAvatar(String account, int role, MultipartFile file, String colName) {
+        if (pictureService.isExist(account, role, colName)) {
+            pictureService.deletePicture(account, role, colName);
+        }
+        Picture avatar = new Picture(account, role);
+        avatar.setAttributes(file);
+        pictureService.savePicture(avatar, colName);
     }
 }

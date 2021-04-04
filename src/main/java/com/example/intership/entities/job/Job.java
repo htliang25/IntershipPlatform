@@ -2,17 +2,22 @@ package com.example.intership.entities.job;
 
 import com.example.intership.entities.form.Form;
 import com.example.intership.entities.user.Applicant;
+import com.example.intership.service.PictureService;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Update;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Document(collection = "job")
 public class Job extends Form {
+
+    @Autowired
+    PictureService pictureService;
+
     /*
         岗位类，继承自表格类
         用于保存工作岗位
@@ -32,7 +37,7 @@ public class Job extends Form {
     public Job(String account, String companyName) {
         super(account);
         this.companyName = companyName;
-        applicants = new ArrayList<Applicant>();
+        applicants = new ArrayList<>();
     }
 
     public void setAttributes(Map<String, Object> data) {
@@ -90,7 +95,6 @@ public class Job extends Form {
         ObjectId id = super.getId();
         data.put("id", id.toString());
         data.put("jobName", jobName);
-        data.put("logoURL", "http://localhost:8089/avatar/2/" + super.getAccount() + "/" + new Date().getTime());
         data.put("companyName", companyName);
         data.put("jobDesc", jobDescription);
 
@@ -103,7 +107,6 @@ public class Job extends Form {
         ObjectId id = super.getId();
         data.put("id", id.toString());
         data.put("jobName", jobName);
-        data.put("logoURL", "http://localhost:8089/avatar/2/" + super.getAccount());
         data.put("companyName", companyName);
         data.put("jobDesc", jobDescription);
         data.put("jobType", jobType);
@@ -112,6 +115,10 @@ public class Job extends Form {
         data.put("jobDuty", jobDuty);
 
         return data;
+    }
+
+    public String getAccount() {
+        return super.getAccount();
     }
 
     public String getCompanyName() {

@@ -3,6 +3,7 @@ package com.example.intership.controller.Job;
 import com.example.intership.entities.job.Job;
 import com.example.intership.entities.user.Enterprise;
 import com.example.intership.service.JobService;
+import com.example.intership.service.PictureService;
 import com.example.intership.service.UserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class PreviewJobController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PictureService pictureService;
 
     /*
         获取工作详情函数
@@ -46,7 +50,8 @@ public class PreviewJobController {
         data.put("companyAccount", job.getAccount());
 
         String account = job.getAccount();
-        data.put("companyLogoURL", "http://localhost:8089/avatar/2/" + account + '/' + new Date().getTime());
+        ObjectId avatarId = pictureService.getAvatarId(account, 2);
+        data.put("companyLogoURL", "http://localhost:8089/avatar/" + avatarId);
 
         int jobNum = jobService.getJobNum(account);
         data.put("companyJobNum", jobNum - 1);
@@ -80,7 +85,7 @@ public class PreviewJobController {
 
         List<Job> jobList = jobService.getOtherJob(account, id);
         for (Job job : jobList) {
-            list.add(job.getForm());
+            list.add(jobService.getForm(job));
         }
 
         data.put("jobList", list);
@@ -112,7 +117,8 @@ public class PreviewJobController {
         List<Job> jobList = jobService.searchPublishJob(account, city, type, searchKey);
         int realJobListCount = jobList.size() > (pageSize * currentPage) ? pageSize * currentPage : jobList.size();
         for (int i = (currentPage - 1) * pageSize; i < realJobListCount; i++) {
-            list.add(jobList.get(i).getFormAddJobDesc());
+            Job job = jobList.get(i);
+            list.add(jobService.getFormAddJobDesc(job));
         }
 
         data.put("currentJobList", list);
@@ -144,7 +150,8 @@ public class PreviewJobController {
         List<Job> jobList = jobService.findJob(city, type, searchKey);
         int realJobListCount = jobList.size() > (pageSize * currentPage) ? pageSize * currentPage : jobList.size();
         for (int i = (currentPage - 1) * pageSize; i < realJobListCount; i++) {
-            list.add(jobList.get(i).getForm());
+            Job job = jobList.get(i);
+            list.add(jobService.getForm(job));
         }
 
         data.put("currentJobList", list);
@@ -175,7 +182,7 @@ public class PreviewJobController {
             if (i > 9) {
                 break;
             }
-            hotJobList.add(job.getForm());
+            hotJobList.add(jobService.getForm(job));
         }
         data.put("hotJobList", hotJobList);
         map.put("data", data);

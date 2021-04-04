@@ -1,8 +1,9 @@
 package com.example.intership.controller.Resume;
 
-import com.example.intership.entities.Accessory;
+import com.example.intership.entities.form.Accessory;
 import com.example.intership.service.AccessoryService;
 import com.example.intership.service.JobService;
+import com.example.intership.service.PictureService;
 import com.example.intership.service.ResumeService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class PreviewResumeController {
 
     @Autowired
     JobService jobService;
+
+    @Autowired
+    PictureService pictureService;
 
     @ResponseBody
     @GetMapping(value = "/UserGetResume")
@@ -55,11 +59,12 @@ public class PreviewResumeController {
         ArrayList awardExperienceList = resumeService.getMultipleForm(account, "awardExperience");
         data.put("awardExperience", awardExperienceList);
 
-        String url = "http://localhost:8089/avatar/1/" + account + "/" + new Date().getTime();
+        ObjectId avatarId = pictureService.getAvatarId(account, 1);
+        String url = "http://localhost:8089/avatar/" + avatarId;
         data.put("avatarURL", url);
 
 
-        List<Accessory> accessoryList = accessoryService.getMyAccessoryList(account, 1);
+        List<Accessory> accessoryList = accessoryService.getMyAccessoryList(account);
         ArrayList finalAccessoryList = new ArrayList();
         for (Accessory accessory : accessoryList) {
             HashMap<String, Object> accessoryMsg = new HashMap<>();
