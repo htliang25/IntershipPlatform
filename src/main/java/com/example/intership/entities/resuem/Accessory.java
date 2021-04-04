@@ -20,10 +20,6 @@ public class Accessory {
     private String contentType;
     private String url;
 
-    public Accessory () {
-        id = new ObjectId();
-    }
-
     public Accessory(String account) {
         id = new ObjectId();
         this.account = account;
@@ -38,9 +34,9 @@ public class Accessory {
             setContent(content);
             setContentType(suffixName);
             if (suffixName.equals(".pdf")) {
-                setUrl("/accessory/pdf/" + account + '/' + fileName);
+                setUrl("/api/accessory/pdf/" + account + '/' + fileName);
             } else {
-                setUrl("/accessory/img/" + account + '/' + fileName);
+                setUrl("/api/accessory/img/" + account + '/' + fileName);
             }
 
 

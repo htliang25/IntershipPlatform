@@ -40,8 +40,6 @@ public class AccessoryTemplate {
         Criteria criteria = Criteria.where("account").is(account);
         Query query = new Query(criteria);
 
-        ArrayList data = new ArrayList();
-
         return mongoTemplate.find(query, Accessory.class);
     }
 
