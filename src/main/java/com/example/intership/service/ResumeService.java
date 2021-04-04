@@ -50,4 +50,5 @@ public class ResumeService {
         return resumeTemplate.isExist(account, colName);
     }
 
+
 }

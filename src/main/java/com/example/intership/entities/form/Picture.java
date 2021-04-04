@@ -1,5 +1,4 @@
-
-package com.example.intership.entities.form;
+package com.example.intership.entities;
 
 import org.bson.types.ObjectId;
 import org.springframework.mock.web.MockMultipartFile;
@@ -11,37 +10,41 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Picture {
-    /*
-        图片类
-        用于保存附件图片和头像
-        类属性有id、所属用户账号account、所属用户角色role、图片名name、图片字节流content和图片类型contentType
-        类函数有类属性的set、get函数和获取图片函数
-     */
+public class Accessory {
     private ObjectId _id;
     private String account;
     private int role;
     private String name;
     private byte[] content;
     private String contentType;
+    private String url;
 
-    public Picture(String account, int role) {
+
+    public Accessory () {
         _id = new ObjectId();
-        this.account = account;
-        this.role = role;
     }
 
-    public void setAttributes(MultipartFile multipartFile) {
+    public Accessory(String account) {
+        _id = new ObjectId();
+        this.account = account;
+    }
+
+    public void setAttributes(int role, MultipartFile multipartFile) {
         try {
             String fileName = multipartFile.getOriginalFilename();
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
             byte[] content = multipartFile.getBytes();
+            setRole(role);
             setName(fileName);
             setContent(content);
             setContentType(suffixName);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setRole(int role) {
+        this.role = role;
     }
 
     public void setName(String name) {
@@ -56,11 +59,15 @@ public class Picture {
         this.contentType = contentType;
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public ObjectId getId() {
         return _id;
     }
 
-    public Map<String, Object> getPicture() {
+    public Map<String, Object> getFile() {
         Map<String, Object> data = new HashMap<>();
 
         try {
