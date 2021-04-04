@@ -1,4 +1,4 @@
-package com.example.intership.entities.form;
+package com.example.intership.entities.resuem;
 
 import org.bson.types.ObjectId;
 import org.springframework.mock.web.MockMultipartFile;

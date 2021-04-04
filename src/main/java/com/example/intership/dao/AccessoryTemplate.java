@@ -1,6 +1,6 @@
 package com.example.intership.dao;
 
-import com.example.intership.entities.form.Accessory;
+import com.example.intership.entities.resuem.Accessory;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -24,7 +24,7 @@ public class AccessoryTemplate {
         Criteria criteria = Criteria.where("account").is(account).and("name").is(fileName);
         Query query = new Query(criteria);
 
-        return mongoTemplate.findOne(query, Accessory.class, "accessory");
+        return mongoTemplate.findOne(query, Accessory.class);
     }
 
 
@@ -33,7 +33,7 @@ public class AccessoryTemplate {
         Criteria criteria = Criteria.where("_id").is(accessoryId);
         Query query = new Query(criteria);
 
-        mongoTemplate.remove(query, Accessory.class, "accessory");
+        mongoTemplate.remove(query, Accessory.class);
     }
 
     public List<Accessory> getAccessory(String account) {
@@ -42,22 +42,22 @@ public class AccessoryTemplate {
 
         ArrayList data = new ArrayList();
 
-        return mongoTemplate.find(query, Accessory.class, "accessory");
+        return mongoTemplate.find(query, Accessory.class);
     }
 
     public void saveAccessory(Accessory accessory) {
         mongoTemplate.save(accessory);
     }
 
-    public void deleteAccessory(String account) {
-        Criteria criteria = Criteria.where("account").is(account);
+    public void deleteAccessory(String account, String name) {
+        Criteria criteria = Criteria.where("account").is(account).and("name").is(name);
         Query query = new Query(criteria);
 
         mongoTemplate.remove(query, Accessory.class);
     }
 
-    public boolean isExist(String account) {
-        Criteria criteria = Criteria.where("account").is(account);
+    public boolean isExist(String account, String name) {
+        Criteria criteria = Criteria.where("account").is(account).and("name").is(name);
         Query query = new Query(criteria);
 
         Accessory accessory = mongoTemplate.findOne(query, Accessory.class);

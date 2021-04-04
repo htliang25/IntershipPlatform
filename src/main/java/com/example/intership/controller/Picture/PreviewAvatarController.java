@@ -1,6 +1,6 @@
 package com.example.intership.controller.Picture;
 
-import com.example.intership.entities.form.Picture;
+import com.example.intership.entities.resuem.Picture;
 import com.example.intership.service.PictureService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +18,14 @@ public class PreviewAvatarController {
     /*
         获取用户头像函数
         api为图片的url
-        参数为为用户帐号account和用户角色role
+        参数为为头像avatarId
         返回值为用户头像图片
      */
     @ResponseBody
-    @GetMapping(value = "/avatar/{pictureId}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
-    public byte[] previewAvatar(@PathVariable ObjectId pictureId) {
-        Picture picture = pictureService.getAvatar(pictureId);
+    @GetMapping(value = "/avatar/{avatarId}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+    public byte[] previewAvatar(@PathVariable String avatarId) {
+        ObjectId id = new ObjectId(avatarId);
+        Picture picture = pictureService.getAvatar(id);
         return (picture != null) ? picture.getContent() : new byte[0];
     }
 }

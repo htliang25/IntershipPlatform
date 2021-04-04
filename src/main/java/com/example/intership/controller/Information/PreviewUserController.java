@@ -51,7 +51,7 @@ public class PreviewUserController {
                 Map<String, Object> infoForm = resumeService.getSingleForm(account, "informationForm");
                 data.put("infoForm", infoForm);
 
-                data.put("avatarURL", "http://localhost:8089/avatar/" + avatarId);
+                data.put("avatarURL", "/api/avatar/" + avatarId);
                 map.put("code", 20001);
                 map.put("data", data);
             } else {
@@ -65,7 +65,7 @@ public class PreviewUserController {
             if (enterprise != null) {
                 data.put("companyName", enterprise.getCompanyName());
                 data.put("companyIntro", enterprise.getCompanyIntro());
-                data.put("companyLogoURL", "http://localhost:8089/avatar/" + avatarId);
+                data.put("companyLogoURL", "/api/avatar/" + avatarId);
                 data.put("companyType", enterprise.getCompanyType());
                 data.put("companyAddress", enterprise.getCompanyAddress());
                 data.put("companyJobCount", jobService.getJobNum(account));
@@ -101,7 +101,7 @@ public class PreviewUserController {
             }
             HashMap<String, Object> enterpriseMsg = new HashMap<>();
             ObjectId pictureId = pictureService.getAvatarId(enterprise.getAccount(), 2);
-            enterpriseMsg.put("logoURL", "http://localhost:8089/avatar/" + pictureId);
+            enterpriseMsg.put("logoURL", "/api/avatar/" + pictureId);
             enterpriseMsg.put("companyName", enterprise.getCompanyName());
             enterpriseMsg.put("companyAccount", enterprise.getAccount());
             hotCompanyList.add(enterpriseMsg);

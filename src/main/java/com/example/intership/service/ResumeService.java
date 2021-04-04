@@ -1,8 +1,8 @@
 package com.example.intership.service;
 
 import com.example.intership.dao.ResumeTemplate;
-import com.example.intership.entities.form.Content;
-import com.example.intership.entities.form.Form;
+import com.example.intership.entities.resuem.Content;
+import com.example.intership.entities.resuem.Form;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

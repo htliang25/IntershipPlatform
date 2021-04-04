@@ -1,13 +1,13 @@
 package com.example.intership.controller.Resume;
 
-import com.example.intership.entities.form.Content;
-import com.example.intership.entities.form.Form;
-import com.example.intership.entities.form.multipleform.AwardExperience;
-import com.example.intership.entities.form.multipleform.EducationExperience;
-import com.example.intership.entities.form.multipleform.ProjectExperience;
-import com.example.intership.entities.form.multipleform.SchoolExperience;
-import com.example.intership.entities.form.singleform.InformationForm;
-import com.example.intership.entities.form.singleform.JobForm;
+import com.example.intership.entities.resuem.Content;
+import com.example.intership.entities.resuem.Form;
+import com.example.intership.entities.resuem.multipleform.AwardExperience;
+import com.example.intership.entities.resuem.multipleform.EducationExperience;
+import com.example.intership.entities.resuem.multipleform.ProjectExperience;
+import com.example.intership.entities.resuem.multipleform.SchoolExperience;
+import com.example.intership.entities.resuem.singleform.InformationForm;
+import com.example.intership.entities.resuem.singleform.JobForm;
 
 import com.example.intership.entities.user.Student;
 import com.example.intership.controller.utils.RecommendUtils;

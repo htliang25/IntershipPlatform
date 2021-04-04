@@ -1,6 +1,6 @@
 package com.example.intership.controller.Picture;
 
-import com.example.intership.entities.form.Picture;
+import com.example.intership.entities.resuem.Picture;
 import com.example.intership.service.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,15 +41,5 @@ public class UpdateAvatarController {
         }
 
         return new HashMap<>();
-    }
-
-    //更新个人和企业头像
-    public void updateAvatar(String account, int role, MultipartFile file, String colName) {
-        if (pictureService.isExist(account, role, colName)) {
-            pictureService.deletePicture(account, role, colName);
-        }
-        Picture avatar = new Picture(account, role);
-        avatar.setAttributes(file);
-        pictureService.savePicture(avatar, colName);
     }
 }

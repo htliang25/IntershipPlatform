@@ -1,6 +1,6 @@
-package com.example.intership.entities.form.multipleform;
+package com.example.intership.entities.resuem.multipleform;
 
-import com.example.intership.entities.form.Form;
+import com.example.intership.entities.resuem.Form;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;

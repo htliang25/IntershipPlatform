@@ -68,7 +68,7 @@ public class PostResumeController {
 
     @ResponseBody
     @GetMapping("/CompanyGetApplicants")
-    public Map<String, Object> companyGetApplicants(@RequestParam(value = "account", required = true) String account) {
+    public Map<String, Object> companyGetApplicants(@RequestParam(value = "account") String account) {
         ArrayList list = new ArrayList();
         Map<String, Object> data = new HashMap<>();
         Map<String, Object> res = new HashMap<>();

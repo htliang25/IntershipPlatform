@@ -1,10 +1,12 @@
 package com.example.intership.controller.Picture;
 
-import com.example.intership.entities.form.Accessory;
+import com.example.intership.entities.resuem.Accessory;
 import com.example.intership.service.AccessoryService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,21 +30,33 @@ public class UpdateAccessoryController {
     @ResponseBody
     @PostMapping("/UserUpdateResumeAppendix")
     public Map<String, Object> updateResumeAppendix(HttpServletRequest request,
-                                                    @RequestParam(value = "role", required = false) int role,
                                                     @RequestParam(value = "appendixList", required = false) ArrayList<MultipartFile> appendixList) {
+        Map<String, Object> res = new HashMap<>();
         String account = request.getParameter("account");
         if (appendixList != null) {
             // 这里传入 account 和 附件 可以传多个文件了
-            if (accessoryService.isExist(account)) {
-                accessoryService.deleteAccessory(account);
-            }
             int len = appendixList.size();
             for (int i = 0; i < len; i++) {
-                Accessory accessory = new Accessory(account, role);
-                accessory.setAttributes((MultipartFile) appendixList.get(i));
+                String name = appendixList.get(i).getOriginalFilename();
+                if (accessoryService.isExist(account, name)) {
+                    accessoryService.deleteAccessory(account, name);
+                }
+                Accessory accessory = new Accessory(account);
+                accessory.setAttributes(appendixList.get(i));
                 accessoryService.saveAccessory(accessory);
             }
         }
-        return new HashMap<>();
+        res.put("code", 20001);
+        return res;
+    }
+
+    @ResponseBody
+    @PostMapping("/UserRemoveResumeAppendix")
+    public Map<String, Object> removeResumeAppendix(@RequestBody Map<String, Object> data) {
+        Map<String, Object> res = new HashMap<>();
+        ObjectId id = new ObjectId((String) data.get("accessoryId"));
+        accessoryService.removeResumeAccessory(id);
+        res.put("code", 20001);
+        return res;
     }
 }

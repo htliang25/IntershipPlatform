@@ -1,7 +1,7 @@
 package com.example.intership.service;
 
 import com.example.intership.dao.AccessoryTemplate;
-import com.example.intership.entities.form.Accessory;
+import com.example.intership.entities.resuem.Accessory;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,12 +25,12 @@ public class AccessoryService {
         accessoryTemplate.saveAccessory(accessory);
     }
 
-    public void deleteAccessory(String account) {
-        accessoryTemplate.deleteAccessory(account);
+    public void deleteAccessory(String account, String name) {
+        accessoryTemplate.deleteAccessory(account, name);
     }
 
-    public boolean isExist(String account) {
-        return accessoryTemplate.isExist(account);
+    public boolean isExist(String account, String name) {
+        return accessoryTemplate.isExist(account, name);
     }
 
     public void removeResumeAccessory (ObjectId accessoryId) {

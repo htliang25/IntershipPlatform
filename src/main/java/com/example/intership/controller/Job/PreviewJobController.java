@@ -51,7 +51,7 @@ public class PreviewJobController {
 
         String account = job.getAccount();
         ObjectId avatarId = pictureService.getAvatarId(account, 2);
-        data.put("companyLogoURL", "http://localhost:8089/avatar/" + avatarId);
+        data.put("companyLogoURL", "/api/avatar/" + avatarId);
 
         int jobNum = jobService.getJobNum(account);
         data.put("companyJobNum", jobNum - 1);

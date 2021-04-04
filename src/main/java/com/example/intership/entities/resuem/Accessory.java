@@ -1,4 +1,4 @@
-package com.example.intership.entities.form;
+package com.example.intership.entities.resuem;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,7 +15,6 @@ import java.util.Map;
 public class Accessory {
     private ObjectId id;
     private String account;
-    private int role;
     private String name;
     private byte[] content;
     private String contentType;
@@ -25,10 +24,9 @@ public class Accessory {
         id = new ObjectId();
     }
 
-    public Accessory(String account, int role) {
+    public Accessory(String account) {
         id = new ObjectId();
         this.account = account;
-        this.role = role;
     }
 
     public void setAttributes(MultipartFile multipartFile) {
@@ -40,19 +38,15 @@ public class Accessory {
             setContent(content);
             setContentType(suffixName);
             if (suffixName.equals(".pdf")) {
-                setUrl("/api/accessory/pdf/" + account + '/' + fileName);
+                setUrl("/accessory/pdf/" + account + '/' + fileName);
             } else {
-                setUrl("/api/accessory/img/" + account + '/' + fileName);
+                setUrl("/accessory/img/" + account + '/' + fileName);
             }
 
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void setRole(int role) {
-        this.role = role;
     }
 
     public void setName(String name) {
@@ -90,10 +84,6 @@ public class Accessory {
         }
 
         return data;
-    }
-
-    public int getRole() {
-        return role;
     }
 
     public String getName() {

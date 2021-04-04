@@ -1,6 +1,6 @@
 package com.example.intership.controller.Resume;
 
-import com.example.intership.entities.form.Accessory;
+import com.example.intership.entities.resuem.Accessory;
 import com.example.intership.service.AccessoryService;
 import com.example.intership.service.JobService;
 import com.example.intership.service.PictureService;
@@ -60,9 +60,8 @@ public class PreviewResumeController {
         data.put("awardExperience", awardExperienceList);
 
         ObjectId avatarId = pictureService.getAvatarId(account, 1);
-        String url = "http://localhost:8089/avatar/" + avatarId;
+        String url = "/api/avatar/" + avatarId;
         data.put("avatarURL", url);
-
 
         List<Accessory> accessoryList = accessoryService.getMyAccessoryList(account);
         ArrayList finalAccessoryList = new ArrayList();

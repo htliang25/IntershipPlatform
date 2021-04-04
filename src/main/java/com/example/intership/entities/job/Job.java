@@ -1,6 +1,6 @@
 package com.example.intership.entities.job;
 
-import com.example.intership.entities.form.Form;
+import com.example.intership.entities.resuem.Form;
 import com.example.intership.entities.user.Applicant;
 import com.example.intership.service.PictureService;
 import org.bson.types.ObjectId;

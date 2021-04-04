@@ -1,4 +1,4 @@
-package com.example.intership.entities.form;
+package com.example.intership.entities.resuem;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;

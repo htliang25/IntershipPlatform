@@ -34,7 +34,7 @@ public class ImageController {
             image.setAttributes(file);
             imageService.saveImage(image);
 
-            map.put("url", "/api/img/" + image.get_id().toString());
+            map.put("url", "/img/" + image.get_id().toString());
             map.put("code", 20001);
         }
 

@@ -1,6 +1,6 @@
-package com.example.intership.entities.form.singleform;
+package com.example.intership.entities.resuem.singleform;
 
-import com.example.intership.entities.form.Form;
+import com.example.intership.entities.resuem.Form;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Update;
 

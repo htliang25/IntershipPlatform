@@ -225,14 +225,14 @@ public class JobTemplate {
     public Map<String, Object> getForm(Job job) {
         Map<String, Object> data = job.getForm();
         ObjectId avatarId = pictureTemplate.getAvatarId(job.getAccount(), 2);
-        data.put("logoURL", "http://localhost:8089/avatar/" + avatarId);
+        data.put("logoURL", "/api/avatar/" + avatarId);
         return data;
     }
 
     public Map<String, Object> getFormAddJobDesc(Job job) {
         Map<String, Object> data = job.getFormAddJobDesc();
         ObjectId avatarId = pictureTemplate.getAvatarId(job.getAccount(), 2);
-        data.put("logoURL", "http://localhost:8089/avatar/" + avatarId);
+        data.put("logoURL", "/api/avatar/" + avatarId);
         return data;
     }
 }

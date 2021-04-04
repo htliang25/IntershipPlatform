@@ -62,7 +62,7 @@ public class SearchController {
 
             enterpriseMsg.put("companyName", enterprise.getCompanyName());
             enterpriseMsg.put("companyIntro", enterprise.getCompanyIntro());
-            enterpriseMsg.put("companyLogoURL", "http://localhost:8089/avatar/" + avatarId);
+            enterpriseMsg.put("companyLogoURL", "/api/avatar/" + avatarId);
             enterpriseMsg.put("companyAccount", enterprise.getAccount());
 
             finalEnterpriseList.add(enterpriseMsg);

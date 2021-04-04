@@ -1,6 +1,6 @@
 package com.example.intership.controller.Picture;
 
-import com.example.intership.entities.form.Accessory;
+import com.example.intership.entities.resuem.Accessory;
 import com.example.intership.service.AccessoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
