@@ -12,6 +12,7 @@ import com.example.intership.entities.resuem.singleform.JobForm;
 import com.example.intership.entities.user.Student;
 import com.example.intership.controller.utils.RecommendUtils;
 import com.example.intership.service.ResumeService;
+import com.example.intership.service.StudentService;
 import com.example.intership.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,9 @@ public class UpdateResumeController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    StudentService studentService;
 
     //更新个人简历信息
     @ResponseBody
@@ -66,7 +70,7 @@ public class UpdateResumeController {
         updateMultipleForm(account, awardExperience, "awardExperience");
 
         {
-            ArrayList<Student> studentList = (ArrayList<Student>) userService.getStudentList();
+            ArrayList<Student> studentList = (ArrayList<Student>) studentService.getStudentList();
             int index = -1;
             for (int i = 0; i < studentList.size();i++) {
                 Student currentStudent = studentList.get(i);

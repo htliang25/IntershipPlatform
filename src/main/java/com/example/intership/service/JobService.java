@@ -40,7 +40,7 @@ public class JobService {
         return jobTemplate.getJobNum(account);
     }
 
-    public int addApplicant(ObjectId jobId, Applicant applicant) {
+    public boolean addApplicant(ObjectId jobId, Applicant applicant) {
         return jobTemplate.addApplicant(jobId, applicant);
     }
 

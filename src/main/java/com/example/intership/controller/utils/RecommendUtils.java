@@ -134,10 +134,10 @@ public class RecommendUtils {
         Student student = studentList.get(index);
         String account = student.getAccount();
 
-        ArrayList<Applicant> currentStudentApplicantList = student.getApplicants();
+        ArrayList<ObjectId> currentStudentApplicantList = student.getJobList();
         ArrayList<String> currentStudentApplicantJobIdList = new ArrayList<>();
-        for (Applicant applicant : currentStudentApplicantList) {
-            currentStudentApplicantJobIdList.add(applicant.getJobId());
+        for (Object jobId : currentStudentApplicantList) {
+            currentStudentApplicantJobIdList.add(jobId.toString());
         }
 
         List<Job> allJobList = jobService.getJobList("全国", "全部");
@@ -207,12 +207,12 @@ public class RecommendUtils {
                 continue;
             }
             Student anotherStudent = studentList.get(j);
-            ArrayList<Applicant> anotherApplicantList = anotherStudent.getApplicants();
+            ArrayList<ObjectId> anotherApplicantList = anotherStudent.getJobList();
 
             // 求交集
             double intersection = 0;
-            for (Applicant anotherApplicant : anotherApplicantList) {
-                if (currentStudentApplicantJobIdList.contains(anotherApplicant.getJobId())) {
+            for (ObjectId jobId : anotherApplicantList) {
+                if (currentStudentApplicantJobIdList.contains(jobId.toString())) {
                     intersection++;
                 }
             }
@@ -229,9 +229,9 @@ public class RecommendUtils {
 
         int userBasedSum = 0;
         for (Student semiStudent : semiStudentList) {
-            ArrayList<Applicant> semiApplicantList = semiStudent.getApplicants();
-            for (Applicant semiApplicant : semiApplicantList) {
-                String semiJobId = semiApplicant.getJobId();
+            ArrayList<ObjectId> semiApplicantList = semiStudent.getJobList();
+            for (ObjectId jobId : semiApplicantList) {
+                String semiJobId = jobId.toString();
                 if (!currentStudentApplicantJobIdList.contains(semiJobId)) {
                     Job job = jobService.getJob(new ObjectId(semiJobId));
                     finalSemiJobSet.add(job);
@@ -317,8 +317,8 @@ public class RecommendUtils {
 
         int itemBasedSum = 0;
 
-        for (Applicant applicant : currentStudentApplicantList) {
-            Map<String, Double> singleSemiJobMap = semiJobMap.get(applicant.getJobId());
+        for (ObjectId jobId : currentStudentApplicantList) {
+            Map<String, Double> singleSemiJobMap = semiJobMap.get(jobId.toString());
             List<String> singleSemiJobArr = RecommendUtils.sortByValueDescending(singleSemiJobMap);
 
             for (String semiJobId : singleSemiJobArr) {

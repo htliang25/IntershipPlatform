@@ -137,56 +137,27 @@ public class JobTemplate {
         return (int) mongoTemplate.count(query, Job.class);
     }
 
-    // 1. job要更新Applicants   2. 企业也需要更新Applicants
-    public int addApplicant(ObjectId id, Applicant currentApplicant) {
-        Criteria criteria1 = Criteria.where("_id").is(id);
-        Query query1 = new Query(criteria1);
+    /*
+        添加岗位申请者函数
+        参数为工作id和申请者applicant
+        返回值为是否投递成功的布尔值
+     */
+    public boolean addApplicant(ObjectId id, Applicant currentApplicant) {
+        Criteria criteria = Criteria.where("_id").is(id);
+        Query query = new Query(criteria);
 
-        Job job = mongoTemplate.findOne(query1, Job.class);
-        currentApplicant.setJobName(job.getJobName());
-        ArrayList<Applicant> jobApplicants = job.getApplicants();
+        Job job = mongoTemplate.findOne(query, Job.class);
+        boolean flag = job.applicantIsExist(currentApplicant);
 
-        Criteria criteria2 = Criteria.where("account").is(job.getAccount());
-        Query query2 = new Query(criteria2);
-        Enterprise enterprise = mongoTemplate.findOne(query2, Enterprise.class);
-        ArrayList<Applicant> companyApplicants = enterprise.getApplicants();
-
-        Criteria criteria3 = Criteria.where("account").is(currentApplicant.getApplicantAccount());
-        Query query3 = new Query(criteria3);
-        Student student = mongoTemplate.findOne(query3, Student.class);
-        ArrayList<Applicant> userApplicants = student.getApplicants();
-
-        String account = currentApplicant.getApplicantAccount();
-        boolean result = true;
-
-        if (!jobApplicants.isEmpty()) {
-            for(Applicant applicant : jobApplicants) {
-                if (applicant.getApplicantAccount().equals(currentApplicant.getApplicantAccount())) {
-                    result = false;
-                    break;
-                }
-            }
-        }
-
-        if (result) {
-            Update update1 = new Update();
-            jobApplicants.add(currentApplicant);
-            update1.set("applicants", jobApplicants);
-            mongoTemplate.updateMulti(query1, update1, "job");
-
-            Update update2 = new Update();
-            companyApplicants.add(currentApplicant);
-            update2.set("applicants", companyApplicants);
-            mongoTemplate.updateMulti(query2, update2, "enterprise");
-
-            Update update3 = new Update();
-            userApplicants.add(currentApplicant);
-            update3.set("applicants", userApplicants);
-            mongoTemplate.updateMulti(query3, update3, "student");
-
-            return 20001;
+        if (flag) {
+            ArrayList applicants = job.getApplicants();
+            applicants.add(currentApplicant);
+            Update update = new Update();
+            update.set("applicants", applicants);
+            mongoTemplate.updateMulti(query, update, Job.class);
+            return true;
         } else {
-            return 50001;
+            return false;
         }
     }
 

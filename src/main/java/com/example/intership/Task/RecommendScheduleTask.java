@@ -2,10 +2,7 @@ package com.example.intership.Task;
 
 import com.example.intership.entities.user.Student;
 import com.example.intership.controller.utils.RecommendUtils;
-import com.example.intership.service.JobService;
-import com.example.intership.service.RecommendJobService;
-import com.example.intership.service.ResumeService;
-import com.example.intership.service.UserService;
+import com.example.intership.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -30,8 +27,8 @@ public class RecommendScheduleTask {
     @Autowired
     RecommendJobService recommendJobService;
 
-
-
+    @Autowired
+    StudentService studentService;
 
     @Scheduled(cron = "* */60 * * * ?")
     private void recommendTask () {
@@ -45,7 +42,7 @@ public class RecommendScheduleTask {
         // 基于用户：用户小明 投了 A、B岗位  用户小红投了A、B、C岗位 基于用户的协同推荐会把C岗位推荐给A
         // 基于内容：用户小明 投了A岗位， 后台发现B岗位和A岗位投递的人很相似，因此会判定岗位A和岗位B相似， 基于内容的协同过滤会把B岗位推荐给A
 
-        ArrayList<Student> studentList = (ArrayList<Student>) userService.getStudentList();
+        ArrayList<Student> studentList = (ArrayList<Student>) studentService.getStudentList();
         for (int i = 0;i < studentList.size();i++) {
             RecommendUtils.recommendJob(i, studentList);
         }

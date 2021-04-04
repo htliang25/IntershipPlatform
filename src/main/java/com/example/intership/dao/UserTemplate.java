@@ -10,8 +10,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 public class UserTemplate {
     @Autowired
@@ -31,22 +29,6 @@ public class UserTemplate {
         } else {
             return mongoTemplate.findOne(query, Enterprise.class);
         }
-    }
-
-    /*
-        获取全部学生函数
-        返回值为学生表中的全部用户
-     */
-    public List<Student> getStudentList () {
-        return mongoTemplate.findAll(Student.class);
-    }
-
-    /*
-        获取全部企业函数
-        返回值为企业表中的全部用户
-     */
-    public List<Enterprise> getEnterpriseList () {
-        return mongoTemplate.findAll(Enterprise.class);
     }
 
     /*
@@ -91,18 +73,5 @@ public class UserTemplate {
         }
 
         mongoTemplate.updateMulti(query, update, str[0]);
-    }
-
-    /*
-        查找企业函数
-        参数为搜索关键词
-        返回值为字符匹配的公司
-     */
-    public List<Enterprise> searchEnterprise (String searchKey) {
-        String companyName = ".*?" + searchKey + ".*";
-        Criteria criteria1 = Criteria.where("companyName").regex(companyName);
-        Query query1 = new Query(criteria1);
-
-        return mongoTemplate.find(query1, Enterprise.class);
     }
 }

@@ -3,6 +3,7 @@ package com.example.intership.controller.Information;
 import com.example.intership.entities.user.User;
 import com.example.intership.entities.user.Student;
 import com.example.intership.controller.utils.RecommendUtils;
+import com.example.intership.service.StudentService;
 import com.example.intership.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,9 @@ import java.util.Map;
 public class ModifyInfoController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    StudentService studentService;
 
     /*
         修改用户（或企业）信息函数
@@ -53,7 +57,7 @@ public class ModifyInfoController {
             userService.modifyInfo(account, str);
 
             if (role == 1) {
-                ArrayList<Student> studentList = (ArrayList<Student>) userService.getStudentList();
+                ArrayList<Student> studentList = (ArrayList<Student>) studentService.getStudentList();
                 int index = -1;
                 for (int i = 0; i < studentList.size();i++) {
                     Student currentStudent = studentList.get(i);

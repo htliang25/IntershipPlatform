@@ -2,6 +2,7 @@ package com.example.intership.controller.Job;
 
 import com.example.intership.entities.job.Job;
 import com.example.intership.entities.user.Enterprise;
+import com.example.intership.service.EnterpriseService;
 import com.example.intership.service.JobService;
 import com.example.intership.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class PublishJobController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    EnterpriseService enterpriseService;
+
     /*
         企业发布工作函数
         api为CompanyPublishJob
@@ -38,6 +42,7 @@ public class PublishJobController {
         Job job = new Job(account, companyName);
         job.setAttributes(data);
         jobService.publishJob(job);
+        enterpriseService.publishJob(account, job.getId());
 
         Map<String, Object> res = new HashMap<>();
         res.put("code", 20001);

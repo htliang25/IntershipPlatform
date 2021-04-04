@@ -1,5 +1,6 @@
 package com.example.intership.entities.user;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -13,12 +14,12 @@ public class Student extends User {
      */
     private String university;
     private String major;
-    private ArrayList<Applicant> applicants;
+    private ArrayList<ObjectId> jobList;
 
     public Student() {
         super();
         super.setRole(1);
-        applicants = new ArrayList<>();
+        jobList = new ArrayList<>();
     }
 
     public void setUniversity(String university) {
@@ -37,11 +38,11 @@ public class Student extends User {
         return major;
     }
 
-    public ArrayList<Applicant> getApplicants() {
-        return applicants;
+    public ArrayList<ObjectId> getJobList() {
+        return jobList;
     }
 
-    public void setApplicants(ArrayList<Applicant> applicants) {
-        this.applicants = applicants;
+    public boolean JobIsExist(ObjectId jobId) {
+        return (jobList.indexOf(jobId) == -1) ? true : false;
     }
 }

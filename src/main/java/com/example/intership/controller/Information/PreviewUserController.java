@@ -2,10 +2,7 @@ package com.example.intership.controller.Information;
 
 import com.example.intership.entities.user.Enterprise;
 import com.example.intership.entities.user.Student;
-import com.example.intership.service.JobService;
-import com.example.intership.service.PictureService;
-import com.example.intership.service.ResumeService;
-import com.example.intership.service.UserService;
+import com.example.intership.service.*;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +14,9 @@ import java.util.*;
 public class PreviewUserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    EnterpriseService enterpriseService;
 
     @Autowired
     JobService jobService;
@@ -91,7 +91,7 @@ public class PreviewUserController {
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> data = new HashMap<>();
 
-        List<Enterprise> list = userService.getEnterpriseList();
+        List<Enterprise> list = enterpriseService.getEnterpriseList();
         ArrayList hotCompanyList = new ArrayList();
         int i = 0;
         for (Enterprise enterprise : list) {

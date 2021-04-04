@@ -2,9 +2,7 @@ package com.example.intership.entities.job;
 
 import com.example.intership.entities.resuem.Form;
 import com.example.intership.entities.user.Applicant;
-import com.example.intership.service.PictureService;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Update;
 
@@ -14,10 +12,6 @@ import java.util.Map;
 
 @Document(collection = "job")
 public class Job extends Form {
-
-    @Autowired
-    PictureService pictureService;
-
     /*
         岗位类，继承自表格类
         用于保存工作岗位
@@ -75,6 +69,10 @@ public class Job extends Form {
 
     public void setJobRequire(String jobRequire) {
         this.jobRequire = jobRequire;
+    }
+
+    public boolean applicantIsExist(Applicant applicant) {
+        return (applicants.indexOf(applicant) == -1) ? true : false;
     }
 
     public static Update modifyJob(Map<String, Object> data) {

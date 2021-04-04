@@ -2,6 +2,7 @@ package com.example.intership.controller;
 
 import com.example.intership.entities.job.Job;
 import com.example.intership.entities.user.Enterprise;
+import com.example.intership.service.EnterpriseService;
 import com.example.intership.service.JobService;
 import com.example.intership.service.PictureService;
 import com.example.intership.service.UserService;
@@ -22,6 +23,9 @@ public class SearchController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    EnterpriseService enterpriseService;
 
     @Autowired
     PictureService pictureService;
@@ -52,7 +56,7 @@ public class SearchController {
             finalJobList.add(jobService.getForm(job));
         }
 
-        List<Enterprise> enterpriseList = userService.searchEnterprise(searchKey);
+        List<Enterprise> enterpriseList = enterpriseService.searchEnterprise(searchKey);
 
         ArrayList finalEnterpriseList = new ArrayList();
 
