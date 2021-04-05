@@ -26,4 +26,7 @@ public class EnterpriseService {
         return enterpriseTemplate.publishJob(account, jobId);
     }
 
+    public void deleteJob(ObjectId jobId) {
+        enterpriseTemplate.deleteJob(jobId);
+    }
 }

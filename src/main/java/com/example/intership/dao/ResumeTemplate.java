@@ -1,14 +1,14 @@
 package com.example.intership.dao;
 
-import com.example.intership.entities.resuem.Picture;
-import com.example.intership.entities.resuem.Content;
-import com.example.intership.entities.resuem.Form;
-import com.example.intership.entities.resuem.multipleform.AwardExperience;
-import com.example.intership.entities.resuem.multipleform.EducationExperience;
-import com.example.intership.entities.resuem.multipleform.ProjectExperience;
-import com.example.intership.entities.resuem.multipleform.SchoolExperience;
-import com.example.intership.entities.resuem.singleform.InformationForm;
-import com.example.intership.entities.resuem.singleform.JobForm;
+import com.example.intership.entities.resume.Picture;
+import com.example.intership.entities.resume.Content;
+import com.example.intership.entities.resume.Form;
+import com.example.intership.entities.resume.multipleform.AwardExperience;
+import com.example.intership.entities.resume.multipleform.EducationExperience;
+import com.example.intership.entities.resume.multipleform.ProjectExperience;
+import com.example.intership.entities.resume.multipleform.SchoolExperience;
+import com.example.intership.entities.resume.singleform.InformationForm;
+import com.example.intership.entities.resume.singleform.JobForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;

@@ -1,6 +1,7 @@
-package com.example.intership.entities.resuem;
+package com.example.intership.entities.resume;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,24 +11,18 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Picture {
-    private ObjectId _id;
+@Document(collection = "accessory")
+public class Accessory {
+    private ObjectId id;
     private String account;
-    private int role;
     private String name;
     private byte[] content;
     private String contentType;
     private String url;
 
-
-    public Picture() {
-        _id = new ObjectId();
-    }
-
-    public Picture(String account, int role) {
-        _id = new ObjectId();
+    public Accessory(String account) {
+        id = new ObjectId();
         this.account = account;
-        this.role = role;
     }
 
     public void setAttributes(MultipartFile multipartFile) {
@@ -38,13 +33,16 @@ public class Picture {
             setName(fileName);
             setContent(content);
             setContentType(suffixName);
+            if (suffixName.equals(".pdf")) {
+                setUrl("/api/accessory/pdf/" + account + '/' + fileName);
+            } else {
+                setUrl("/api/accessory/img/" + account + '/' + fileName);
+            }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void setRole(int role) {
-        this.role = role;
     }
 
     public void setName(String name) {
@@ -64,7 +62,7 @@ public class Picture {
     }
 
     public ObjectId getId() {
-        return _id;
+        return id;
     }
 
     public Map<String, Object> getFile() {
@@ -84,10 +82,6 @@ public class Picture {
         return data;
     }
 
-    public int getRole() {
-        return role;
-    }
-
     public String getName() {
         return name;
     }
@@ -98,5 +92,21 @@ public class Picture {
 
     public String getContentType() {
         return contentType;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }

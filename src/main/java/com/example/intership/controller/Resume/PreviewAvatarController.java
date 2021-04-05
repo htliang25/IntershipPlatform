@@ -1,6 +1,6 @@
-package com.example.intership.controller.Picture;
+package com.example.intership.controller.Resume;
 
-import com.example.intership.entities.resuem.Picture;
+import com.example.intership.entities.resume.Picture;
 import com.example.intership.service.PictureService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,7 @@
 package com.example.intership.dao;
 
-import com.example.intership.entities.user.Applicant;
+import com.example.intership.entities.job.Applicant;
 import com.example.intership.entities.job.Job;
-import com.example.intership.entities.user.Enterprise;
-import com.example.intership.entities.user.Student;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -149,7 +147,7 @@ public class JobTemplate {
         Job job = mongoTemplate.findOne(query, Job.class);
         boolean flag = job.applicantIsExist(currentApplicant);
 
-        if (flag) {
+        if (!flag) {
             ArrayList applicants = job.getApplicants();
             applicants.add(currentApplicant);
             Update update = new Update();

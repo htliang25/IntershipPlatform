@@ -1,8 +1,8 @@
 package com.example.intership.service;
 
 import com.example.intership.dao.ResumeTemplate;
-import com.example.intership.entities.resuem.Content;
-import com.example.intership.entities.resuem.Form;
+import com.example.intership.entities.resume.Content;
+import com.example.intership.entities.resume.Form;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +49,5 @@ public class ResumeService {
     public boolean isExist(String account, String colName) {
         return resumeTemplate.isExist(account, colName);
     }
-
 
 }

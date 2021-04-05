@@ -1,4 +1,4 @@
-package com.example.intership.entities.resuem;
+package com.example.intership.entities.resume;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.query.Update;

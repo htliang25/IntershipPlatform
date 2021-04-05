@@ -1,6 +1,6 @@
-package com.example.intership.entities.resuem.multipleform;
+package com.example.intership.entities.resume.multipleform;
 
-import com.example.intership.entities.resuem.Form;
+import com.example.intership.entities.resume.Form;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashMap;

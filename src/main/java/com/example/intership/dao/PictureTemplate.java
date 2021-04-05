@@ -1,6 +1,6 @@
 package com.example.intership.dao;
 
-import com.example.intership.entities.resuem.Picture;
+import com.example.intership.entities.resume.Picture;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;

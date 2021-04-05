@@ -1,7 +1,6 @@
 package com.example.intership.entities.job;
 
-import com.example.intership.entities.resuem.Form;
-import com.example.intership.entities.user.Applicant;
+import com.example.intership.entities.resume.Form;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Update;
@@ -71,8 +70,14 @@ public class Job extends Form {
         this.jobRequire = jobRequire;
     }
 
-    public boolean applicantIsExist(Applicant applicant) {
-        return (applicants.indexOf(applicant) == -1) ? true : false;
+    public boolean applicantIsExist(Applicant currentApplicant) {
+        String currentAccount = currentApplicant.getApplicantAccount();
+        for (Applicant applicant : applicants) {
+            String account = applicant.getApplicantAccount();
+            if (currentAccount.equals(account))
+                return true;
+        }
+        return false;
     }
 
     public static Update modifyJob(Map<String, Object> data) {

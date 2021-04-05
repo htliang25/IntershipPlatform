@@ -1,6 +1,6 @@
 package com.example.intership.dao;
 
-import com.example.intership.entities.resuem.Accessory;
+import com.example.intership.entities.resume.Accessory;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -8,14 +8,11 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class AccessoryTemplate {
-    /*
-        只对简历附件作用
-     */
+    //只对简历附件作用
     @Autowired
     MongoTemplate mongoTemplate;
 

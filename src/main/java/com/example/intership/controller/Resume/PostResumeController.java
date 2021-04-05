@@ -1,6 +1,6 @@
 package com.example.intership.controller.Resume;
 
-import com.example.intership.entities.user.Applicant;
+import com.example.intership.entities.job.Applicant;
 import com.example.intership.entities.job.Job;
 import com.example.intership.entities.user.Enterprise;
 import com.example.intership.entities.user.Student;

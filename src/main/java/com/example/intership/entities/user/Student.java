@@ -43,6 +43,6 @@ public class Student extends User {
     }
 
     public boolean JobIsExist(ObjectId jobId) {
-        return (jobList.indexOf(jobId) == -1) ? true : false;
+        return (jobList.indexOf(jobId) == -1) ? false : true;
     }
 }

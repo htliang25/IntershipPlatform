@@ -2,6 +2,7 @@ package com.example.intership.dao;
 
 import com.example.intership.entities.job.Job;
 import com.example.intership.entities.user.Enterprise;
+import com.example.intership.entities.user.Student;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -17,6 +18,12 @@ import java.util.List;
 public class EnterpriseTemplate {
     @Autowired
     MongoTemplate mongoTemplate;
+
+    @Autowired
+    UserTemplate userTemplate;
+
+    @Autowired
+    JobTemplate jobTemplate;
 
     /*
         获取全部企业函数
@@ -62,5 +69,19 @@ public class EnterpriseTemplate {
         } else {
             return 50001;
         }
+    }
+
+    public void deleteJob(ObjectId jobId) {
+        Job job = jobTemplate.getJob(jobId);
+        String account = job.getAccount();
+        Enterprise enterprise = (Enterprise) userTemplate.getUser(account, 2);
+        ArrayList jobList = enterprise.getJobList();
+        jobList.remove(jobId);
+
+        Criteria criteria = Criteria.where("account").is(account);
+        Query query = new Query(criteria);
+        Update update = new Update();
+        update.set("jobList", jobList);
+        mongoTemplate.updateMulti(query, update, Enterprise.class);
     }
 }

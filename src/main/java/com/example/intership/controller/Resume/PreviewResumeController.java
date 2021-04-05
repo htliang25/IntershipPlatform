@@ -1,6 +1,6 @@
 package com.example.intership.controller.Resume;
 
-import com.example.intership.entities.resuem.Accessory;
+import com.example.intership.entities.resume.Accessory;
 import com.example.intership.service.AccessoryService;
 import com.example.intership.service.JobService;
 import com.example.intership.service.PictureService;

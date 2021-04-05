@@ -1,5 +1,7 @@
 package com.example.intership.dao;
 
+import com.example.intership.entities.job.Applicant;
+import com.example.intership.entities.job.Job;
 import com.example.intership.entities.user.Student;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class StudentTemplate {
 
     @Autowired
     UserTemplate userTemplate;
+
+    @Autowired
+    JobTemplate jobTemplate;
 
     /*
         获取全部学生函数
@@ -40,7 +45,7 @@ public class StudentTemplate {
         Student student = (Student) userTemplate.getUser(account, 1);
         boolean flag = student.JobIsExist(jobId);
 
-        if (flag) {
+        if (!flag) {
             ArrayList jobList = student.getJobList();
             jobList.add(jobId);
             Update update = new Update();
@@ -49,6 +54,24 @@ public class StudentTemplate {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public void deleteJob(ObjectId jobId) {
+        Job job = jobTemplate.getJob(jobId);
+        ArrayList<Applicant> applicants = job.getApplicants();
+
+        for (Applicant applicant : applicants) {
+            String account = applicant.getApplicantAccount();
+            Student student = (Student) userTemplate.getUser(account, 1);
+            ArrayList jobList = student.getJobList();
+            jobList.remove(jobId);
+
+            Criteria criteria = Criteria.where("account").is(account);
+            Query query = new Query(criteria);
+            Update update = new Update();
+            update.set("jobList", jobList);
+            mongoTemplate.updateMulti(query, update, Student.class);
         }
     }
 }

@@ -2,7 +2,7 @@ package com.example.intership.service;
 
 import com.example.intership.dao.JobTemplate;
 import com.example.intership.dao.UserTemplate;
-import com.example.intership.entities.user.Applicant;
+import com.example.intership.entities.job.Applicant;
 import com.example.intership.entities.job.Job;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;

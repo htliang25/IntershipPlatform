@@ -20,4 +20,8 @@ public class StudentService {
     public boolean addJob(String account, ObjectId jobId) {
         return studentTemplate.addJob(account, jobId);
     }
+
+    public void deleteJob(ObjectId jobId) {
+        studentTemplate.deleteJob(jobId);
+    }
 }

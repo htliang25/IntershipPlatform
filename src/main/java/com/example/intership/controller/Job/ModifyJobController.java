@@ -1,6 +1,8 @@
 package com.example.intership.controller.Job;
 
+import com.example.intership.service.EnterpriseService;
 import com.example.intership.service.JobService;
+import com.example.intership.service.StudentService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,12 @@ import java.util.Map;
 public class ModifyJobController {
     @Autowired
     JobService jobService;
+
+    @Autowired
+    EnterpriseService enterpriseService;
+
+    @Autowired
+    StudentService studentService;
 
     /*
         更新工作函数
@@ -46,6 +54,8 @@ public class ModifyJobController {
     public Map<String, Object> deleteJob(@RequestBody Map<String, Object> data) {
         ObjectId id = new ObjectId((String) data.get("jobId"));
 
+        studentService.deleteJob(id);
+        enterpriseService.deleteJob(id);
         jobService.deleteJob(id);
 
         Map<String, Object> res = new HashMap<>();

@@ -1,38 +1,38 @@
-package com.example.intership.entities.resuem.multipleform;
+package com.example.intership.entities.resume.multipleform;
 
-import com.example.intership.entities.resuem.Form;
+import com.example.intership.entities.resume.Form;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Document(collection = "projectExperience")
-public class ProjectExperience extends Form {
+@Document(collection = "schoolExperience")
+public class SchoolExperience extends Form {
     /*
-        项目经历类，继承自表格类
-        类属性有项目名称name、职位position、开始时间inTime、结束时间outTime和描述content
+        校内经历类，继承自表格类
+        类属性有组织organization、职位position、开始时间inTime、结束时间outTime和描述content
         类函数有类属性的set、get函数
      */
-    private String name;
+    private String organization;
     private String position;
     private String inTime;
     private String outTime;
     private String content;
 
-    public ProjectExperience(String account) {
+    public SchoolExperience(String account) {
         super(account);
     }
 
     public void setAttributes(Map<String, Object> data) {
-        setName((String) data.get("name"));
+        setOrganization((String) data.get("organization"));
         setPosition((String) data.get("position"));
         setInTime((String) data.get("inTime"));
         setOutTime((String) data.get("outTime"));
         setContent((String) data.get("content"));
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setOrganization(String organization) {
+        this.organization = organization;
     }
 
     public void setPosition(String position) {
@@ -54,7 +54,7 @@ public class ProjectExperience extends Form {
     public Map<String, Object> getForm() {
         Map<String, Object> data = new HashMap<>();
 
-        data.put("name", name);
+        data.put("organization", organization);
         data.put("position", position);
         data.put("inTime", inTime);
         data.put("outTime", outTime);
@@ -63,8 +63,8 @@ public class ProjectExperience extends Form {
         return data;
     }
 
-    public String getName(String name) {
-        return name;
+    public String getOrganization() {
+        return organization;
     }
 
     public String getPosition() {

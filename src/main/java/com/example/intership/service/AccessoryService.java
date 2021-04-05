@@ -1,7 +1,7 @@
 package com.example.intership.service;
 
 import com.example.intership.dao.AccessoryTemplate;
-import com.example.intership.entities.resuem.Accessory;
+import com.example.intership.entities.resume.Accessory;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
