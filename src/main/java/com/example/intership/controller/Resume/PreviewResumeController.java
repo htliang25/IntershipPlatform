@@ -70,7 +70,15 @@ public class PreviewResumeController {
             accessoryMsg.put("name", accessory.getName());
             accessoryMsg.put("url", accessory.getUrl());
             accessoryMsg.put("contentType", accessory.getContentType());
+
             accessoryMsg.put("accessoryId", accessory.getId().toString());
+
+            if (accessory.getContentType().equals(".pdf")) {
+                accessoryMsg.put("downloadURL", "http://localhost:8089/accessory/pdf/" + account + '/' + accessory.getName());
+            } else {
+                accessoryMsg.put("downloadURL", "http://localhost:8089/accessory/img/" + account + '/' + accessory.getName());
+            }
+
             finalAccessoryList.add(accessoryMsg);
         }
 
