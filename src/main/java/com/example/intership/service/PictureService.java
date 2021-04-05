@@ -30,4 +30,8 @@ public class PictureService {
     public ObjectId getAvatarId(String account, int role) {
         return pictureTemplate.getAvatarId(account, role);
     }
+
+    public boolean avatarIsExist(String account, int role) {
+        return pictureTemplate.avatarIsExist(account, role);
+    }
 }
