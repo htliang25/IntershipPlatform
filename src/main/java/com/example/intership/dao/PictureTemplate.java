@@ -38,6 +38,15 @@ public class PictureTemplate {
         return picture;
     }
 
+    public boolean avatarIsExist(String account, int role) {
+        Criteria criteria = Criteria.where("account").is(account).and("role").is(role);
+        Query query = new Query(criteria);
+
+        Picture picture = mongoTemplate.findOne(query, Picture.class, "avatar");
+
+        return (picture != null) ? true : false;
+    }
+
     /*
         获取头像id函数
         参数为账户account和角色role

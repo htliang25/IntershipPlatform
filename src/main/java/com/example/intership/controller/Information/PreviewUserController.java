@@ -60,12 +60,17 @@ public class PreviewUserController {
             }
         } else {
             Enterprise enterprise = (Enterprise) userService.getUser(account, role);
-            ObjectId avatarId = pictureService.getAvatarId(account, 2);
+
 
             if (enterprise != null) {
+                boolean flag = pictureService.avatarIsExist(account, 2);
+                if (flag) {
+                    ObjectId avatarId = pictureService.getAvatarId(account, 2);
+                    data.put("companyLogoURL", "/api/avatar/" + avatarId);
+                }
+
                 data.put("companyName", enterprise.getCompanyName());
                 data.put("companyIntro", enterprise.getCompanyIntro());
-                data.put("companyLogoURL", "/api/avatar/" + avatarId);
                 data.put("companyType", enterprise.getCompanyType());
                 data.put("companyAddress", enterprise.getCompanyAddress());
                 data.put("companyJobCount", jobService.getJobNum(account));
@@ -100,8 +105,13 @@ public class PreviewUserController {
                 break;
             }
             HashMap<String, Object> enterpriseMsg = new HashMap<>();
-            ObjectId pictureId = pictureService.getAvatarId(enterprise.getAccount(), 2);
-            enterpriseMsg.put("logoURL", "/api/avatar/" + pictureId);
+
+            String account = enterprise.getAccount();
+            boolean flag = pictureService.avatarIsExist(account, 2);
+            if (flag) {
+                ObjectId pictureId = pictureService.getAvatarId(account, 2);
+                enterpriseMsg.put("logoURL", "/api/avatar/" + pictureId);
+            }
             enterpriseMsg.put("companyName", enterprise.getCompanyName());
             enterpriseMsg.put("companyAccount", enterprise.getAccount());
             hotCompanyList.add(enterpriseMsg);

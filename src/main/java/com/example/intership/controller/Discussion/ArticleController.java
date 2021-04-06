@@ -14,7 +14,6 @@ import java.util.*;
 
 @Controller
 public class ArticleController {
-    //TODO：检查评论区的逻辑结构是否有问题
     @Autowired
     ArticleService articleService;
 

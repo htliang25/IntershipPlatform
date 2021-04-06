@@ -59,9 +59,11 @@ public class PreviewResumeController {
         ArrayList awardExperienceList = resumeService.getMultipleForm(account, "awardExperience");
         data.put("awardExperience", awardExperienceList);
 
-        ObjectId avatarId = pictureService.getAvatarId(account, 1);
-        String url = "/api/avatar/" + avatarId;
-        data.put("avatarURL", url);
+        boolean flag = pictureService.avatarIsExist(account, 1);
+        if (flag) {
+            ObjectId avatarId = pictureService.getAvatarId(account, 1);
+            data.put("avatarURL", "/api/avatar/" + avatarId);
+        }
 
         List<Accessory> accessoryList = accessoryService.getMyAccessoryList(account);
         ArrayList finalAccessoryList = new ArrayList();
