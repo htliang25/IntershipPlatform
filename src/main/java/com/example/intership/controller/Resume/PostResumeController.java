@@ -132,18 +132,16 @@ public class PostResumeController {
 
         Student user = (Student) userService.getUser(account, 1);
         ArrayList<ObjectId> jobList = user.getJobList();
+        
 
         for (ObjectId jobId : jobList) {
             Job job = jobService.getJob(jobId);
-            ArrayList<Applicant> applicants = job.getApplicants();
-            for (Applicant applicant : applicants) {
-                Map<String, Object> map = new HashMap<>();
-                map.put("jobId", jobId.toString());
-                map.put("jobName", job.getJobName());
-                map.put("companyName", job.getCompanyName());
-                map.put("jobDesc", job.getJobDescription());
-                list.add(map);
-            }
+            Map<String, Object> map = new HashMap<>();
+            map.put("jobId", jobId.toString());
+            map.put("jobName", job.getJobName());
+            map.put("companyName", job.getCompanyName());
+            map.put("jobDesc", job.getJobDescription());
+            list.add(map);
         }
 
         data.put("applicantList", list);
