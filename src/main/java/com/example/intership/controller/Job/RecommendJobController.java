@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Controller
 public class RecommendJobController {
-    //TODO: 尝试理解推荐算法
+
     @Autowired
     RecommendJobService recommendJobService;
 

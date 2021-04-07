@@ -61,9 +61,11 @@ public class EnterpriseTemplate {
 
         if (result) {
             ArrayList jobList = enterprise.getJobList();
+            int jobCount = enterprise.getJobCount();
             jobList.add(jobId);
             Update update = new Update();
             update.set("jobList", jobList);
+            update.set("jobCount", ++jobCount);
             mongoTemplate.updateMulti(query, update, Enterprise.class);
             return 20001;
         } else {
@@ -76,12 +78,14 @@ public class EnterpriseTemplate {
         String account = job.getAccount();
         Enterprise enterprise = (Enterprise) userTemplate.getUser(account, 2);
         ArrayList jobList = enterprise.getJobList();
+        int jobCount = enterprise.getJobCount();
         jobList.remove(jobId);
 
         Criteria criteria = Criteria.where("account").is(account);
         Query query = new Query(criteria);
         Update update = new Update();
         update.set("jobList", jobList);
+        update.set("jobCount", --jobCount);
         mongoTemplate.updateMulti(query, update, Enterprise.class);
     }
 }

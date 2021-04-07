@@ -62,11 +62,15 @@ public class SearchController {
 
         for (Enterprise enterprise : enterpriseList) {
             HashMap<String, Object> enterpriseMsg = new HashMap<>();
-            ObjectId avatarId = pictureService.getAvatarId(enterprise.getAccount(), 2);
+
 
             enterpriseMsg.put("companyName", enterprise.getCompanyName());
             enterpriseMsg.put("companyIntro", enterprise.getCompanyIntro());
-            enterpriseMsg.put("companyLogoURL", "/api/avatar/" + avatarId);
+            boolean flag = pictureService.avatarIsExist(enterprise.getAccount(), 2);
+            if (flag) {
+                ObjectId avatarId = pictureService.getAvatarId(enterprise.getAccount(), 2);
+                enterpriseMsg.put("companyLogoURL", "/api/avatar/" + avatarId);
+            }
             enterpriseMsg.put("companyAccount", enterprise.getAccount());
 
             finalEnterpriseList.add(enterpriseMsg);

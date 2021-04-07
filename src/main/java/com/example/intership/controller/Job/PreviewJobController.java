@@ -50,8 +50,11 @@ public class PreviewJobController {
         data.put("companyAccount", job.getAccount());
 
         String account = job.getAccount();
-        ObjectId avatarId = pictureService.getAvatarId(account, 2);
-        data.put("companyLogoURL", "/api/avatar/" + avatarId);
+        boolean flag = pictureService.avatarIsExist(account, 2);
+        if (flag) {
+            ObjectId avatarId = pictureService.getAvatarId(account, 2);
+            data.put("companyLogoURL", "/api/avatar/" + avatarId);
+        }
 
         int jobNum = jobService.getJobNum(account);
         data.put("companyJobNum", jobNum - 1);
@@ -175,6 +178,7 @@ public class PreviewJobController {
         Map<String, Object> data = new HashMap<>();
 
         List<Job> list = jobService.getJobList("全国", "全部");
+        Collections.sort(list);
         ArrayList hotJobList = new ArrayList();
         int i = 0;
         for (Job job : list) {

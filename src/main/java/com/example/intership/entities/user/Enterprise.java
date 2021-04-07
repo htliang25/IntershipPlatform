@@ -1,13 +1,12 @@
 package com.example.intership.entities.user;
 
-import com.example.intership.entities.job.Job;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 
 @Document(collection = "enterprise")
-public class Enterprise extends User {
+public class Enterprise extends User implements Comparable{
     /*
         企业类，继承自用户类
         类属性有公司名称companyName、公司介绍companyIntro、公司类型companyType和公司地址companyAddress
@@ -19,11 +18,13 @@ public class Enterprise extends User {
     private String companyAddress;
 
     private ArrayList<ObjectId> jobList;
+    private int jobCount;
 
     public Enterprise() {
         super();
         super.setRole(2);
         jobList = new ArrayList<>();
+        jobCount = 0;
     }
 
     public void setCompanyName(String companyName) {
@@ -60,7 +61,22 @@ public class Enterprise extends User {
         this.companyAddress = address;
     }
 
+    public int getJobCount() {
+        return jobCount;
+    }
+
     public boolean JobIsExist(ObjectId jobId) {
         return (jobList.indexOf(jobId) == -1) ? true : false;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Enterprise e = (Enterprise) o;
+        if (this.jobCount < e.getJobCount())
+            return 1;
+        else if (this.jobCount > e.getJobCount())
+            return -1;
+        else
+            return 0;
     }
 }

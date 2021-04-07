@@ -1,6 +1,7 @@
 package com.example.intership.entities.job;
 
 import com.example.intership.entities.resume.Form;
+import com.example.intership.entities.user.Enterprise;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Update;
@@ -10,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Document(collection = "job")
-public class Job extends Form {
+public class Job extends Form implements Comparable{
     /*
         岗位类，继承自表格类
         用于保存工作岗位
@@ -26,11 +27,13 @@ public class Job extends Form {
     private String jobRequire;
 
     private ArrayList<Applicant> applicants;
+    private int applicantCount;
 
     public Job(String account, String companyName) {
         super(account);
         this.companyName = companyName;
         applicants = new ArrayList<>();
+        applicantCount = 0;
     }
 
     public void setAttributes(Map<String, Object> data) {
@@ -154,5 +157,20 @@ public class Job extends Form {
 
     public ArrayList getApplicants() {
         return applicants;
+    }
+
+    public int getApplicantCount() {
+        return applicantCount;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Job j = (Job) o;
+        if (this.applicantCount < j.getApplicantCount())
+            return 1;
+        else if (this.applicantCount > j.getApplicantCount())
+            return -1;
+        else
+            return 0;
     }
 }
