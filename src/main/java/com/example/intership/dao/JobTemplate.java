@@ -204,4 +204,6 @@ public class JobTemplate {
         data.put("logoURL", "/api/avatar/" + avatarId);
         return data;
     }
+
+
 }

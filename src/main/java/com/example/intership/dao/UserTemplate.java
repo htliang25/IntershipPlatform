@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class UserTemplate {
     @Autowired
@@ -74,4 +76,13 @@ public class UserTemplate {
 
         mongoTemplate.updateMulti(query, update, str[0]);
     }
+
+
+    /*
+        获取所有学生
+     */
+    public List<Student> getStudentList() {
+        return mongoTemplate.findAll(Student.class);
+    }
+
 }

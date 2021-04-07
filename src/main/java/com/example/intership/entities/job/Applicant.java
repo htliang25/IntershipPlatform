@@ -5,7 +5,7 @@ import org.bson.types.ObjectId;
 public class Applicant {
     /*
         申请者类
-        类属性有所申请工作id、申请工作jobId、申请者账号applicantAccount和入职时间entryTime
+        类属性有申请工作jobId、申请者账号applicantAccount和入职时间entryTime
         类函数有类属性的set、get函数
      */
     private ObjectId _id;
@@ -40,4 +40,5 @@ public class Applicant {
     public void setEntryTime(String entryTime) {
         this.entryTime = entryTime;
     }
+
 }
