@@ -42,7 +42,6 @@ public class PreviewUserController {
 
         if (role == 1) {
             Student student = (Student) userService.getUser(account, role);
-            ObjectId avatarId = pictureService.getAvatarId(account, 1);
 
             if (student != null) {
                 data.put("university", student.getUniversity());
@@ -51,7 +50,11 @@ public class PreviewUserController {
                 Map<String, Object> infoForm = resumeService.getSingleForm(account, "informationForm");
                 data.put("infoForm", infoForm);
 
-                data.put("avatarURL", "/api/avatar/" + avatarId);
+                boolean flag = pictureService.avatarIsExist(account, 1);
+                if (flag) {
+                    ObjectId avatarId = pictureService.getAvatarId(account, 1);
+                    data.put("avatarURL", "/api/avatar/" + avatarId);
+                }
                 map.put("code", 20001);
                 map.put("data", data);
             } else {
@@ -97,6 +100,7 @@ public class PreviewUserController {
         Map<String, Object> data = new HashMap<>();
 
         List<Enterprise> list = enterpriseService.getEnterpriseList();
+        Collections.sort(list);
         ArrayList hotCompanyList = new ArrayList();
         int i = 0;
         for (Enterprise enterprise : list) {
@@ -104,6 +108,7 @@ public class PreviewUserController {
             if (i > 12) {
                 break;
             }
+
             HashMap<String, Object> enterpriseMsg = new HashMap<>();
 
             String account = enterprise.getAccount();
@@ -116,6 +121,7 @@ public class PreviewUserController {
             enterpriseMsg.put("companyAccount", enterprise.getAccount());
             hotCompanyList.add(enterpriseMsg);
         }
+
         data.put("hotCompanyList", hotCompanyList);
         map.put("data", data);
         map.put("code", 20001);

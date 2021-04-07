@@ -1,7 +1,6 @@
 package com.example.intership.service;
 
 import com.example.intership.dao.EnterpriseTemplate;
-import com.example.intership.entities.job.Job;
 import com.example.intership.entities.user.Enterprise;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;

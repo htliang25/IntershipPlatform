@@ -149,9 +149,11 @@ public class JobTemplate {
 
         if (!flag) {
             ArrayList applicants = job.getApplicants();
+            int applicantCount = job.getApplicantCount();
             applicants.add(currentApplicant);
             Update update = new Update();
             update.set("applicants", applicants);
+            update.set("applicantCount", ++applicantCount);
             mongoTemplate.updateMulti(query, update, Job.class);
             return true;
         } else {
@@ -193,15 +195,21 @@ public class JobTemplate {
 
     public Map<String, Object> getForm(Job job) {
         Map<String, Object> data = job.getForm();
-        ObjectId avatarId = pictureTemplate.getAvatarId(job.getAccount(), 2);
-        data.put("logoURL", "/api/avatar/" + avatarId);
+        boolean flag = pictureTemplate.avatarIsExist(job.getAccount(), 2);
+        if (flag) {
+            ObjectId avatarId = pictureTemplate.getAvatarId(job.getAccount(), 2);
+            data.put("logoURL", "/api/avatar/" + avatarId);
+        }
         return data;
     }
 
     public Map<String, Object> getFormAddJobDesc(Job job) {
         Map<String, Object> data = job.getFormAddJobDesc();
-        ObjectId avatarId = pictureTemplate.getAvatarId(job.getAccount(), 2);
-        data.put("logoURL", "/api/avatar/" + avatarId);
+        boolean flag = pictureTemplate.avatarIsExist(job.getAccount(), 2);
+        if (flag) {
+            ObjectId avatarId = pictureTemplate.getAvatarId(job.getAccount(), 2);
+            data.put("logoURL", "/api/avatar/" + avatarId);
+        }
         return data;
     }
 
