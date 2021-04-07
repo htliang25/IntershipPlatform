@@ -24,11 +24,11 @@ public class MessageController {
     JobService jobService;
 
     /*
-    企业回复学生投递的信息
-    api为sendMessageToStudent
-    参数为学生id、企业id、消息msg
-    返回值为发送消息的结果
- */
+        企业回复学生投递的信息
+        api为sendMessageToStudent
+        参数为投递学生账号applicantAccount、岗位id jobId、消息replyMsg
+        返回值为发送消息的结果
+    */
     @ResponseBody
     @PostMapping("/sendMessageToStudent")
     public Map<String, Object> sendMessageToStudent(@RequestBody Map<String, Object> data) {
@@ -48,6 +48,12 @@ public class MessageController {
         return map;
     }
 
+    /*
+        获取学生的消息列表
+        api为getMyNotifyMessage
+        参数为学生账号
+        返回值为发送消息的结果
+    */
     @ResponseBody
     @GetMapping("/getMyNotifyMessage")
     public Map<String, Object> getMyNotifyMessage(@RequestParam(value = "account") String account) {
@@ -60,8 +66,11 @@ public class MessageController {
 
         for (int i = messageList.size() - 1; i >= 0; i--) {
             Message message = messageList.get(i);
+
             HashMap<String, Object> messageMsg = new HashMap<>();
             messageMsg.put("replyMsg", message.getReplyMsg());
+            messageMsg.put("messageId", message.getId().toString());
+
             Job job = jobService.getJob(new ObjectId(message.getJobId()));
             if (job != null) {
                 messageMsg.put("jobName", job.getJobName());
@@ -80,6 +89,16 @@ public class MessageController {
         map.put("code", 20001);
 
         return map;
+    }
+
+
+    @ResponseBody
+    @PostMapping("/studentReadMessage")
+    public Map<String, Object> studentReadMessage(@RequestBody Map<String, Object> data) {
+        String messageId = (String) data.get("messageId");
+        messageService.readMessage(new ObjectId(messageId));
+
+        return new HashMap<>();
     }
 
 }

@@ -11,6 +11,7 @@ import com.example.intership.entities.user.Student;
 import com.example.intership.service.EnterpriseService;
 import com.example.intership.service.JobService;
 import com.example.intership.service.ResumeService;
+import com.example.intership.service.StudentService;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ class IntershipApplicationTests {
 
     @Autowired
     ResumeService resumeService;
+
+    @Autowired
+    StudentService studentService;
 
     @Test
     void contextLoads(){
@@ -129,6 +133,8 @@ class IntershipApplicationTests {
                 applicant.setJobId(jobId.toString());
 
                 jobService.addApplicant(jobId, applicant);
+                jobService.addApplicant(jobId, applicant);
+                studentService.addJob(account, jobId);
             }
         }
 

@@ -2,6 +2,7 @@ package com.example.intership.service;
 
 import com.example.intership.dao.MessageTemplate;
 import com.example.intership.entities.message.Message;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,10 @@ public class MessageService {
 
     public List<Message> getMyNotifyMessageList(String applicantAccount) {
         return messageTemplate.getMyNotifyMessageList(applicantAccount);
+    }
+
+    public void readMessage(ObjectId id) {
+        messageTemplate.readMessage(id);
     }
 
 }
