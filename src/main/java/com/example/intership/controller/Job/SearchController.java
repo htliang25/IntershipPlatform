@@ -1,4 +1,4 @@
-package com.example.intership.controller;
+package com.example.intership.controller.Job;
 
 import com.example.intership.entities.job.Job;
 import com.example.intership.entities.user.Enterprise;
